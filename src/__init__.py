@@ -8,7 +8,9 @@ License: MIT
 SubstanceNet v4 — Bio-Inspired Neural Network
 with Reflexive Consciousness
 ===========================================================
-    from src import BiologicalV1, QuantumWaveFunction
+Usage:
+    from src import SubstanceNet                  # Full model template
+    from src import BiologicalV1, QuantumWaveFunction    # Core modules
     from src import ReflexiveConsciousness, TemporalConsciousnessController
     from src import Hippocampus
 
@@ -26,9 +28,11 @@ from .wave import QuantumWaveFunction
 from .cortex import BiologicalV1
 from .consciousness import ReflexiveConsciousness, TemporalConsciousnessController
 from .hippocampus import Hippocampus
+from .model import SubstanceNet
 
 __all__ = [
     '__version__',
+    'SubstanceNet',
     'QuantumWaveFunction',
     'BiologicalV1',
     'ReflexiveConsciousness',

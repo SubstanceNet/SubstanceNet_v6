@@ -5,3 +5,21 @@ Developer: SubstanceNet — https://github.com/SubstanceNet
 Code: Claude (Anthropic)
 License: MIT
 """
+
+from .substance_net import SubstanceNet
+from .layers import (
+    OrientationSelectivity,
+    NonLocalInteraction,
+    AbstractionLayer,
+    PhaseCoherenceLoss,
+    TopologicalLoss,
+)
+
+__all__ = [
+    'SubstanceNet',
+    'OrientationSelectivity',
+    'NonLocalInteraction',
+    'AbstractionLayer',
+    'PhaseCoherenceLoss',
+    'TopologicalLoss',
+]
