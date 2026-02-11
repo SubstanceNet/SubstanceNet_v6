@@ -125,7 +125,7 @@ def train(args):
     print('=' * 70)
     print(f'Device: {device}')
     print(f'Epochs: {args.epochs}, Batch size: {args.batch_size}, LR: {args.lr}')
-    print(f'Reference: {REFERENCE_RESULTS["mnist_accuracy"]*100:.2f}% (v3.1.1)')
+    print(f'Reference: {REFERENCE_RESULTS["mnist_stream_1epoch"]["accuracy"]*100:.2f}% (v3.1.1)')
     print(f'Optimal reflexivity: [{OPTIMAL_REFLEXIVITY_MIN}, {OPTIMAL_REFLEXIVITY_MAX}]')
     print()
 
@@ -285,7 +285,7 @@ def train(args):
     # === Final results ===
     final_acc = history['epochs'][-1]['test_accuracy']
     final_R = history['epochs'][-1]['reflexivity']
-    ref_acc = REFERENCE_RESULTS['mnist_accuracy'] * 100
+    ref_acc = REFERENCE_RESULTS['mnist_stream_1epoch']['accuracy'] * 100
 
     history['summary'] = {
         'final_test_accuracy': final_acc,
@@ -379,7 +379,7 @@ def generate_figures(history, timestamp):
             'b-o', linewidth=2, label='Train')
     ax.plot(ep, [e['test_accuracy'] for e in epochs_data],
             'r-s', linewidth=2, label='Test')
-    ref = REFERENCE_RESULTS['mnist_accuracy'] * 100
+    ref = REFERENCE_RESULTS['mnist_stream_1epoch']['accuracy'] * 100
     ax.axhline(y=ref, color='green', linestyle='--', alpha=0.7,
                label=f'v3.1.1 ref ({ref:.2f}%)')
     ax.set_xlabel('Epoch')

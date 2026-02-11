@@ -1,0 +1,3966 @@
+{
+  "config": {
+    "epochs": 5,
+    "batch_size": 32,
+    "lr": 0.001,
+    "device": "cuda",
+    "parameters": {
+      "v1": 141344,
+      "orientation": 1536,
+      "wave": 65667,
+      "nonlocal": 66305,
+      "abstraction": 9296,
+      "consciousness": 6371,
+      "classifier": 297738,
+      "total": 588257
+    },
+    "timestamp": "20260211_194749",
+    "model_config": {
+      "num_classes": 10,
+      "v1_orientations": 8,
+      "v1_scales": 3,
+      "v1_dim": 64,
+      "wave_channels": 128,
+      "orient_expand": 8,
+      "consciousness_dim": 32,
+      "abstract_dim": 16,
+      "num_iterations": 3,
+      "num_attn_heads": 2
+    }
+  },
+  "epochs": [
+    {
+      "epoch": 1,
+      "train_accuracy": 94.5367,
+      "test_accuracy": 97.89,
+      "avg_loss": 0.152237,
+      "avg_classification_loss": 0.172703,
+      "avg_consciousness_loss": -0.325812,
+      "per_class_accuracy": {
+        "0": 98.6734693877551,
+        "1": 98.8546255506608,
+        "2": 98.54651162790698,
+        "3": 99.20792079207921,
+        "4": 94.19551934826885,
+        "5": 99.10313901345292,
+        "6": 97.18162839248434,
+        "7": 97.56809338521401,
+        "8": 98.15195071868582,
+        "9": 97.32408325074331
+      },
+      "reflexivity": 0.5184,
+      "reflexivity_phase": "accumulation",
+      "lr": 0.001,
+      "epoch_time_sec": 19.1
+    },
+    {
+      "epoch": 2,
+      "train_accuracy": 97.7417,
+      "test_accuracy": 95.76,
+      "avg_loss": 0.053549,
+      "avg_classification_loss": 0.076149,
+      "avg_consciousness_loss": -0.327722,
+      "per_class_accuracy": {
+        "0": 98.9795918367347,
+        "1": 98.8546255506608,
+        "2": 94.86434108527132,
+        "3": 89.9009900990099,
+        "4": 99.89816700610999,
+        "5": 97.30941704035874,
+        "6": 96.24217118997912,
+        "7": 90.07782101167315,
+        "8": 99.17864476386038,
+        "9": 92.56689791873141
+      },
+      "reflexivity": 0.6713,
+      "reflexivity_phase": "accumulation",
+      "lr": 0.001,
+      "epoch_time_sec": 18.4
+    },
+    {
+      "epoch": 3,
+      "train_accuracy": 98.395,
+      "test_accuracy": 98.82,
+      "avg_loss": 0.02855,
+      "avg_classification_loss": 0.053504,
+      "avg_consciousness_loss": -0.327722,
+      "per_class_accuracy": {
+        "0": 99.59183673469387,
+        "1": 99.64757709251101,
+        "2": 99.2248062015504,
+        "3": 98.91089108910892,
+        "4": 98.4725050916497,
+        "5": 98.31838565022422,
+        "6": 98.8517745302714,
+        "7": 98.92996108949416,
+        "8": 98.25462012320328,
+        "9": 97.81962338949455
+      },
+      "reflexivity": 0.7756,
+      "reflexivity_phase": "accumulation",
+      "lr": 0.001,
+      "epoch_time_sec": 19.2
+    },
+    {
+      "epoch": 4,
+      "train_accuracy": 99.08,
+      "test_accuracy": 99.13,
+      "avg_loss": 0.002815,
+      "avg_classification_loss": 0.029713,
+      "avg_consciousness_loss": -0.327726,
+      "per_class_accuracy": {
+        "0": 99.28571428571429,
+        "1": 99.64757709251101,
+        "2": 99.51550387596899,
+        "3": 99.60396039603961,
+        "4": 99.38900203665987,
+        "5": 98.76681614349776,
+        "6": 98.8517745302714,
+        "7": 98.92996108949416,
+        "8": 98.870636550308,
+        "9": 98.31516352824579
+      },
+      "reflexivity": 0.8469,
+      "reflexivity_phase": "convergence",
+      "lr": 0.0005,
+      "epoch_time_sec": 18.7
+    },
+    {
+      "epoch": 5,
+      "train_accuracy": 99.145,
+      "test_accuracy": 99.16,
+      "avg_loss": -0.000274,
+      "avg_classification_loss": 0.027388,
+      "avg_consciousness_loss": -0.327725,
+      "per_class_accuracy": {
+        "0": 99.48979591836735,
+        "1": 99.8237885462555,
+        "2": 99.6124031007752,
+        "3": 99.10891089108911,
+        "4": 98.77800407331975,
+        "5": 98.87892376681614,
+        "6": 98.53862212943632,
+        "7": 99.0272373540856,
+        "8": 99.28131416837782,
+        "9": 98.90981169474728
+      },
+      "reflexivity": 0.8955,
+      "reflexivity_phase": "convergence",
+      "lr": 0.0005,
+      "epoch_time_sec": 19.4
+    }
+  ],
+  "consciousness_trace": [
+    {
+      "epoch": 1,
+      "batch": 0,
+      "reflexivity": 0.4572693470113171,
+      "phase_coherence": 0.9964832383061955,
+      "mean_amplitude": 0.710273265838623,
+      "complexity": 16.0,
+      "controller_level": 0.3015726934701132,
+      "controller_phase": "initialization"
+    },
+    {
+      "epoch": 1,
+      "batch": 50,
+      "reflexivity": 0.9963252701798607,
+      "phase_coherence": 0.9991723801795794,
+      "mean_amplitude": 0.549663782119751,
+      "complexity": 16.0,
+      "controller_level": 0.3085202192372106,
+      "controller_phase": "initialization"
+    },
+    {
+      "epoch": 1,
+      "batch": 100,
+      "reflexivity": 0.9990721785620563,
+      "phase_coherence": 0.999575823676821,
+      "mean_amplitude": 0.5334320068359375,
+      "complexity": 16.0,
+      "controller_level": 0.31542573883045905,
+      "controller_phase": "initialization"
+    },
+    {
+      "epoch": 1,
+      "batch": 150,
+      "reflexivity": 0.9996539086862103,
+      "phase_coherence": 0.9998149591427442,
+      "mean_amplitude": 0.5283244848251343,
+      "complexity": 16.0,
+      "controller_level": 0.32226802052901654,
+      "controller_phase": "initialization"
+    },
+    {
+      "epoch": 1,
+      "batch": 200,
+      "reflexivity": 0.9997262439488414,
+      "phase_coherence": 0.9998661511166305,
+      "mean_amplitude": 0.5237627625465393,
+      "complexity": 16.0,
+      "controller_level": 0.3290426027632148,
+      "controller_phase": "initialization"
+    },
+    {
+      "epoch": 1,
+      "batch": 250,
+      "reflexivity": 0.9997950790028263,
+      "phase_coherence": 0.9998834018484933,
+      "mean_amplitude": 0.518950879573822,
+      "complexity": 16.0,
+      "controller_level": 0.33575012752561095,
+      "controller_phase": "initialization"
+    },
+    {
+      "epoch": 1,
+      "batch": 300,
+      "reflexivity": 0.9998994067055623,
+      "phase_coherence": 0.999937948307844,
+      "mean_amplitude": 0.5198264718055725,
+      "complexity": 16.0,
+      "controller_level": 0.34239162031741044,
+      "controller_phase": "initialization"
+    },
+    {
+      "epoch": 1,
+      "batch": 350,
+      "reflexivity": 0.9999318944285622,
+      "phase_coherence": 0.9999677643096561,
+      "mean_amplitude": 0.5180376172065735,
+      "complexity": 16.0,
+      "controller_level": 0.34896702305852195,
+      "controller_phase": "initialization"
+    },
+    {
+      "epoch": 1,
+      "batch": 400,
+      "reflexivity": 0.9999387910062227,
+      "phase_coherence": 0.9999644480851761,
+      "mean_amplitude": 0.5166593790054321,
+      "complexity": 16.0,
+      "controller_level": 0.35547674073799895,
+      "controller_phase": "initialization"
+    },
+    {
+      "epoch": 1,
+      "batch": 450,
+      "reflexivity": 0.9999488163890475,
+      "phase_coherence": 0.9999690630918141,
+      "mean_amplitude": 0.5147392153739929,
+      "complexity": 16.0,
+      "controller_level": 0.36192146149450943,
+      "controller_phase": "initialization"
+    },
+    {
+      "epoch": 1,
+      "batch": 500,
+      "reflexivity": 0.9999283764707995,
+      "phase_coherence": 0.9999534112440355,
+      "mean_amplitude": 0.5132453441619873,
+      "complexity": 16.0,
+      "controller_level": 0.36830153064427235,
+      "controller_phase": "initialization"
+    },
+    {
+      "epoch": 1,
+      "batch": 550,
+      "reflexivity": 0.9999590308885407,
+      "phase_coherence": 0.9999798468929775,
+      "mean_amplitude": 0.5121594071388245,
+      "complexity": 16.0,
+      "controller_level": 0.37461810564671505,
+      "controller_phase": "initialization"
+    },
+    {
+      "epoch": 1,
+      "batch": 600,
+      "reflexivity": 0.999956788350708,
+      "phase_coherence": 0.9999762288306938,
+      "mean_amplitude": 0.5119372606277466,
+      "complexity": 16.0,
+      "controller_level": 0.38087149247375496,
+      "controller_phase": "initialization"
+    },
+    {
+      "epoch": 1,
+      "batch": 650,
+      "reflexivity": 0.9999810158990542,
+      "phase_coherence": 0.9999878570349311,
+      "mean_amplitude": 0.5113152265548706,
+      "complexity": 16.0,
+      "controller_level": 0.38706258770800794,
+      "controller_phase": "initialization"
+    },
+    {
+      "epoch": 1,
+      "batch": 700,
+      "reflexivity": 0.999952867338531,
+      "phase_coherence": 0.9999668716870428,
+      "mean_amplitude": 0.5094770193099976,
+      "complexity": 16.0,
+      "controller_level": 0.3931914905043132,
+      "controller_phase": "initialization"
+    },
+    {
+      "epoch": 1,
+      "batch": 750,
+      "reflexivity": 0.999950835173739,
+      "phase_coherence": 0.999970595827323,
+      "mean_amplitude": 0.5091374516487122,
+      "complexity": 16.0,
+      "controller_level": 0.39925908395100745,
+      "controller_phase": "initialization"
+    },
+    {
+      "epoch": 1,
+      "batch": 800,
+      "reflexivity": 0.9999545816501311,
+      "phase_coherence": 0.9999721308152635,
+      "mean_amplitude": 0.5093764066696167,
+      "complexity": 16.0,
+      "controller_level": 0.4052660389279987,
+      "controller_phase": "initialization"
+    },
+    {
+      "epoch": 1,
+      "batch": 850,
+      "reflexivity": 0.9999890033950216,
+      "phase_coherence": 0.999992969780154,
+      "mean_amplitude": 0.5101232528686523,
+      "complexity": 16.0,
+      "controller_level": 0.41121326857266893,
+      "controller_phase": "initialization"
+    },
+    {
+      "epoch": 1,
+      "batch": 900,
+      "reflexivity": 0.9999705368013495,
+      "phase_coherence": 0.99998147308786,
+      "mean_amplitude": 0.5088561773300171,
+      "complexity": 16.0,
+      "controller_level": 0.4171008412549557,
+      "controller_phase": "initialization"
+    },
+    {
+      "epoch": 1,
+      "batch": 950,
+      "reflexivity": 0.9999849620259266,
+      "phase_coherence": 0.9999905051443402,
+      "mean_amplitude": 0.5095365643501282,
+      "complexity": 16.0,
+      "controller_level": 0.42292968246266543,
+      "controller_phase": "initialization"
+    },
+    {
+      "epoch": 1,
+      "batch": 1000,
+      "reflexivity": 0.9999917510293176,
+      "phase_coherence": 0.9999944847123624,
+      "mean_amplitude": 0.5097500681877136,
+      "complexity": 16.0,
+      "controller_level": 0.42870030314833196,
+      "controller_phase": "initialization"
+    },
+    {
+      "epoch": 1,
+      "batch": 1050,
+      "reflexivity": 0.9999792144344998,
+      "phase_coherence": 0.9999877717437877,
+      "mean_amplitude": 0.5077488422393799,
+      "complexity": 16.0,
+      "controller_level": 0.4344130922611936,
+      "controller_phase": "initialization"
+    },
+    {
+      "epoch": 1,
+      "batch": 1100,
+      "reflexivity": 0.9999908666374906,
+      "phase_coherence": 0.9999934344788217,
+      "mean_amplitude": 0.5099153518676758,
+      "complexity": 16.0,
+      "controller_level": 0.4400688700049566,
+      "controller_phase": "initialization"
+    },
+    {
+      "epoch": 1,
+      "batch": 1150,
+      "reflexivity": 0.9999945178288228,
+      "phase_coherence": 0.9999972871258396,
+      "mean_amplitude": 0.5090198516845703,
+      "complexity": 16.0,
+      "controller_level": 0.44566812648319526,
+      "controller_phase": "initialization"
+    },
+    {
+      "epoch": 1,
+      "batch": 1200,
+      "reflexivity": 0.9999960615410192,
+      "phase_coherence": 0.9999976396387225,
+      "mean_amplitude": 0.5092834234237671,
+      "complexity": 16.0,
+      "controller_level": 0.4512114058337735,
+      "controller_phase": "initialization"
+    },
+    {
+      "epoch": 1,
+      "batch": 1250,
+      "reflexivity": 0.9999965919421545,
+      "phase_coherence": 0.9999981072509136,
+      "mean_amplitude": 0.5091400146484375,
+      "complexity": 16.0,
+      "controller_level": 0.4566992576948573,
+      "controller_phase": "initialization"
+    },
+    {
+      "epoch": 1,
+      "batch": 1300,
+      "reflexivity": 0.9999933901217797,
+      "phase_coherence": 0.9999957654176103,
+      "mean_amplitude": 0.5090861320495605,
+      "complexity": 16.0,
+      "controller_level": 0.4621321990191265,
+      "controller_phase": "initialization"
+    },
+    {
+      "epoch": 1,
+      "batch": 1350,
+      "reflexivity": 0.9999934472659439,
+      "phase_coherence": 0.9999979914088739,
+      "mean_amplitude": 0.5094510912895203,
+      "complexity": 16.0,
+      "controller_level": 0.4675108115015947,
+      "controller_phase": "initialization"
+    },
+    {
+      "epoch": 1,
+      "batch": 1400,
+      "reflexivity": 0.9999953889949913,
+      "phase_coherence": 0.9999969314504047,
+      "mean_amplitude": 0.5082924962043762,
+      "complexity": 16.0,
+      "controller_level": 0.47283565727652865,
+      "controller_phase": "initialization"
+    },
+    {
+      "epoch": 1,
+      "batch": 1450,
+      "reflexivity": 0.9999907945795469,
+      "phase_coherence": 0.9999982240937639,
+      "mean_amplitude": 0.5090751051902771,
+      "complexity": 16.0,
+      "controller_level": 0.47810720864955886,
+      "controller_phase": "initialization"
+    },
+    {
+      "epoch": 1,
+      "batch": 1500,
+      "reflexivity": 0.999987493955784,
+      "phase_coherence": 0.9999983396520992,
+      "mean_amplitude": 0.5086072683334351,
+      "complexity": 16.0,
+      "controller_level": 0.4833260115026211,
+      "controller_phase": "initialization"
+    },
+    {
+      "epoch": 1,
+      "batch": 1550,
+      "reflexivity": 0.9999924929224696,
+      "phase_coherence": 0.999995524778089,
+      "mean_amplitude": 0.5083494186401367,
+      "complexity": 16.0,
+      "controller_level": 0.4884926763168196,
+      "controller_phase": "initialization"
+    },
+    {
+      "epoch": 1,
+      "batch": 1600,
+      "reflexivity": 0.9997881919493518,
+      "phase_coherence": 0.9999956374150035,
+      "mean_amplitude": 0.5078117251396179,
+      "complexity": 16.0,
+      "controller_level": 0.4936056314731449,
+      "controller_phase": "initialization"
+    },
+    {
+      "epoch": 1,
+      "batch": 1650,
+      "reflexivity": 0.9999976608524013,
+      "phase_coherence": 0.9999989247012998,
+      "mean_amplitude": 0.5081767439842224,
+      "complexity": 16.0,
+      "controller_level": 0.4986695517669375,
+      "controller_phase": "initialization"
+    },
+    {
+      "epoch": 1,
+      "batch": 1700,
+      "reflexivity": 0.9999970479378425,
+      "phase_coherence": 0.9999985716984967,
+      "mean_amplitude": 0.5077749490737915,
+      "complexity": 16.0,
+      "controller_level": 0.5036828267286465,
+      "controller_phase": "accumulation"
+    },
+    {
+      "epoch": 1,
+      "batch": 1750,
+      "reflexivity": 0.9999951899102957,
+      "phase_coherence": 0.9999975155503665,
+      "mean_amplitude": 0.5078378319740295,
+      "complexity": 16.0,
+      "controller_level": 0.508645950360463,
+      "controller_phase": "accumulation"
+    },
+    {
+      "epoch": 1,
+      "batch": 1800,
+      "reflexivity": 0.9999863898917019,
+      "phase_coherence": 0.9999979838165514,
+      "mean_amplitude": 0.5075326561927795,
+      "complexity": 16.0,
+      "controller_level": 0.5135593547557754,
+      "controller_phase": "accumulation"
+    },
+    {
+      "epoch": 1,
+      "batch": 1850,
+      "reflexivity": 0.9999926322267915,
+      "phase_coherence": 0.9999963349690301,
+      "mean_amplitude": 0.5068835616111755,
+      "complexity": 16.0,
+      "controller_level": 0.5184236875304855,
+      "controller_phase": "accumulation"
+    },
+    {
+      "epoch": 2,
+      "batch": 0,
+      "reflexivity": 0.9999954582755709,
+      "phase_coherence": 0.9999983345985226,
+      "mean_amplitude": 0.5070639252662659,
+      "complexity": 16.0,
+      "controller_level": 0.5232394052379363,
+      "controller_phase": "accumulation"
+    },
+    {
+      "epoch": 2,
+      "batch": 50,
+      "reflexivity": 0.99999606287069,
+      "phase_coherence": 0.9999988059172823,
+      "mean_amplitude": 0.5075414180755615,
+      "complexity": 16.0,
+      "controller_level": 0.5280069718142638,
+      "controller_phase": "accumulation"
+    },
+    {
+      "epoch": 2,
+      "batch": 100,
+      "reflexivity": 0.9999969191077858,
+      "phase_coherence": 0.9999999803043035,
+      "mean_amplitude": 0.5077251195907593,
+      "complexity": 16.0,
+      "controller_level": 0.532726871287199,
+      "controller_phase": "accumulation"
+    },
+    {
+      "epoch": 2,
+      "batch": 150,
+      "reflexivity": 0.9999842078652484,
+      "phase_coherence": 0.9999986879779127,
+      "mean_amplitude": 0.5073474645614624,
+      "complexity": 16.0,
+      "controller_level": 0.5373994446529794,
+      "controller_phase": "accumulation"
+    },
+    {
+      "epoch": 2,
+      "batch": 200,
+      "reflexivity": 0.9999941867837665,
+      "phase_coherence": 0.9999973918654586,
+      "mean_amplitude": 0.5066081285476685,
+      "complexity": 16.0,
+      "controller_level": 0.5420253920742873,
+      "controller_phase": "accumulation"
+    },
+    {
+      "epoch": 2,
+      "batch": 250,
+      "reflexivity": 0.9999939968025727,
+      "phase_coherence": 0.9999962092038087,
+      "mean_amplitude": 0.5057904720306396,
+      "complexity": 16.0,
+      "controller_level": 0.5466050781215702,
+      "controller_phase": "accumulation"
+    },
+    {
+      "epoch": 2,
+      "batch": 300,
+      "reflexivity": 0.999978405422318,
+      "phase_coherence": 0.9999980982139284,
+      "mean_amplitude": 0.5067206621170044,
+      "complexity": 16.0,
+      "controller_level": 0.5511388113945777,
+      "controller_phase": "accumulation"
+    },
+    {
+      "epoch": 2,
+      "batch": 350,
+      "reflexivity": 0.9999164200793474,
+      "phase_coherence": 0.9999989212138223,
+      "mean_amplitude": 0.5065339207649231,
+      "complexity": 16.0,
+      "controller_level": 0.5556265874814253,
+      "controller_phase": "accumulation"
+    },
+    {
+      "epoch": 2,
+      "batch": 400,
+      "reflexivity": 0.9999978138250799,
+      "phase_coherence": 0.9999996269765192,
+      "mean_amplitude": 0.506171703338623,
+      "complexity": 16.0,
+      "controller_level": 0.5600702997448619,
+      "controller_phase": "accumulation"
+    },
+    {
+      "epoch": 2,
+      "batch": 450,
+      "reflexivity": 0.9999912476070932,
+      "phase_coherence": 0.9999993909304915,
+      "mean_amplitude": 0.5057275295257568,
+      "complexity": 16.0,
+      "controller_level": 0.5644695092234842,
+      "controller_phase": "accumulation"
+    },
+    {
+      "epoch": 2,
+      "batch": 500,
+      "reflexivity": 0.999999099778805,
+      "phase_coherence": 0.9999997446191058,
+      "mean_amplitude": 0.5059473514556885,
+      "complexity": 16.0,
+      "controller_level": 0.5688248051290373,
+      "controller_phase": "accumulation"
+    },
+    {
+      "epoch": 2,
+      "batch": 550,
+      "reflexivity": 0.9999900597473628,
+      "phase_coherence": 0.9999995087823998,
+      "mean_amplitude": 0.5057200193405151,
+      "complexity": 16.0,
+      "controller_level": 0.5731364576752206,
+      "controller_phase": "accumulation"
+    },
+    {
+      "epoch": 2,
+      "batch": 600,
+      "reflexivity": 0.9999899202800518,
+      "phase_coherence": 0.9999993906525589,
+      "mean_amplitude": 0.5054968595504761,
+      "complexity": 16.0,
+      "controller_level": 0.577404992301269,
+      "controller_phase": "accumulation"
+    },
+    {
+      "epoch": 2,
+      "batch": 650,
+      "reflexivity": 0.9999992079789328,
+      "phase_coherence": 0.9999997443879572,
+      "mean_amplitude": 0.5054898262023926,
+      "complexity": 16.0,
+      "controller_level": 0.5816309344580456,
+      "controller_phase": "accumulation"
+    },
+    {
+      "epoch": 2,
+      "batch": 700,
+      "reflexivity": 0.9999794334736027,
+      "phase_coherence": 0.9999988003081938,
+      "mean_amplitude": 0.5051684379577637,
+      "complexity": 16.0,
+      "controller_level": 0.5858144194482012,
+      "controller_phase": "accumulation"
+    },
+    {
+      "epoch": 2,
+      "batch": 750,
+      "reflexivity": 0.9999924452274669,
+      "phase_coherence": 0.9999957285067353,
+      "mean_amplitude": 0.5046870112419128,
+      "complexity": 16.0,
+      "controller_level": 0.5899561997059939,
+      "controller_phase": "accumulation"
+    },
+    {
+      "epoch": 2,
+      "batch": 800,
+      "reflexivity": 0.9999963229148456,
+      "phase_coherence": 0.9999990353471065,
+      "mean_amplitude": 0.5046759843826294,
+      "complexity": 16.0,
+      "controller_level": 0.5940566009380823,
+      "controller_phase": "accumulation"
+    },
+    {
+      "epoch": 2,
+      "batch": 850,
+      "reflexivity": 0.9999232026504923,
+      "phase_coherence": 0.9999984437822066,
+      "mean_amplitude": 0.5043383836746216,
+      "complexity": 16.0,
+      "controller_level": 0.5981152669552063,
+      "controller_phase": "accumulation"
+    },
+    {
+      "epoch": 2,
+      "batch": 900,
+      "reflexivity": 0.9999985144744882,
+      "phase_coherence": 0.9999995074140046,
+      "mean_amplitude": 0.5043151378631592,
+      "complexity": 16.0,
+      "controller_level": 0.6021340994303992,
+      "controller_phase": "accumulation"
+    },
+    {
+      "epoch": 2,
+      "batch": 950,
+      "reflexivity": 0.9999995151536117,
+      "phase_coherence": 0.9999998619583051,
+      "mean_amplitude": 0.5042291283607483,
+      "complexity": 16.0,
+      "controller_level": 0.6061127535876314,
+      "controller_phase": "accumulation"
+    },
+    {
+      "epoch": 2,
+      "batch": 1000,
+      "reflexivity": 0.9998970113659614,
+      "phase_coherence": 0.9999999801700954,
+      "mean_amplitude": 0.5042888522148132,
+      "complexity": 16.0,
+      "controller_level": 0.6100505961654147,
+      "controller_phase": "accumulation"
+    },
+    {
+      "epoch": 2,
+      "batch": 1050,
+      "reflexivity": 0.9999985321392105,
+      "phase_coherence": 0.9999995067677487,
+      "mean_amplitude": 0.5036543607711792,
+      "complexity": 16.0,
+      "controller_level": 0.6139500755251527,
+      "controller_phase": "accumulation"
+    },
+    {
+      "epoch": 2,
+      "batch": 1100,
+      "reflexivity": 0.9999965366493493,
+      "phase_coherence": 0.9999997433320754,
+      "mean_amplitude": 0.5034103393554688,
+      "complexity": 16.0,
+      "controller_level": 0.6178105401363947,
+      "controller_phase": "accumulation"
+    },
+    {
+      "epoch": 2,
+      "batch": 1150,
+      "reflexivity": 0.9999993213132315,
+      "phase_coherence": 0.9999998617371713,
+      "mean_amplitude": 0.5034226775169373,
+      "complexity": 16.0,
+      "controller_level": 0.621632427948163,
+      "controller_phase": "accumulation"
+    },
+    {
+      "epoch": 2,
+      "batch": 1200,
+      "reflexivity": 0.9999994294720254,
+      "phase_coherence": 0.9999998616868966,
+      "mean_amplitude": 0.5032396912574768,
+      "complexity": 16.0,
+      "controller_level": 0.6254160979634017,
+      "controller_phase": "accumulation"
+    },
+    {
+      "epoch": 2,
+      "batch": 1250,
+      "reflexivity": 0.9999069223762891,
+      "phase_coherence": 0.9999991501114722,
+      "mean_amplitude": 0.5026924014091492,
+      "complexity": 16.0,
+      "controller_level": 0.6291610062075306,
+      "controller_phase": "accumulation"
+    },
+    {
+      "epoch": 2,
+      "batch": 1300,
+      "reflexivity": 0.9999994335424074,
+      "phase_coherence": 0.9999997427921896,
+      "mean_amplitude": 0.5023536682128906,
+      "complexity": 16.0,
+      "controller_level": 0.6328693904808793,
+      "controller_phase": "accumulation"
+    },
+    {
+      "epoch": 2,
+      "batch": 1350,
+      "reflexivity": 0.9999983814777854,
+      "phase_coherence": 0.9999992684033906,
+      "mean_amplitude": 0.5025007724761963,
+      "complexity": 16.0,
+      "controller_level": 0.6365406803908483,
+      "controller_phase": "accumulation"
+    },
+    {
+      "epoch": 2,
+      "batch": 1400,
+      "reflexivity": 0.9999987231554247,
+      "phase_coherence": 0.9999997426772689,
+      "mean_amplitude": 0.502129316329956,
+      "complexity": 16.0,
+      "controller_level": 0.6401752608184941,
+      "controller_phase": "accumulation"
+    },
+    {
+      "epoch": 2,
+      "batch": 1450,
+      "reflexivity": 0.9999990045642694,
+      "phase_coherence": 0.9999995050074327,
+      "mean_amplitude": 0.5018632411956787,
+      "complexity": 16.0,
+      "controller_level": 0.6437734982559518,
+      "controller_phase": "accumulation"
+    },
+    {
+      "epoch": 2,
+      "batch": 1500,
+      "reflexivity": 0.9999988157801836,
+      "phase_coherence": 0.9999999800746011,
+      "mean_amplitude": 0.5018720030784607,
+      "complexity": 16.0,
+      "controller_level": 0.6473357514311942,
+      "controller_phase": "accumulation"
+    },
+    {
+      "epoch": 2,
+      "batch": 1550,
+      "reflexivity": 0.9999694523449314,
+      "phase_coherence": 0.9999997423962522,
+      "mean_amplitude": 0.5015815496444702,
+      "complexity": 16.0,
+      "controller_level": 0.6508620884403314,
+      "controller_phase": "accumulation"
+    },
+    {
+      "epoch": 2,
+      "batch": 1600,
+      "reflexivity": 0.9999989597606053,
+      "phase_coherence": 0.9999997422023328,
+      "mean_amplitude": 0.501204252243042,
+      "complexity": 16.0,
+      "controller_level": 0.6543534571535342,
+      "controller_phase": "accumulation"
+    },
+    {
+      "epoch": 2,
+      "batch": 1650,
+      "reflexivity": 0.9999979665936246,
+      "phase_coherence": 0.9999999800427288,
+      "mean_amplitude": 0.501070499420166,
+      "complexity": 16.0,
+      "controller_level": 0.6578099022479351,
+      "controller_phase": "accumulation"
+    },
+    {
+      "epoch": 2,
+      "batch": 1700,
+      "reflexivity": 0.9999955256353243,
+      "phase_coherence": 0.9999998610908993,
+      "mean_amplitude": 0.5010805130004883,
+      "complexity": 16.0,
+      "controller_level": 0.6612317584818089,
+      "controller_phase": "accumulation"
+    },
+    {
+      "epoch": 2,
+      "batch": 1750,
+      "reflexivity": 0.9999991799922913,
+      "phase_coherence": 0.9999998609338142,
+      "mean_amplitude": 0.5005145072937012,
+      "complexity": 16.0,
+      "controller_level": 0.6646194326969138,
+      "controller_phase": "accumulation"
+    },
+    {
+      "epoch": 2,
+      "batch": 1800,
+      "reflexivity": 0.999968711669145,
+      "phase_coherence": 0.9999999800185891,
+      "mean_amplitude": 0.5004651546478271,
+      "complexity": 16.0,
+      "controller_level": 0.6679729254866361,
+      "controller_phase": "accumulation"
+    },
+    {
+      "epoch": 2,
+      "batch": 1850,
+      "reflexivity": 0.9999995723754987,
+      "phase_coherence": 0.9999998608459527,
+      "mean_amplitude": 0.500198483467102,
+      "complexity": 16.0,
+      "controller_level": 0.6712931919555247,
+      "controller_phase": "accumulation"
+    },
+    {
+      "epoch": 3,
+      "batch": 0,
+      "reflexivity": 0.9999375563925132,
+      "phase_coherence": 0.9999998608652015,
+      "mean_amplitude": 0.5002676844596863,
+      "complexity": 16.0,
+      "controller_level": 0.6745796355998946,
+      "controller_phase": "accumulation"
+    },
+    {
+      "epoch": 3,
+      "batch": 50,
+      "reflexivity": 0.999983246906232,
+      "phase_coherence": 0.9999997415299238,
+      "mean_amplitude": 0.49990037083625793,
+      "complexity": 16.0,
+      "controller_level": 0.677833671712958,
+      "controller_phase": "accumulation"
+    },
+    {
+      "epoch": 3,
+      "batch": 100,
+      "reflexivity": 0.9999982239919228,
+      "phase_coherence": 0.9999997414609189,
+      "mean_amplitude": 0.4997669458389282,
+      "complexity": 16.0,
+      "controller_level": 0.6810553172357477,
+      "controller_phase": "accumulation"
+    },
+    {
+      "epoch": 3,
+      "batch": 150,
+      "reflexivity": 0.9999983942544395,
+      "phase_coherence": 0.9999999203121694,
+      "mean_amplitude": 0.4994780421257019,
+      "complexity": 16.0,
+      "controller_level": 0.6842447480059347,
+      "controller_phase": "accumulation"
+    },
+    {
+      "epoch": 3,
+      "batch": 200,
+      "reflexivity": 0.9999961355573942,
+      "phase_coherence": 0.9999993230248073,
+      "mean_amplitude": 0.4990220367908478,
+      "complexity": 16.0,
+      "controller_level": 0.6874022618814493,
+      "controller_phase": "accumulation"
+    },
+    {
+      "epoch": 3,
+      "batch": 250,
+      "reflexivity": 0.9999976771627485,
+      "phase_coherence": 0.9999999799429611,
+      "mean_amplitude": 0.4985780715942383,
+      "complexity": 16.0,
+      "controller_level": 0.6905282160342622,
+      "controller_phase": "accumulation"
+    },
+    {
+      "epoch": 3,
+      "batch": 300,
+      "reflexivity": 0.9999980136475081,
+      "phase_coherence": 0.9999997407023881,
+      "mean_amplitude": 0.49830496311187744,
+      "complexity": 16.0,
+      "controller_level": 0.6936229140103947,
+      "controller_phase": "accumulation"
+    },
+    {
+      "epoch": 3,
+      "batch": 350,
+      "reflexivity": 0.999997282503609,
+      "phase_coherence": 0.9999999200886712,
+      "mean_amplitude": 0.4980810880661011,
+      "complexity": 16.0,
+      "controller_level": 0.6966866576953268,
+      "controller_phase": "accumulation"
+    },
+    {
+      "epoch": 3,
+      "batch": 400,
+      "reflexivity": 0.9999984840556196,
+      "phase_coherence": 0.9999998002265216,
+      "mean_amplitude": 0.49759840965270996,
+      "complexity": 16.0,
+      "controller_level": 0.6997197759589298,
+      "controller_phase": "accumulation"
+    },
+    {
+      "epoch": 3,
+      "batch": 450,
+      "reflexivity": 0.9999744441357614,
+      "phase_coherence": 0.9999993809946858,
+      "mean_amplitude": 0.4976099729537964,
+      "complexity": 16.0,
+      "controller_level": 0.7027223226406981,
+      "controller_phase": "accumulation"
+    },
+    {
+      "epoch": 3,
+      "batch": 500,
+      "reflexivity": 0.9999875820363315,
+      "phase_coherence": 0.9999997400240076,
+      "mean_amplitude": 0.4970046877861023,
+      "complexity": 16.0,
+      "controller_level": 0.7056949752346544,
+      "controller_phase": "accumulation"
+    },
+    {
+      "epoch": 3,
+      "batch": 550,
+      "reflexivity": 0.9999980940381139,
+      "phase_coherence": 0.9999997998868959,
+      "mean_amplitude": 0.49675390124320984,
+      "complexity": 16.0,
+      "controller_level": 0.708638006422689,
+      "controller_phase": "accumulation"
+    },
+    {
+      "epoch": 3,
+      "batch": 600,
+      "reflexivity": 0.9999322772301753,
+      "phase_coherence": 0.9999999798610728,
+      "mean_amplitude": 0.4965507686138153,
+      "complexity": 16.0,
+      "controller_level": 0.7115509491307639,
+      "controller_phase": "accumulation"
+    },
+    {
+      "epoch": 3,
+      "batch": 650,
+      "reflexivity": 0.9999971933156406,
+      "phase_coherence": 0.9999997396221535,
+      "mean_amplitude": 0.4962376356124878,
+      "complexity": 16.0,
+      "controller_level": 0.7144354115726126,
+      "controller_phase": "accumulation"
+    },
+    {
+      "epoch": 3,
+      "batch": 700,
+      "reflexivity": 0.9999912495843001,
+      "phase_coherence": 0.9999999798427792,
+      "mean_amplitude": 0.49610012769699097,
+      "complexity": 16.0,
+      "controller_level": 0.7172909699527295,
+      "controller_phase": "accumulation"
+    },
+    {
+      "epoch": 3,
+      "batch": 750,
+      "reflexivity": 0.9999593858171748,
+      "phase_coherence": 1.0000000399314988,
+      "mean_amplitude": 0.4959073066711426,
+      "complexity": 16.0,
+      "controller_level": 0.7201176541113739,
+      "controller_phase": "accumulation"
+    },
+    {
+      "epoch": 3,
+      "batch": 800,
+      "reflexivity": 0.9999995571956475,
+      "phase_coherence": 0.9999999195302498,
+      "mean_amplitude": 0.49462464451789856,
+      "complexity": 16.0,
+      "controller_level": 0.7229164731422166,
+      "controller_phase": "accumulation"
+    },
+    {
+      "epoch": 3,
+      "batch": 850,
+      "reflexivity": 0.9999254162873901,
+      "phase_coherence": 0.9999999797743335,
+      "mean_amplitude": 0.4944212734699249,
+      "complexity": 16.0,
+      "controller_level": 0.7256865625736684,
+      "controller_phase": "accumulation"
+    },
+    {
+      "epoch": 3,
+      "batch": 900,
+      "reflexivity": 0.9999993120016101,
+      "phase_coherence": 0.9999999797465379,
+      "mean_amplitude": 0.4937427341938019,
+      "complexity": 16.0,
+      "controller_level": 0.7284296900679478,
+      "controller_phase": "accumulation"
+    },
+    {
+      "epoch": 3,
+      "batch": 950,
+      "reflexivity": 0.9999999831737924,
+      "phase_coherence": 1.000000040103194,
+      "mean_amplitude": 0.4937841594219208,
+      "complexity": 16.0,
+      "controller_level": 0.7311453929990063,
+      "controller_phase": "accumulation"
+    },
+    {
+      "epoch": 3,
+      "batch": 1000,
+      "reflexivity": 0.9999978148009634,
+      "phase_coherence": 0.9999999192901801,
+      "mean_amplitude": 0.4931533932685852,
+      "complexity": 16.0,
+      "controller_level": 0.7338339172170258,
+      "controller_phase": "accumulation"
+    },
+    {
+      "epoch": 3,
+      "batch": 1050,
+      "reflexivity": 0.9999985225402044,
+      "phase_coherence": 0.9999991327800902,
+      "mean_amplitude": 0.49264609813690186,
+      "complexity": 16.0,
+      "controller_level": 0.7364955632702576,
+      "controller_phase": "accumulation"
+    },
+    {
+      "epoch": 3,
+      "batch": 1100,
+      "reflexivity": 0.999999429569057,
+      "phase_coherence": 0.9999999797043043,
+      "mean_amplitude": 0.4927152991294861,
+      "complexity": 16.0,
+      "controller_level": 0.7391306019332455,
+      "controller_phase": "accumulation"
+    },
+    {
+      "epoch": 3,
+      "batch": 1150,
+      "reflexivity": 0.9999963271182719,
+      "phase_coherence": 0.9999993745263589,
+      "mean_amplitude": 0.49246394634246826,
+      "complexity": 16.0,
+      "controller_level": 0.7417392591850958,
+      "controller_phase": "accumulation"
+    },
+    {
+      "epoch": 3,
+      "batch": 1200,
+      "reflexivity": 0.9999958839044923,
+      "phase_coherence": 0.9999999796874168,
+      "mean_amplitude": 0.4923056662082672,
+      "complexity": 16.0,
+      "controller_level": 0.7443218254322898,
+      "controller_phase": "accumulation"
+    },
+    {
+      "epoch": 3,
+      "batch": 1250,
+      "reflexivity": 0.9999992048962054,
+      "phase_coherence": 1.0000000402290774,
+      "mean_amplitude": 0.4922390282154083,
+      "complexity": 16.0,
+      "controller_level": 0.7468785992269289,
+      "controller_phase": "accumulation"
+    },
+    {
+      "epoch": 3,
+      "batch": 1300,
+      "reflexivity": 0.9999999707270524,
+      "phase_coherence": 1.0000000402297375,
+      "mean_amplitude": 0.49223095178604126,
+      "complexity": 16.0,
+      "controller_level": 0.7494098129419301,
+      "controller_phase": "accumulation"
+    },
+    {
+      "epoch": 3,
+      "batch": 1350,
+      "reflexivity": 0.9999976161868727,
+      "phase_coherence": 0.9999998583062698,
+      "mean_amplitude": 0.49123305082321167,
+      "complexity": 16.0,
+      "controller_level": 0.7519156909743796,
+      "controller_phase": "accumulation"
+    },
+    {
+      "epoch": 3,
+      "batch": 1400,
+      "reflexivity": 0.9999998722109943,
+      "phase_coherence": 0.9999998582630171,
+      "mean_amplitude": 0.49108314514160156,
+      "complexity": 16.0,
+      "controller_level": 0.7543965327867458,
+      "controller_phase": "accumulation"
+    },
+    {
+      "epoch": 3,
+      "batch": 1450,
+      "reflexivity": 0.9999947060981089,
+      "phase_coherence": 0.9999999796142125,
+      "mean_amplitude": 0.4905378222465515,
+      "complexity": 16.0,
+      "controller_level": 0.7568525145198594,
+      "controller_phase": "accumulation"
+    },
+    {
+      "epoch": 3,
+      "batch": 1500,
+      "reflexivity": 0.999999086014594,
+      "phase_coherence": 0.9999999796025166,
+      "mean_amplitude": 0.49025654792785645,
+      "complexity": 16.0,
+      "controller_level": 0.7592839802348067,
+      "controller_phase": "accumulation"
+    },
+    {
+      "epoch": 3,
+      "batch": 1550,
+      "reflexivity": 0.9999989843066799,
+      "phase_coherence": 0.9999999795931458,
+      "mean_amplitude": 0.4900314211845398,
+      "complexity": 16.0,
+      "controller_level": 0.7616911302755255,
+      "controller_phase": "accumulation"
+    },
+    {
+      "epoch": 3,
+      "batch": 1600,
+      "reflexivity": 0.9999943119315267,
+      "phase_coherence": 0.9999999186725429,
+      "mean_amplitude": 0.4894081652164459,
+      "complexity": 16.0,
+      "controller_level": 0.7640741620920856,
+      "controller_phase": "accumulation"
+    },
+    {
+      "epoch": 3,
+      "batch": 1650,
+      "reflexivity": 0.999999352455312,
+      "phase_coherence": 0.9999999186375838,
+      "mean_amplitude": 0.48919788002967834,
+      "complexity": 16.0,
+      "controller_level": 0.7664334139957178,
+      "controller_phase": "accumulation"
+    },
+    {
+      "epoch": 3,
+      "batch": 1700,
+      "reflexivity": 0.9999989852689234,
+      "phase_coherence": 0.9999999795598353,
+      "mean_amplitude": 0.4892328381538391,
+      "complexity": 16.0,
+      "controller_level": 0.7687690697084499,
+      "controller_phase": "accumulation"
+    },
+    {
+      "epoch": 3,
+      "batch": 1750,
+      "reflexivity": 0.9999944663328905,
+      "phase_coherence": 0.9999999186118406,
+      "mean_amplitude": 0.48904314637184143,
+      "complexity": 16.0,
+      "controller_level": 0.7710813236746943,
+      "controller_phase": "accumulation"
+    },
+    {
+      "epoch": 3,
+      "batch": 1800,
+      "reflexivity": 0.9999987730635941,
+      "phase_coherence": 0.999999857585959,
+      "mean_amplitude": 0.4887484610080719,
+      "complexity": 16.0,
+      "controller_level": 0.7733704981685833,
+      "controller_phase": "accumulation"
+    },
+    {
+      "epoch": 3,
+      "batch": 1850,
+      "reflexivity": 0.9999948250451282,
+      "phase_coherence": 1.0000001015540747,
+      "mean_amplitude": 0.48845547437667847,
+      "complexity": 16.0,
+      "controller_level": 0.7756367414373487,
+      "controller_phase": "accumulation"
+    },
+    {
+      "epoch": 4,
+      "batch": 0,
+      "reflexivity": 0.9999650614611004,
+      "phase_coherence": 0.9999999795197454,
+      "mean_amplitude": 0.4882751703262329,
+      "complexity": 16.0,
+      "controller_level": 0.7778800246375863,
+      "controller_phase": "accumulation"
+    },
+    {
+      "epoch": 4,
+      "batch": 50,
+      "reflexivity": 0.9999998208110733,
+      "phase_coherence": 0.9999999795124677,
+      "mean_amplitude": 0.4881017208099365,
+      "complexity": 16.0,
+      "controller_level": 0.7801012225993211,
+      "controller_phase": "accumulation"
+    },
+    {
+      "epoch": 4,
+      "batch": 100,
+      "reflexivity": 0.9999999984228238,
+      "phase_coherence": 1.0000000405703073,
+      "mean_amplitude": 0.4880988895893097,
+      "complexity": 16.0,
+      "controller_level": 0.7823002103575563,
+      "controller_phase": "accumulation"
+    },
+    {
+      "epoch": 4,
+      "batch": 150,
+      "reflexivity": 0.9999999611914505,
+      "phase_coherence": 0.9999999795106387,
+      "mean_amplitude": 0.4880581498146057,
+      "complexity": 16.0,
+      "controller_level": 0.7844772078658953,
+      "controller_phase": "accumulation"
+    },
+    {
+      "epoch": 4,
+      "batch": 200,
+      "reflexivity": 0.999999975381798,
+      "phase_coherence": 0.9999999795124839,
+      "mean_amplitude": 0.48810210824012756,
+      "complexity": 16.0,
+      "controller_level": 0.7866324355410542,
+      "controller_phase": "accumulation"
+    },
+    {
+      "epoch": 4,
+      "batch": 250,
+      "reflexivity": 0.9999999884033254,
+      "phase_coherence": 0.999999979511657,
+      "mean_amplitude": 0.4880824089050293,
+      "complexity": 16.0,
+      "controller_level": 0.7887661110696769,
+      "controller_phase": "accumulation"
+    },
+    {
+      "epoch": 4,
+      "batch": 300,
+      "reflexivity": 0.9999998854690009,
+      "phase_coherence": 0.9999998573885688,
+      "mean_amplitude": 0.4880719780921936,
+      "complexity": 16.0,
+      "controller_level": 0.7908784488136701,
+      "controller_phase": "accumulation"
+    },
+    {
+      "epoch": 4,
+      "batch": 350,
+      "reflexivity": 0.9999999231576228,
+      "phase_coherence": 0.9999999184496848,
+      "mean_amplitude": 0.4880707263946533,
+      "complexity": 16.0,
+      "controller_level": 0.7929696635571096,
+      "controller_phase": "accumulation"
+    },
+    {
+      "epoch": 4,
+      "batch": 400,
+      "reflexivity": 0.9999998725457593,
+      "phase_coherence": 0.999999918441109,
+      "mean_amplitude": 0.4880194067955017,
+      "complexity": 16.0,
+      "controller_level": 0.7950399656469962,
+      "controller_phase": "accumulation"
+    },
+    {
+      "epoch": 4,
+      "batch": 450,
+      "reflexivity": 0.9999999231355533,
+      "phase_coherence": 1.0000000405738303,
+      "mean_amplitude": 0.4880565106868744,
+      "complexity": 16.0,
+      "controller_level": 0.7970895652218818,
+      "controller_phase": "accumulation"
+    },
+    {
+      "epoch": 4,
+      "batch": 500,
+      "reflexivity": 0.9999999812466956,
+      "phase_coherence": 0.9999999184488731,
+      "mean_amplitude": 0.4880658686161041,
+      "complexity": 16.0,
+      "controller_level": 0.7991186693821299,
+      "controller_phase": "accumulation"
+    },
+    {
+      "epoch": 4,
+      "batch": 550,
+      "reflexivity": 0.9999999806562133,
+      "phase_coherence": 1.0000000405728318,
+      "mean_amplitude": 0.48806852102279663,
+      "complexity": 16.0,
+      "controller_level": 0.8011274824948709,
+      "controller_phase": "convergence"
+    },
+    {
+      "epoch": 4,
+      "batch": 600,
+      "reflexivity": 0.9999999879809806,
+      "phase_coherence": 0.9999999795110815,
+      "mean_amplitude": 0.48806869983673096,
+      "complexity": 16.0,
+      "controller_level": 0.803116207549732,
+      "controller_phase": "convergence"
+    },
+    {
+      "epoch": 4,
+      "batch": 650,
+      "reflexivity": 0.9999999603276224,
+      "phase_coherence": 0.9999999795105636,
+      "mean_amplitude": 0.48805636167526245,
+      "complexity": 16.0,
+      "controller_level": 0.8050850450775109,
+      "controller_phase": "convergence"
+    },
+    {
+      "epoch": 4,
+      "batch": 700,
+      "reflexivity": 0.9999998938355545,
+      "phase_coherence": 0.9999999795107712,
+      "mean_amplitude": 0.4880613088607788,
+      "complexity": 16.0,
+      "controller_level": 0.8070341935650913,
+      "controller_phase": "convergence"
+    },
+    {
+      "epoch": 4,
+      "batch": 750,
+      "reflexivity": 0.9999999153576767,
+      "phase_coherence": 0.9999999795104435,
+      "mean_amplitude": 0.48805350065231323,
+      "complexity": 16.0,
+      "controller_level": 0.8089638507830171,
+      "controller_phase": "convergence"
+    },
+    {
+      "epoch": 4,
+      "batch": 800,
+      "reflexivity": 0.999999954477817,
+      "phase_coherence": 0.999999979509863,
+      "mean_amplitude": 0.48803967237472534,
+      "complexity": 16.0,
+      "controller_level": 0.8108742118199651,
+      "controller_phase": "convergence"
+    },
+    {
+      "epoch": 4,
+      "batch": 850,
+      "reflexivity": 0.9999999172693845,
+      "phase_coherence": 0.999999979509873,
+      "mean_amplitude": 0.48803991079330444,
+      "complexity": 16.0,
+      "controller_level": 0.8127654688744593,
+      "controller_phase": "convergence"
+    },
+    {
+      "epoch": 4,
+      "batch": 900,
+      "reflexivity": 0.9999999911843106,
+      "phase_coherence": 0.9999999795102408,
+      "mean_amplitude": 0.4880486726760864,
+      "complexity": 16.0,
+      "controller_level": 0.8146378140975579,
+      "controller_phase": "convergence"
+    },
+    {
+      "epoch": 4,
+      "batch": 950,
+      "reflexivity": 0.9999999746256971,
+      "phase_coherence": 0.9999999184467766,
+      "mean_amplitude": 0.4880533218383789,
+      "complexity": 16.0,
+      "controller_level": 0.8164914357028392,
+      "controller_phase": "convergence"
+    },
+    {
+      "epoch": 4,
+      "batch": 1000,
+      "reflexivity": 0.9999998574110752,
+      "phase_coherence": 0.9999999184301054,
+      "mean_amplitude": 0.4879535734653473,
+      "complexity": 16.0,
+      "controller_level": 0.8183265199199216,
+      "controller_phase": "convergence"
+    },
+    {
+      "epoch": 4,
+      "batch": 1050,
+      "reflexivity": 0.9999999885143139,
+      "phase_coherence": 0.999999918443679,
+      "mean_amplitude": 0.48803478479385376,
+      "complexity": 16.0,
+      "controller_level": 0.8201432546058655,
+      "controller_phase": "convergence"
+    },
+    {
+      "epoch": 4,
+      "batch": 1100,
+      "reflexivity": 0.9999999971828875,
+      "phase_coherence": 0.9999999795099255,
+      "mean_amplitude": 0.4880411624908447,
+      "complexity": 16.0,
+      "controller_level": 0.8219418220316357,
+      "controller_phase": "convergence"
+    },
+    {
+      "epoch": 4,
+      "batch": 1150,
+      "reflexivity": 0.9999999965383832,
+      "phase_coherence": 0.9999999795100231,
+      "mean_amplitude": 0.48804348707199097,
+      "complexity": 16.0,
+      "controller_level": 0.8237224037767031,
+      "controller_phase": "convergence"
+    },
+    {
+      "epoch": 4,
+      "batch": 1200,
+      "reflexivity": 0.9999999861795248,
+      "phase_coherence": 0.9999999184440177,
+      "mean_amplitude": 0.4880368113517761,
+      "complexity": 16.0,
+      "controller_level": 0.8254851796007313,
+      "controller_phase": "convergence"
+    },
+    {
+      "epoch": 4,
+      "batch": 1250,
+      "reflexivity": 0.9999999196067144,
+      "phase_coherence": 0.9999999184395352,
+      "mean_amplitude": 0.4880099892616272,
+      "complexity": 16.0,
+      "controller_level": 0.8272303270007912,
+      "controller_phase": "convergence"
+    },
+    {
+      "epoch": 4,
+      "batch": 1300,
+      "reflexivity": 0.9999999737972309,
+      "phase_coherence": 0.9999999795085215,
+      "mean_amplitude": 0.48800772428512573,
+      "complexity": 16.0,
+      "controller_level": 0.8289580234687556,
+      "controller_phase": "convergence"
+    },
+    {
+      "epoch": 4,
+      "batch": 1350,
+      "reflexivity": 0.9999999934846047,
+      "phase_coherence": 1.0000000405768754,
+      "mean_amplitude": 0.4880198836326599,
+      "complexity": 16.0,
+      "controller_level": 0.8306684431689141,
+      "controller_phase": "convergence"
+    },
+    {
+      "epoch": 4,
+      "batch": 1400,
+      "reflexivity": 0.9999999892510695,
+      "phase_coherence": 0.9999999795088593,
+      "mean_amplitude": 0.4880157709121704,
+      "complexity": 16.0,
+      "controller_level": 0.8323617586297356,
+      "controller_phase": "convergence"
+    },
+    {
+      "epoch": 4,
+      "batch": 1450,
+      "reflexivity": 0.9999862384067728,
+      "phase_coherence": 0.999999979512604,
+      "mean_amplitude": 0.4881049692630768,
+      "complexity": 16.0,
+      "controller_level": 0.8340380034275059,
+      "controller_phase": "convergence"
+    },
+    {
+      "epoch": 4,
+      "batch": 1500,
+      "reflexivity": 0.9999995870174416,
+      "phase_coherence": 0.9999999794996728,
+      "mean_amplitude": 0.4877970814704895,
+      "complexity": 16.0,
+      "controller_level": 0.8356976192634052,
+      "controller_phase": "convergence"
+    },
+    {
+      "epoch": 4,
+      "batch": 1550,
+      "reflexivity": 0.9999976569925239,
+      "phase_coherence": 1.0000000406058334,
+      "mean_amplitude": 0.4876718521118164,
+      "complexity": 16.0,
+      "controller_level": 0.8373406196406964,
+      "controller_phase": "convergence"
+    },
+    {
+      "epoch": 4,
+      "batch": 1600,
+      "reflexivity": 0.9999998778009606,
+      "phase_coherence": 0.9999999794849631,
+      "mean_amplitude": 0.4874473214149475,
+      "complexity": 16.0,
+      "controller_level": 0.8389672122222991,
+      "controller_phase": "convergence"
+    },
+    {
+      "epoch": 4,
+      "batch": 1650,
+      "reflexivity": 0.9999980365807811,
+      "phase_coherence": 0.9999999183296598,
+      "mean_amplitude": 0.48735344409942627,
+      "complexity": 16.0,
+      "controller_level": 0.840577520465884,
+      "controller_phase": "convergence"
+    },
+    {
+      "epoch": 4,
+      "batch": 1700,
+      "reflexivity": 0.9999927004010596,
+      "phase_coherence": 0.9999999794737927,
+      "mean_amplitude": 0.48718205094337463,
+      "complexity": 16.0,
+      "controller_level": 0.8421716722652358,
+      "controller_phase": "convergence"
+    },
+    {
+      "epoch": 4,
+      "batch": 1750,
+      "reflexivity": 0.9999987585604864,
+      "phase_coherence": 0.9999999794671682,
+      "mean_amplitude": 0.48702487349510193,
+      "complexity": 16.0,
+      "controller_level": 0.8437499431281883,
+      "controller_phase": "convergence"
+    },
+    {
+      "epoch": 4,
+      "batch": 1800,
+      "reflexivity": 0.9999942412718731,
+      "phase_coherence": 0.9999999794587855,
+      "mean_amplitude": 0.4868261218070984,
+      "complexity": 16.0,
+      "controller_level": 0.8453123861096251,
+      "controller_phase": "convergence"
+    },
+    {
+      "epoch": 4,
+      "batch": 1850,
+      "reflexivity": 0.9999974947355903,
+      "phase_coherence": 0.9999999794561821,
+      "mean_amplitude": 0.48676443099975586,
+      "complexity": 16.0,
+      "controller_level": 0.8468592371958847,
+      "controller_phase": "convergence"
+    },
+    {
+      "epoch": 5,
+      "batch": 0,
+      "reflexivity": 0.9999949380432311,
+      "phase_coherence": 0.9999998569845411,
+      "mean_amplitude": 0.4866931438446045,
+      "complexity": 16.0,
+      "controller_level": 0.8483905942043583,
+      "controller_phase": "convergence"
+    },
+    {
+      "epoch": 5,
+      "batch": 50,
+      "reflexivity": 0.9999982332926101,
+      "phase_coherence": 0.9999999181960452,
+      "mean_amplitude": 0.4865574240684509,
+      "complexity": 16.0,
+      "controller_level": 0.8499066705952407,
+      "controller_phase": "convergence"
+    },
+    {
+      "epoch": 5,
+      "batch": 100,
+      "reflexivity": 0.9999998257715693,
+      "phase_coherence": 0.999999918171556,
+      "mean_amplitude": 0.48641180992126465,
+      "complexity": 16.0,
+      "controller_level": 0.851407602147004,
+      "controller_phase": "convergence"
+    },
+    {
+      "epoch": 5,
+      "batch": 150,
+      "reflexivity": 0.9999992264179995,
+      "phase_coherence": 0.9999999181453766,
+      "mean_amplitude": 0.4862562417984009,
+      "complexity": 16.0,
+      "controller_level": 0.852893518389714,
+      "controller_phase": "convergence"
+    },
+    {
+      "epoch": 5,
+      "batch": 200,
+      "reflexivity": 0.9999831227443721,
+      "phase_coherence": 1.000000040730168,
+      "mean_amplitude": 0.48618316650390625,
+      "complexity": 16.0,
+      "controller_level": 0.8543644144332605,
+      "controller_phase": "convergence"
+    },
+    {
+      "epoch": 5,
+      "batch": 250,
+      "reflexivity": 0.9999996301488014,
+      "phase_coherence": 0.9999999794239874,
+      "mean_amplitude": 0.4860028028488159,
+      "complexity": 16.0,
+      "controller_level": 0.855820766590416,
+      "controller_phase": "convergence"
+    },
+    {
+      "epoch": 5,
+      "batch": 300,
+      "reflexivity": 0.9999986302696587,
+      "phase_coherence": 0.9999999794172576,
+      "mean_amplitude": 0.4858438968658447,
+      "complexity": 16.0,
+      "controller_level": 0.8572625452272084,
+      "controller_phase": "convergence"
+    },
+    {
+      "epoch": 5,
+      "batch": 350,
+      "reflexivity": 0.9999994838720275,
+      "phase_coherence": 1.0000001021253464,
+      "mean_amplitude": 0.4857231378555298,
+      "complexity": 16.0,
+      "controller_level": 0.8586899146136565,
+      "controller_phase": "convergence"
+    },
+    {
+      "epoch": 5,
+      "batch": 400,
+      "reflexivity": 0.9999993638733212,
+      "phase_coherence": 0.9999999794050007,
+      "mean_amplitude": 0.4855547547340393,
+      "complexity": 16.0,
+      "controller_level": 0.8601030091062533,
+      "controller_phase": "convergence"
+    },
+    {
+      "epoch": 5,
+      "batch": 450,
+      "reflexivity": 0.999999719512339,
+      "phase_coherence": 0.9999999793948756,
+      "mean_amplitude": 0.4853161573410034,
+      "complexity": 16.0,
+      "controller_level": 0.8615019762103141,
+      "controller_phase": "convergence"
+    },
+    {
+      "epoch": 5,
+      "batch": 500,
+      "reflexivity": 0.999989548780012,
+      "phase_coherence": 0.9999999793954703,
+      "mean_amplitude": 0.48533016443252563,
+      "complexity": 16.0,
+      "controller_level": 0.8628868519360111,
+      "controller_phase": "convergence"
+    },
+    {
+      "epoch": 5,
+      "batch": 550,
+      "reflexivity": 0.9999900889270115,
+      "phase_coherence": 0.9999999793849494,
+      "mean_amplitude": 0.4850824773311615,
+      "complexity": 16.0,
+      "controller_level": 0.8642578843059212,
+      "controller_phase": "convergence"
+    },
+    {
+      "epoch": 5,
+      "batch": 600,
+      "reflexivity": 0.9999977868441288,
+      "phase_coherence": 0.9999999793824806,
+      "mean_amplitude": 0.4850243926048279,
+      "complexity": 16.0,
+      "controller_level": 0.8656152833313033,
+      "controller_phase": "convergence"
+    },
+    {
+      "epoch": 5,
+      "batch": 650,
+      "reflexivity": 0.9999987928650645,
+      "phase_coherence": 0.9999999793674957,
+      "mean_amplitude": 0.4846721291542053,
+      "complexity": 16.0,
+      "controller_level": 0.866959118426641,
+      "controller_phase": "convergence"
+    },
+    {
+      "epoch": 5,
+      "batch": 700,
+      "reflexivity": 0.9999955031378105,
+      "phase_coherence": 0.9999999793671785,
+      "mean_amplitude": 0.4846646785736084,
+      "complexity": 16.0,
+      "controller_level": 0.8682894822737526,
+      "controller_phase": "convergence"
+    },
+    {
+      "epoch": 5,
+      "batch": 750,
+      "reflexivity": 0.9999993125304237,
+      "phase_coherence": 0.9999997948014524,
+      "mean_amplitude": 0.4844428300857544,
+      "complexity": 16.0,
+      "controller_level": 0.8696065805763192,
+      "controller_phase": "convergence"
+    },
+    {
+      "epoch": 5,
+      "batch": 800,
+      "reflexivity": 0.999998811793423,
+      "phase_coherence": 0.9999999793539474,
+      "mean_amplitude": 0.48435407876968384,
+      "complexity": 16.0,
+      "controller_level": 0.8709105028884903,
+      "controller_phase": "convergence"
+    },
+    {
+      "epoch": 5,
+      "batch": 850,
+      "reflexivity": 0.9999944642365284,
+      "phase_coherence": 0.9999999793450766,
+      "mean_amplitude": 0.4841460585594177,
+      "complexity": 16.0,
+      "controller_level": 0.8722013425019707,
+      "controller_phase": "convergence"
+    },
+    {
+      "epoch": 5,
+      "batch": 900,
+      "reflexivity": 0.9999999164606733,
+      "phase_coherence": 0.9999999793381983,
+      "mean_amplitude": 0.48398488759994507,
+      "complexity": 16.0,
+      "controller_level": 0.8734793282415577,
+      "controller_phase": "convergence"
+    },
+    {
+      "epoch": 5,
+      "batch": 950,
+      "reflexivity": 0.9999935892394095,
+      "phase_coherence": 0.9999999793290694,
+      "mean_amplitude": 0.4837711453437805,
+      "complexity": 16.0,
+      "controller_level": 0.8747444708515363,
+      "controller_phase": "convergence"
+    },
+    {
+      "epoch": 5,
+      "batch": 1000,
+      "reflexivity": 0.9999937836555443,
+      "phase_coherence": 0.9999999177050779,
+      "mean_amplitude": 0.483654648065567,
+      "complexity": 16.0,
+      "controller_level": 0.8759969639795764,
+      "controller_phase": "convergence"
+    },
+    {
+      "epoch": 5,
+      "batch": 1050,
+      "reflexivity": 0.9999809472275404,
+      "phase_coherence": 0.9999999793160048,
+      "mean_amplitude": 0.4834655821323395,
+      "complexity": 16.0,
+      "controller_level": 0.877236803812056,
+      "controller_phase": "convergence"
+    },
+    {
+      "epoch": 5,
+      "batch": 1100,
+      "reflexivity": 0.9999998942215568,
+      "phase_coherence": 0.9999999176479244,
+      "mean_amplitude": 0.4833189845085144,
+      "complexity": 16.0,
+      "controller_level": 0.8784644347161511,
+      "controller_phase": "convergence"
+    },
+    {
+      "epoch": 5,
+      "batch": 1150,
+      "reflexivity": 0.9999978503847894,
+      "phase_coherence": 0.9999999793103944,
+      "mean_amplitude": 0.483334481716156,
+      "complexity": 16.0,
+      "controller_level": 0.8796797688728375,
+      "controller_phase": "convergence"
+    },
+    {
+      "epoch": 5,
+      "batch": 1200,
+      "reflexivity": 0.9999997993669018,
+      "phase_coherence": 0.999999979304693,
+      "mean_amplitude": 0.4832013249397278,
+      "complexity": 16.0,
+      "controller_level": 0.8808829691777781,
+      "controller_phase": "convergence"
+    },
+    {
+      "epoch": 5,
+      "batch": 1250,
+      "reflexivity": 0.9999971557644083,
+      "phase_coherence": 0.9999999176124903,
+      "mean_amplitude": 0.48311111330986023,
+      "complexity": 16.0,
+      "controller_level": 0.8820741110436444,
+      "controller_phase": "convergence"
+    },
+    {
+      "epoch": 5,
+      "batch": 1300,
+      "reflexivity": 0.9999995160244521,
+      "phase_coherence": 0.9999999175557169,
+      "mean_amplitude": 0.4827784299850464,
+      "complexity": 16.0,
+      "controller_level": 0.8832533650934525,
+      "controller_phase": "convergence"
+    },
+    {
+      "epoch": 5,
+      "batch": 1350,
+      "reflexivity": 0.9999990665887895,
+      "phase_coherence": 0.9999999792841144,
+      "mean_amplitude": 0.48272132873535156,
+      "complexity": 16.0,
+      "controller_level": 0.8844208221084059,
+      "controller_phase": "convergence"
+    },
+    {
+      "epoch": 5,
+      "batch": 1400,
+      "reflexivity": 0.9999985662478914,
+      "phase_coherence": 0.999999979269542,
+      "mean_amplitude": 0.48238199949264526,
+      "complexity": 16.0,
+      "controller_level": 0.8855765995498007,
+      "controller_phase": "convergence"
+    },
+    {
+      "epoch": 5,
+      "batch": 1450,
+      "reflexivity": 0.9999934064897397,
+      "phase_coherence": 0.9999999792686634,
+      "mean_amplitude": 0.4823615550994873,
+      "complexity": 16.0,
+      "controller_level": 0.8867207676192002,
+      "controller_phase": "convergence"
+    },
+    {
+      "epoch": 5,
+      "batch": 1500,
+      "reflexivity": 0.9999976990444077,
+      "phase_coherence": 0.9999999792600716,
+      "mean_amplitude": 0.4821617305278778,
+      "complexity": 16.0,
+      "controller_level": 0.8878535369334523,
+      "controller_phase": "convergence"
+    },
+    {
+      "epoch": 5,
+      "batch": 1550,
+      "reflexivity": 0.9999945782277073,
+      "phase_coherence": 1.0000000410771541,
+      "mean_amplitude": 0.4820762872695923,
+      "complexity": 16.0,
+      "controller_level": 0.8889749473463947,
+      "controller_phase": "convergence"
+    },
+    {
+      "epoch": 5,
+      "batch": 1600,
+      "reflexivity": 0.9999998908093465,
+      "phase_coherence": 0.9999999792478552,
+      "mean_amplitude": 0.4818778932094574,
+      "complexity": 16.0,
+      "controller_level": 0.8900851967810242,
+      "controller_phase": "convergence"
+    },
+    {
+      "epoch": 5,
+      "batch": 1650,
+      "reflexivity": 0.9999997630584965,
+      "phase_coherence": 0.9999999792349101,
+      "mean_amplitude": 0.48157748579978943,
+      "complexity": 16.0,
+      "controller_level": 0.891184342443799,
+      "controller_phase": "convergence"
+    },
+    {
+      "epoch": 5,
+      "batch": 1700,
+      "reflexivity": 0.9999981152964489,
+      "phase_coherence": 1.000000041132415,
+      "mean_amplitude": 0.4814286231994629,
+      "complexity": 16.0,
+      "controller_level": 0.8922724801723255,
+      "controller_phase": "convergence"
+    },
+    {
+      "epoch": 5,
+      "batch": 1750,
+      "reflexivity": 0.9999998576621099,
+      "phase_coherence": 0.9999999792182953,
+      "mean_amplitude": 0.4811924695968628,
+      "complexity": 16.0,
+      "controller_level": 0.8933497539472234,
+      "controller_phase": "convergence"
+    },
+    {
+      "epoch": 5,
+      "batch": 1800,
+      "reflexivity": 0.9999966076467475,
+      "phase_coherence": 1.0000000411601295,
+      "mean_amplitude": 0.48110446333885193,
+      "complexity": 16.0,
+      "controller_level": 0.8944162224842186,
+      "controller_phase": "convergence"
+    },
+    {
+      "epoch": 5,
+      "batch": 1850,
+      "reflexivity": 0.9999983945616203,
+      "phase_coherence": 0.999999979206973,
+      "mean_amplitude": 0.4809304475784302,
+      "complexity": 16.0,
+      "controller_level": 0.8954720442049926,
+      "controller_phase": "convergence"
+    }
+  ],
+  "batch_losses": [
+    {
+      "epoch": 1,
+      "batch": 0,
+      "total": 2.349153757095337,
+      "classification": 2.3422939777374268,
+      "consciousness": 0.038689471781253815,
+      "zero_loss": 3.063230906263925e-06,
+      "phase_coherence": 0.0005080946139059961,
+      "topological": 0.002482605865225196
+    },
+    {
+      "epoch": 1,
+      "batch": 50,
+      "total": 0.4034873843193054,
+      "classification": 0.42358824610710144,
+      "consciousness": -0.3256184160709381,
+      "zero_loss": -0.001953151309862733,
+      "phase_coherence": 0.010116147808730602,
+      "topological": 0.0023643237072974443
+    },
+    {
+      "epoch": 1,
+      "batch": 100,
+      "total": 0.5375972986221313,
+      "classification": 0.5569499731063843,
+      "consciousness": -0.3268252909183502,
+      "zero_loss": -0.00507274828851223,
+      "phase_coherence": 0.010962671600282192,
+      "topological": 0.00241794902831316
+    },
+    {
+      "epoch": 1,
+      "batch": 150,
+      "total": 0.165021613240242,
+      "classification": 0.18297263979911804,
+      "consciousness": -0.3272542655467987,
+      "zero_loss": -0.00955211091786623,
+      "phase_coherence": 0.012465055100619793,
+      "topological": 0.0024048518389463425
+    },
+    {
+      "epoch": 1,
+      "batch": 200,
+      "total": 0.10849541425704956,
+      "classification": 0.12729260325431824,
+      "consciousness": -0.32741767168045044,
+      "zero_loss": -0.01087926235049963,
+      "phase_coherence": 0.011633091606199741,
+      "topological": 0.002420287113636732
+    },
+    {
+      "epoch": 1,
+      "batch": 250,
+      "total": 0.15213502943515778,
+      "classification": 0.17023426294326782,
+      "consciousness": -0.327523410320282,
+      "zero_loss": -0.012514022178947926,
+      "phase_coherence": 0.012383290566504002,
+      "topological": 0.0023949453607201576
+    },
+    {
+      "epoch": 1,
+      "batch": 300,
+      "total": 0.2848656177520752,
+      "classification": 0.30396509170532227,
+      "consciousness": -0.3276273310184479,
+      "zero_loss": -0.015013855881989002,
+      "phase_coherence": 0.011391621083021164,
+      "topological": 0.0024217988830059767
+    },
+    {
+      "epoch": 1,
+      "batch": 350,
+      "total": 0.10817546397447586,
+      "classification": 0.12784788012504578,
+      "consciousness": -0.3276709020137787,
+      "zero_loss": -0.014765575528144836,
+      "phase_coherence": 0.010825369507074356,
+      "topological": 0.002416958101093769
+    },
+    {
+      "epoch": 1,
+      "batch": 400,
+      "total": -0.015516059473156929,
+      "classification": 0.004731311462819576,
+      "consciousness": -0.3276853859424591,
+      "zero_loss": -0.016207467764616013,
+      "phase_coherence": 0.010271194390952587,
+      "topological": 0.002412049099802971
+    },
+    {
+      "epoch": 1,
+      "batch": 450,
+      "total": 0.047102995216846466,
+      "classification": 0.06621518731117249,
+      "consciousness": -0.3276955485343933,
+      "zero_loss": -0.01831105537712574,
+      "phase_coherence": 0.011435090564191341,
+      "topological": 0.002405381528660655
+    },
+    {
+      "epoch": 1,
+      "batch": 500,
+      "total": 0.14286968111991882,
+      "classification": 0.16348478198051453,
+      "consciousness": -0.32768771052360535,
+      "zero_loss": -0.017820555716753006,
+      "phase_coherence": 0.00991313811391592,
+      "topological": 0.0024187390226870775
+    },
+    {
+      "epoch": 1,
+      "batch": 550,
+      "total": 0.2905057370662689,
+      "classification": 0.3106616735458374,
+      "consciousness": -0.3277057111263275,
+      "zero_loss": -0.019412366673350334,
+      "phase_coherence": 0.010391860269010067,
+      "topological": 0.0024169122334569693
+    },
+    {
+      "epoch": 1,
+      "batch": 600,
+      "total": -0.013224679976701736,
+      "classification": 0.006366061978042126,
+      "consciousness": -0.3277049958705902,
+      "zero_loss": -0.021121129393577576,
+      "phase_coherence": 0.010971262119710445,
+      "topological": 0.0024197064340114594
+    },
+    {
+      "epoch": 1,
+      "batch": 650,
+      "total": 0.08156432956457138,
+      "classification": 0.10236003994941711,
+      "consciousness": -0.32771608233451843,
+      "zero_loss": -0.020852386951446533,
+      "phase_coherence": 0.009764976799488068,
+      "topological": 0.002419447060674429
+    },
+    {
+      "epoch": 1,
+      "batch": 700,
+      "total": 0.120679572224617,
+      "classification": 0.14192745089530945,
+      "consciousness": -0.3277014195919037,
+      "zero_loss": -0.01859099790453911,
+      "phase_coherence": 0.009292719885706902,
+      "topological": 0.0024154470302164555
+    },
+    {
+      "epoch": 1,
+      "batch": 750,
+      "total": 0.07906641066074371,
+      "classification": 0.09919235110282898,
+      "consciousness": -0.32770174741744995,
+      "zero_loss": -0.020420830696821213,
+      "phase_coherence": 0.010431978851556778,
+      "topological": 0.00241646496579051
+    },
+    {
+      "epoch": 1,
+      "batch": 800,
+      "total": 0.18172197043895721,
+      "classification": 0.20340341329574585,
+      "consciousness": -0.32770371437072754,
+      "zero_loss": -0.018607718870043755,
+      "phase_coherence": 0.008847265504300594,
+      "topological": 0.002427727449685335
+    },
+    {
+      "epoch": 1,
+      "batch": 850,
+      "total": 0.01869962178170681,
+      "classification": 0.03873228281736374,
+      "consciousness": -0.32772040367126465,
+      "zero_loss": -0.025568973273038864,
+      "phase_coherence": 0.01058106403797865,
+      "topological": 0.0024140067398548126
+    },
+    {
+      "epoch": 1,
+      "batch": 900,
+      "total": 0.17070604860782623,
+      "classification": 0.1914667785167694,
+      "consciousness": -0.32771116495132446,
+      "zero_loss": -0.021970663219690323,
+      "phase_coherence": 0.009819491766393185,
+      "topological": 0.0024105950724333525
+    },
+    {
+      "epoch": 1,
+      "batch": 950,
+      "total": -0.01596677489578724,
+      "classification": 0.004459792282432318,
+      "consciousness": -0.3277184069156647,
+      "zero_loss": -0.025433678179979324,
+      "phase_coherence": 0.010176172479987144,
+      "topological": 0.0024234370794147253
+    },
+    {
+      "epoch": 1,
+      "batch": 1000,
+      "total": 0.0677744522690773,
+      "classification": 0.08891124278306961,
+      "consciousness": -0.3277217149734497,
+      "zero_loss": -0.024182487279176712,
+      "phase_coherence": 0.00945291668176651,
+      "topological": 0.0024242918007075787
+    },
+    {
+      "epoch": 1,
+      "batch": 1050,
+      "total": 0.14523611962795258,
+      "classification": 0.16500712931156158,
+      "consciousness": -0.3277156352996826,
+      "zero_loss": -0.027098210528492928,
+      "phase_coherence": 0.0108516039326787,
+      "topological": 0.002419939497485757
+    },
+    {
+      "epoch": 1,
+      "batch": 1100,
+      "total": -0.011291570961475372,
+      "classification": 0.009552408009767532,
+      "consciousness": -0.3277210593223572,
+      "zero_loss": -0.02669861726462841,
+      "phase_coherence": 0.009772418066859245,
+      "topological": 0.0024226936511695385
+    },
+    {
+      "epoch": 1,
+      "batch": 1150,
+      "total": -0.005427266471087933,
+      "classification": 0.014625074341893196,
+      "consciousness": -0.32772335410118103,
+      "zero_loss": -0.02977784350514412,
+      "phase_coherence": 0.010592673905193806,
+      "topological": 0.0024251004215329885
+    },
+    {
+      "epoch": 1,
+      "batch": 1200,
+      "total": 0.07242364436388016,
+      "classification": 0.09376472234725952,
+      "consciousness": -0.32772400975227356,
+      "zero_loss": -0.026504114270210266,
+      "phase_coherence": 0.009279996156692505,
+      "topological": 0.002416362287476659
+    },
+    {
+      "epoch": 1,
+      "batch": 1250,
+      "total": -0.00738591980189085,
+      "classification": 0.014559979550540447,
+      "consciousness": -0.32772427797317505,
+      "zero_loss": -0.024816717952489853,
+      "phase_coherence": 0.008660540916025639,
+      "topological": 0.0024141555186361074
+    },
+    {
+      "epoch": 1,
+      "batch": 1300,
+      "total": -0.012380301021039486,
+      "classification": 0.009676114656031132,
+      "consciousness": -0.32772254943847656,
+      "zero_loss": -0.02599589340388775,
+      "phase_coherence": 0.008552313782274723,
+      "topological": 0.0024234838783740997
+    },
+    {
+      "epoch": 1,
+      "batch": 1350,
+      "total": 0.153945654630661,
+      "classification": 0.17597007751464844,
+      "consciousness": -0.3277231752872467,
+      "zero_loss": -0.028303852304816246,
+      "phase_coherence": 0.008620504289865494,
+      "topological": 0.002410430693998933
+    },
+    {
+      "epoch": 1,
+      "batch": 1400,
+      "total": -0.008486403152346611,
+      "classification": 0.012437217868864536,
+      "consciousness": -0.3277234435081482,
+      "zero_loss": -0.0304306298494339,
+      "phase_coherence": 0.009739425033330917,
+      "topological": 0.002413604175671935
+    },
+    {
+      "epoch": 1,
+      "batch": 1450,
+      "total": 0.11684286594390869,
+      "classification": 0.13799212872982025,
+      "consciousness": -0.327722430229187,
+      "zero_loss": -0.03202228248119354,
+      "phase_coherence": 0.009535592049360275,
+      "topological": 0.002407614141702652
+    },
+    {
+      "epoch": 1,
+      "batch": 1500,
+      "total": 0.024689247831702232,
+      "classification": 0.04493801295757294,
+      "consciousness": -0.32772117853164673,
+      "zero_loss": -0.033845435827970505,
+      "phase_coherence": 0.010450170375406742,
+      "topological": 0.002411640016362071
+    },
+    {
+      "epoch": 1,
+      "batch": 1550,
+      "total": -0.012092682532966137,
+      "classification": 0.00928608700633049,
+      "consciousness": -0.32772213220596313,
+      "zero_loss": -0.029600568115711212,
+      "phase_coherence": 0.009265721775591373,
+      "topological": 0.002423727884888649
+    },
+    {
+      "epoch": 1,
+      "batch": 1600,
+      "total": 0.1575925052165985,
+      "classification": 0.17832255363464355,
+      "consciousness": -0.32764920592308044,
+      "zero_loss": -0.03298431262373924,
+      "phase_coherence": 0.009941586293280125,
+      "topological": 0.0024231267161667347
+    },
+    {
+      "epoch": 1,
+      "batch": 1650,
+      "total": 0.01587042771279812,
+      "classification": 0.0364873968064785,
+      "consciousness": -0.3277248442173004,
+      "zero_loss": -0.03489066660404205,
+      "phase_coherence": 0.010081182233989239,
+      "topological": 0.0024232412688434124
+    },
+    {
+      "epoch": 1,
+      "batch": 1700,
+      "total": 0.07877734303474426,
+      "classification": 0.10042967647314072,
+      "consciousness": -0.32772451639175415,
+      "zero_loss": -0.03471983224153519,
+      "phase_coherence": 0.009037655778229237,
+      "topological": 0.002429655520245433
+    },
+    {
+      "epoch": 1,
+      "batch": 1750,
+      "total": 0.07316140085458755,
+      "classification": 0.09401854872703552,
+      "consciousness": -0.3277236223220825,
+      "zero_loss": -0.03958030045032501,
+      "phase_coherence": 0.009898502379655838,
+      "topological": 0.002412517089396715
+    },
+    {
+      "epoch": 1,
+      "batch": 1800,
+      "total": -0.006109446752816439,
+      "classification": 0.015464458614587784,
+      "consciousness": -0.3277203440666199,
+      "zero_loss": -0.03304724767804146,
+      "phase_coherence": 0.009110466577112675,
+      "topological": 0.0024181348271667957
+    },
+    {
+      "epoch": 1,
+      "batch": 1850,
+      "total": 0.264994353055954,
+      "classification": 0.2865714728832245,
+      "consciousness": -0.32772237062454224,
+      "zero_loss": -0.034912578761577606,
+      "phase_coherence": 0.009125112555921078,
+      "topological": 0.0024191453121602535
+    },
+    {
+      "epoch": 2,
+      "batch": 0,
+      "total": 0.21475501358509064,
+      "classification": 0.23633459210395813,
+      "consciousness": -0.32772383093833923,
+      "zero_loss": -0.03482625633478165,
+      "phase_coherence": 0.00911038275808096,
+      "topological": 0.0024307083804160357
+    },
+    {
+      "epoch": 2,
+      "batch": 50,
+      "total": 0.023969756439328194,
+      "classification": 0.04520801454782486,
+      "consciousness": -0.3277242183685303,
+      "zero_loss": -0.039677929133176804,
+      "phase_coherence": 0.009504951536655426,
+      "topological": 0.0024259909987449646
+    },
+    {
+      "epoch": 2,
+      "batch": 100,
+      "total": 0.010417453944683075,
+      "classification": 0.03200330585241318,
+      "consciousness": -0.32772475481033325,
+      "zero_loss": -0.03569848835468292,
+      "phase_coherence": 0.009118854068219662,
+      "topological": 0.0024247565306723118
+    },
+    {
+      "epoch": 2,
+      "batch": 150,
+      "total": 0.10194149613380432,
+      "classification": 0.12398286908864975,
+      "consciousness": -0.32771965861320496,
+      "zero_loss": -0.03570478782057762,
+      "phase_coherence": 0.008656935766339302,
+      "topological": 0.0024307097773998976
+    },
+    {
+      "epoch": 2,
+      "batch": 200,
+      "total": -0.021665602922439575,
+      "classification": 0.00016587573918513954,
+      "consciousness": -0.32772329449653625,
+      "zero_loss": -0.035929422825574875,
+      "phase_coherence": 0.008879248984158039,
+      "topological": 0.0024208955001085997
+    },
+    {
+      "epoch": 2,
+      "batch": 250,
+      "total": 0.13898038864135742,
+      "classification": 0.16129840910434723,
+      "consciousness": -0.3277228772640228,
+      "zero_loss": -0.031865984201431274,
+      "phase_coherence": 0.008358346298336983,
+      "topological": 0.0024145878851413727
+    },
+    {
+      "epoch": 2,
+      "batch": 300,
+      "total": 0.21835868060588837,
+      "classification": 0.24024136364459991,
+      "consciousness": -0.327717661857605,
+      "zero_loss": -0.036465760320425034,
+      "phase_coherence": 0.00882422924041748,
+      "topological": 0.002429508138448
+    },
+    {
+      "epoch": 2,
+      "batch": 350,
+      "total": 0.13693617284297943,
+      "classification": 0.15841369330883026,
+      "consciousness": -0.32769444584846497,
+      "zero_loss": -0.036874327808618546,
+      "phase_coherence": 0.009234468452632427,
+      "topological": 0.0024261916987597942
+    },
+    {
+      "epoch": 2,
+      "batch": 400,
+      "total": 0.12013891339302063,
+      "classification": 0.14217352867126465,
+      "consciousness": -0.32772502303123474,
+      "zero_loss": -0.03564935177564621,
+      "phase_coherence": 0.008666327223181725,
+      "topological": 0.0024280536454170942
+    },
+    {
+      "epoch": 2,
+      "batch": 450,
+      "total": -0.019872117787599564,
+      "classification": 0.002021918771788478,
+      "consciousness": -0.32772260904312134,
+      "zero_loss": -0.038615867495536804,
+      "phase_coherence": 0.008853030391037464,
+      "topological": 0.0024113536346703768
+    },
+    {
+      "epoch": 2,
+      "batch": 500,
+      "total": 0.028506066650152206,
+      "classification": 0.05096040666103363,
+      "consciousness": -0.32772547006607056,
+      "zero_loss": -0.03528131544589996,
+      "phase_coherence": 0.00824754312634468,
+      "topological": 0.002423477591946721
+    },
+    {
+      "epoch": 2,
+      "batch": 550,
+      "total": 0.09626071155071259,
+      "classification": 0.11872879415750504,
+      "consciousness": -0.32772207260131836,
+      "zero_loss": -0.036829426884651184,
+      "phase_coherence": 0.008243088610470295,
+      "topological": 0.002429331885650754
+    },
+    {
+      "epoch": 2,
+      "batch": 600,
+      "total": 0.13004904985427856,
+      "classification": 0.15300461649894714,
+      "consciousness": -0.3277219235897064,
+      "zero_loss": -0.03452629968523979,
+      "phase_coherence": 0.007739506661891937,
+      "topological": 0.0024223863147199154
+    },
+    {
+      "epoch": 2,
+      "batch": 650,
+      "total": 0.09265383332967758,
+      "classification": 0.11488327383995056,
+      "consciousness": -0.3277255594730377,
+      "zero_loss": -0.04177585989236832,
+      "phase_coherence": 0.008537090383470058,
+      "topological": 0.0024237821344286203
+    },
+    {
+      "epoch": 2,
+      "batch": 700,
+      "total": -0.020775403827428818,
+      "classification": 0.002025844994932413,
+      "consciousness": -0.327718049287796,
+      "zero_loss": -0.037457700818777084,
+      "phase_coherence": 0.007922249846160412,
+      "topological": 0.0024228834081441164
+    },
+    {
+      "epoch": 2,
+      "batch": 750,
+      "total": -0.020358089357614517,
+      "classification": 0.0028726602904498577,
+      "consciousness": -0.3277221918106079,
+      "zero_loss": -0.036382753401994705,
+      "phase_coherence": 0.007472209632396698,
+      "topological": 0.002433088142424822
+    },
+    {
+      "epoch": 2,
+      "batch": 800,
+      "total": 0.04065025970339775,
+      "classification": 0.06349870562553406,
+      "consciousness": -0.32772427797317505,
+      "zero_loss": -0.03855947032570839,
+      "phase_coherence": 0.007883275859057903,
+      "topological": 0.002426303457468748
+    },
+    {
+      "epoch": 2,
+      "batch": 850,
+      "total": 0.0038939835503697395,
+      "classification": 0.026880377903580666,
+      "consciousness": -0.32769620418548584,
+      "zero_loss": -0.038123540580272675,
+      "phase_coherence": 0.007724299561232328,
+      "topological": 0.0024401620030403137
+    },
+    {
+      "epoch": 2,
+      "batch": 900,
+      "total": 0.24539190530776978,
+      "classification": 0.2684928774833679,
+      "consciousness": -0.32772523164749146,
+      "zero_loss": -0.039197564125061035,
+      "phase_coherence": 0.007635861169546843,
+      "topological": 0.0024276678450405598
+    },
+    {
+      "epoch": 2,
+      "batch": 950,
+      "total": 0.014050942845642567,
+      "classification": 0.03706707805395126,
+      "consciousness": -0.32772567868232727,
+      "zero_loss": -0.03952697291970253,
+      "phase_coherence": 0.007716189604252577,
+      "topological": 0.002435511676594615
+    },
+    {
+      "epoch": 2,
+      "batch": 1000,
+      "total": 0.04993356019258499,
+      "classification": 0.07269532233476639,
+      "consciousness": -0.32768577337265015,
+      "zero_loss": -0.041533421725034714,
+      "phase_coherence": 0.007988580502569675,
+      "topological": 0.00243356847204268
+    },
+    {
+      "epoch": 2,
+      "batch": 1050,
+      "total": 0.025221996009349823,
+      "classification": 0.047675665467977524,
+      "consciousness": -0.32772526144981384,
+      "zero_loss": -0.0474722757935524,
+      "phase_coherence": 0.008373036049306393,
+      "topological": 0.0024205450899899006
+    },
+    {
+      "epoch": 2,
+      "batch": 1100,
+      "total": -0.005573509261012077,
+      "classification": 0.01688503660261631,
+      "consciousness": -0.32772454619407654,
+      "zero_loss": -0.04475374147295952,
+      "phase_coherence": 0.008330399170517921,
+      "topological": 0.002431047847494483
+    },
+    {
+      "epoch": 2,
+      "batch": 1150,
+      "total": -0.0006851714570075274,
+      "classification": 0.0227455236017704,
+      "consciousness": -0.3277256190776825,
+      "zero_loss": -0.039627883583307266,
+      "phase_coherence": 0.007318537682294846,
+      "topological": 0.0024196093436330557
+    },
+    {
+      "epoch": 2,
+      "batch": 1200,
+      "total": 0.14874127507209778,
+      "classification": 0.17210976779460907,
+      "consciousness": -0.3277256488800049,
+      "zero_loss": -0.041930463165044785,
+      "phase_coherence": 0.007388914469629526,
+      "topological": 0.0024344692938029766
+    },
+    {
+      "epoch": 2,
+      "batch": 1250,
+      "total": 0.15201035141944885,
+      "classification": 0.17488911747932434,
+      "consciousness": -0.32769152522087097,
+      "zero_loss": -0.042612042278051376,
+      "phase_coherence": 0.007879253476858139,
+      "topological": 0.0024372509215027094
+    },
+    {
+      "epoch": 2,
+      "batch": 1300,
+      "total": -0.018326764926314354,
+      "classification": 0.004393789917230606,
+      "consciousness": -0.32772567868232727,
+      "zero_loss": -0.04880820959806442,
+      "phase_coherence": 0.008105436339974403,
+      "topological": 0.002434657420963049
+    },
+    {
+      "epoch": 2,
+      "batch": 1350,
+      "total": -0.016529448330402374,
+      "classification": 0.006162222940474749,
+      "consciousness": -0.3277250826358795,
+      "zero_loss": -0.047153372317552567,
+      "phase_coherence": 0.008128325454890728,
+      "topological": 0.0024240456987172365
+    },
+    {
+      "epoch": 2,
+      "batch": 1400,
+      "total": 0.03979315236210823,
+      "classification": 0.06250351667404175,
+      "consciousness": -0.3277253806591034,
+      "zero_loss": -0.05084170028567314,
+      "phase_coherence": 0.008135485462844372,
+      "topological": 0.0024351042229682207
+    },
+    {
+      "epoch": 2,
+      "batch": 1450,
+      "total": 0.0632546991109848,
+      "classification": 0.086134172976017,
+      "consciousness": -0.3277254104614258,
+      "zero_loss": -0.04658280313014984,
+      "phase_coherence": 0.007929827086627483,
+      "topological": 0.0024290650617331266
+    },
+    {
+      "epoch": 2,
+      "batch": 1500,
+      "total": 0.012965991161763668,
+      "classification": 0.03581458702683449,
+      "consciousness": -0.3277254104614258,
+      "zero_loss": -0.04799932613968849,
+      "phase_coherence": 0.007980886846780777,
+      "topological": 0.002423051744699478
+    },
+    {
+      "epoch": 2,
+      "batch": 1550,
+      "total": -0.007242658641189337,
+      "classification": 0.015302857384085655,
+      "consciousness": -0.32771384716033936,
+      "zero_loss": -0.04525710642337799,
+      "phase_coherence": 0.00824803952127695,
+      "topological": 0.002430401276797056
+    },
+    {
+      "epoch": 2,
+      "batch": 1600,
+      "total": 0.11856397986412048,
+      "classification": 0.1420001983642578,
+      "consciousness": -0.3277253806591034,
+      "zero_loss": -0.04513616859912872,
+      "phase_coherence": 0.007362123113125563,
+      "topological": 0.002425562823191285
+    },
+    {
+      "epoch": 2,
+      "batch": 1650,
+      "total": 0.024174150079488754,
+      "classification": 0.047547999769449234,
+      "consciousness": -0.32772496342658997,
+      "zero_loss": -0.04665978625416756,
+      "phase_coherence": 0.007439474109560251,
+      "topological": 0.002425770740956068
+    },
+    {
+      "epoch": 2,
+      "batch": 1700,
+      "total": 0.0669497475028038,
+      "classification": 0.09077100455760956,
+      "consciousness": -0.32772406935691833,
+      "zero_loss": -0.04330189898610115,
+      "phase_coherence": 0.006956818979233503,
+      "topological": 0.0024273537565022707
+    },
+    {
+      "epoch": 2,
+      "batch": 1750,
+      "total": 0.04039615020155907,
+      "classification": 0.06358297914266586,
+      "consciousness": -0.32772552967071533,
+      "zero_loss": -0.0512944720685482,
+      "phase_coherence": 0.007673288229852915,
+      "topological": 0.0024253816809505224
+    },
+    {
+      "epoch": 2,
+      "batch": 1800,
+      "total": -0.022267743945121765,
+      "classification": 0.001280405791476369,
+      "consciousness": -0.32771316170692444,
+      "zero_loss": -0.05069513991475105,
+      "phase_coherence": 0.0073036737740039825,
+      "topological": 0.0024264464154839516
+    },
+    {
+      "epoch": 2,
+      "batch": 1850,
+      "total": -0.012603759765625,
+      "classification": 0.011174801737070084,
+      "consciousness": -0.32772567868232727,
+      "zero_loss": -0.048779573291540146,
+      "phase_coherence": 0.0070489258505403996,
+      "topological": 0.0024328751023858786
+    },
+    {
+      "epoch": 3,
+      "batch": 0,
+      "total": 0.22090496122837067,
+      "classification": 0.24451766908168793,
+      "consciousness": -0.32769933342933655,
+      "zero_loss": -0.04628998413681984,
+      "phase_coherence": 0.007187906187027693,
+      "topological": 0.002432220848277211
+    },
+    {
+      "epoch": 3,
+      "batch": 50,
+      "total": 0.31466013193130493,
+      "classification": 0.33780309557914734,
+      "consciousness": -0.32771918177604675,
+      "zero_loss": -0.0570882111787796,
+      "phase_coherence": 0.007762056775391102,
+      "topological": 0.0024378052912652493
+    },
+    {
+      "epoch": 3,
+      "batch": 100,
+      "total": 0.029010433703660965,
+      "classification": 0.05266393721103668,
+      "consciousness": -0.32772496342658997,
+      "zero_loss": -0.052003659307956696,
+      "phase_coherence": 0.007199220359325409,
+      "topological": 0.0024398071691393852
+    },
+    {
+      "epoch": 3,
+      "batch": 150,
+      "total": 0.08952443301677704,
+      "classification": 0.11402665823698044,
+      "consciousness": -0.3277251124382019,
+      "zero_loss": -0.04416373744606972,
+      "phase_coherence": 0.0062747071497142315,
+      "topological": 0.002437220886349678
+    },
+    {
+      "epoch": 3,
+      "batch": 200,
+      "total": 0.029602909460663795,
+      "classification": 0.05369624122977257,
+      "consciousness": -0.3277241885662079,
+      "zero_loss": -0.05014333128929138,
+      "phase_coherence": 0.006751164793968201,
+      "topological": 0.0024293542373925447
+    },
+    {
+      "epoch": 3,
+      "batch": 250,
+      "total": 0.0743919387459755,
+      "classification": 0.09874215722084045,
+      "consciousness": -0.3277251124382019,
+      "zero_loss": -0.04507080465555191,
+      "phase_coherence": 0.006442537996917963,
+      "topological": 0.00243046460673213
+    },
+    {
+      "epoch": 3,
+      "batch": 300,
+      "total": 0.013934707269072533,
+      "classification": 0.03832001984119415,
+      "consciousness": -0.32772505283355713,
+      "zero_loss": -0.0476146824657917,
+      "phase_coherence": 0.006435215473175049,
+      "topological": 0.0024281260557472706
+    },
+    {
+      "epoch": 3,
+      "batch": 350,
+      "total": 0.11491991579532623,
+      "classification": 0.1390925943851471,
+      "consciousness": -0.3277243375778198,
+      "zero_loss": -0.04724077880382538,
+      "phase_coherence": 0.006647876929491758,
+      "topological": 0.0024242899380624294
+    },
+    {
+      "epoch": 3,
+      "batch": 400,
+      "total": 0.052704185247421265,
+      "classification": 0.0777115523815155,
+      "consciousness": -0.32772520184516907,
+      "zero_loss": -0.04405215010046959,
+      "phase_coherence": 0.0057775345630943775,
+      "topological": 0.002428145846351981
+    },
+    {
+      "epoch": 3,
+      "batch": 450,
+      "total": -0.009567482396960258,
+      "classification": 0.01487423200160265,
+      "consciousness": -0.32771360874176025,
+      "zero_loss": -0.04808615520596504,
+      "phase_coherence": 0.006375463213771582,
+      "topological": 0.0024350450839847326
+    },
+    {
+      "epoch": 3,
+      "batch": 500,
+      "total": -0.006340653635561466,
+      "classification": 0.018323486670851707,
+      "consciousness": -0.3277208209037781,
+      "zero_loss": -0.04940486699342728,
+      "phase_coherence": 0.0061784894205629826,
+      "topological": 0.0024235013406723738
+    },
+    {
+      "epoch": 3,
+      "batch": 550,
+      "total": 0.026465078815817833,
+      "classification": 0.05125856772065163,
+      "consciousness": -0.32772505283355713,
+      "zero_loss": -0.04649892449378967,
+      "phase_coherence": 0.0060167089104652405,
+      "topological": 0.0024272978771477938
+    },
+    {
+      "epoch": 3,
+      "batch": 600,
+      "total": 0.4596852660179138,
+      "classification": 0.4841274619102478,
+      "consciousness": -0.3276972472667694,
+      "zero_loss": -0.051686763763427734,
+      "phase_coherence": 0.006407409440726042,
+      "topological": 0.0024370038881897926
+    },
+    {
+      "epoch": 3,
+      "batch": 650,
+      "total": -0.019846267998218536,
+      "classification": 0.00476424116641283,
+      "consciousness": -0.327724814414978,
+      "zero_loss": -0.04931999370455742,
+      "phase_coherence": 0.006219278555363417,
+      "topological": 0.0024358953814953566
+    },
+    {
+      "epoch": 3,
+      "batch": 700,
+      "total": 0.058433111757040024,
+      "classification": 0.08303504437208176,
+      "consciousness": -0.3277217149734497,
+      "zero_loss": -0.05143069848418236,
+      "phase_coherence": 0.006242724601179361,
+      "topological": 0.0024418204557150602
+    },
+    {
+      "epoch": 3,
+      "batch": 750,
+      "total": 0.18612481653690338,
+      "classification": 0.2109019011259079,
+      "consciousness": -0.3277045488357544,
+      "zero_loss": -0.0493035688996315,
+      "phase_coherence": 0.00605023605749011,
+      "topological": 0.0024361717514693737
+    },
+    {
+      "epoch": 3,
+      "batch": 800,
+      "total": 0.0009599542245268822,
+      "classification": 0.02587074413895607,
+      "consciousness": -0.32772567868232727,
+      "zero_loss": -0.048158030956983566,
+      "phase_coherence": 0.005903296638280153,
+      "topological": 0.002440060954540968
+    },
+    {
+      "epoch": 3,
+      "batch": 850,
+      "total": 0.00898989662528038,
+      "classification": 0.03428906202316284,
+      "consciousness": -0.3276914358139038,
+      "zero_loss": -0.043361734598875046,
+      "phase_coherence": 0.0054681687615811825,
+      "topological": 0.0024354266934096813
+    },
+    {
+      "epoch": 3,
+      "batch": 900,
+      "total": 0.06774937361478806,
+      "classification": 0.0931399017572403,
+      "consciousness": -0.3277256190776825,
+      "zero_loss": -0.04467706382274628,
+      "phase_coherence": 0.005391472019255161,
+      "topological": 0.0024373307824134827
+    },
+    {
+      "epoch": 3,
+      "batch": 950,
+      "total": -0.019513260573148727,
+      "classification": 0.0053295716643333435,
+      "consciousness": -0.327725887298584,
+      "zero_loss": -0.05213405564427376,
+      "phase_coherence": 0.0060142469592392445,
+      "topological": 0.002436852315440774
+    },
+    {
+      "epoch": 3,
+      "batch": 1000,
+      "total": 0.2466384321451187,
+      "classification": 0.2718474268913269,
+      "consciousness": -0.3277248442173004,
+      "zero_loss": -0.04665353521704674,
+      "phase_coherence": 0.005590229760855436,
+      "topological": 0.0024397901725023985
+    },
+    {
+      "epoch": 3,
+      "batch": 1050,
+      "total": -0.016096804291009903,
+      "classification": 0.009262642823159695,
+      "consciousness": -0.3277251422405243,
+      "zero_loss": -0.0479038804769516,
+      "phase_coherence": 0.0054453229531645775,
+      "topological": 0.0024467811454087496
+    },
+    {
+      "epoch": 3,
+      "batch": 1100,
+      "total": -0.010596493259072304,
+      "classification": 0.014942184090614319,
+      "consciousness": -0.3277256190776825,
+      "zero_loss": -0.04651007801294327,
+      "phase_coherence": 0.005258140619844198,
+      "topological": 0.002440845128148794
+    },
+    {
+      "epoch": 3,
+      "batch": 1150,
+      "total": -0.004581704270094633,
+      "classification": 0.0207089651376009,
+      "consciousness": -0.32772374153137207,
+      "zero_loss": -0.04901702329516411,
+      "phase_coherence": 0.005525854881852865,
+      "topological": 0.0024460190907120705
+    },
+    {
+      "epoch": 3,
+      "batch": 1200,
+      "total": 0.2898104190826416,
+      "classification": 0.3153184652328491,
+      "consciousness": -0.32772400975227356,
+      "zero_loss": -0.04570160433650017,
+      "phase_coherence": 0.005283266305923462,
+      "topological": 0.002438108902424574
+    },
+    {
+      "epoch": 3,
+      "batch": 1250,
+      "total": -0.021524567157030106,
+      "classification": 0.0039009572938084602,
+      "consciousness": -0.32772549986839294,
+      "zero_loss": -0.04800349473953247,
+      "phase_coherence": 0.005387480836361647,
+      "topological": 0.002439583418890834
+    },
+    {
+      "epoch": 3,
+      "batch": 1300,
+      "total": 0.11390607059001923,
+      "classification": 0.1388581097126007,
+      "consciousness": -0.327725887298584,
+      "zero_loss": -0.0556512326002121,
+      "phase_coherence": 0.005931624677032232,
+      "topological": 0.0024454365484416485
+    },
+    {
+      "epoch": 3,
+      "batch": 1350,
+      "total": 0.07397133857011795,
+      "classification": 0.099261574447155,
+      "consciousness": -0.3277246654033661,
+      "zero_loss": -0.04917087033390999,
+      "phase_coherence": 0.005530509632080793,
+      "topological": 0.0024434358347207308
+    },
+    {
+      "epoch": 3,
+      "batch": 1400,
+      "total": 0.10810437053442001,
+      "classification": 0.1328832358121872,
+      "consciousness": -0.3277257978916168,
+      "zero_loss": -0.060780275613069534,
+      "phase_coherence": 0.0061612906865775585,
+      "topological": 0.002440233249217272
+    },
+    {
+      "epoch": 3,
+      "batch": 1450,
+      "total": 0.02374545857310295,
+      "classification": 0.04901246353983879,
+      "consciousness": -0.3277233839035034,
+      "zero_loss": -0.05092942342162132,
+      "phase_coherence": 0.005571045912802219,
+      "topological": 0.0024435813538730145
+    },
+    {
+      "epoch": 3,
+      "batch": 1500,
+      "total": -0.01703440211713314,
+      "classification": 0.008024783805012703,
+      "consciousness": -0.3277254104614258,
+      "zero_loss": -0.051619429141283035,
+      "phase_coherence": 0.005785503890365362,
+      "topological": 0.002444045152515173
+    },
+    {
+      "epoch": 3,
+      "batch": 1550,
+      "total": -0.024361681193113327,
+      "classification": 0.001480968901887536,
+      "consciousness": -0.3277254104614258,
+      "zero_loss": -0.048526134341955185,
+      "phase_coherence": 0.00497127790004015,
+      "topological": 0.002443871460855007
+    },
+    {
+      "epoch": 3,
+      "batch": 1600,
+      "total": -0.020604342222213745,
+      "classification": 0.004698643460869789,
+      "consciousness": -0.3277226388454437,
+      "zero_loss": -0.05323166400194168,
+      "phase_coherence": 0.005571962799876928,
+      "topological": 0.0024296322371810675
+    },
+    {
+      "epoch": 3,
+      "batch": 1650,
+      "total": 0.024638012051582336,
+      "classification": 0.050591759383678436,
+      "consciousness": -0.3277255594730377,
+      "zero_loss": -0.044609975069761276,
+      "phase_coherence": 0.004823257680982351,
+      "topological": 0.0024416509550064802
+    },
+    {
+      "epoch": 3,
+      "batch": 1700,
+      "total": 0.0043716952204704285,
+      "classification": 0.030434465035796165,
+      "consciousness": -0.3277254104614258,
+      "zero_loss": -0.04792044311761856,
+      "phase_coherence": 0.004751145374029875,
+      "topological": 0.0024378299713134766
+    },
+    {
+      "epoch": 3,
+      "batch": 1750,
+      "total": 0.08563880622386932,
+      "classification": 0.11137467622756958,
+      "consciousness": -0.3277224898338318,
+      "zero_loss": -0.04902951419353485,
+      "phase_coherence": 0.005086850840598345,
+      "topological": 0.002439821371808648
+    },
+    {
+      "epoch": 3,
+      "batch": 1800,
+      "total": -0.020246243104338646,
+      "classification": 0.0058217719197273254,
+      "consciousness": -0.3277251720428467,
+      "zero_loss": -0.04854574799537659,
+      "phase_coherence": 0.0047521814703941345,
+      "topological": 0.0024377796798944473
+    },
+    {
+      "epoch": 3,
+      "batch": 1850,
+      "total": -0.00011284020729362965,
+      "classification": 0.025776028633117676,
+      "consciousness": -0.32772305607795715,
+      "zero_loss": -0.050963353365659714,
+      "phase_coherence": 0.004947833716869354,
+      "topological": 0.0024452374782413244
+    },
+    {
+      "epoch": 4,
+      "batch": 0,
+      "total": -0.0113100316375494,
+      "classification": 0.01455735508352518,
+      "consciousness": -0.3277120292186737,
+      "zero_loss": -0.051516979932785034,
+      "phase_coherence": 0.0049725864082574844,
+      "topological": 0.0024464018642902374
+    },
+    {
+      "epoch": 4,
+      "batch": 50,
+      "total": 0.023044124245643616,
+      "classification": 0.04902506247162819,
+      "consciousness": -0.3277258276939392,
+      "zero_loss": -0.05082061141729355,
+      "phase_coherence": 0.004855161067098379,
+      "topological": 0.0024446879979223013
+    },
+    {
+      "epoch": 4,
+      "batch": 100,
+      "total": -0.025300638750195503,
+      "classification": 0.0007555917254649103,
+      "consciousness": -0.327725887298584,
+      "zero_loss": -0.04689421504735947,
+      "phase_coherence": 0.00474207941442728,
+      "topological": 0.0024432223290205
+    },
+    {
+      "epoch": 4,
+      "batch": 150,
+      "total": -0.008596917614340782,
+      "classification": 0.017800671979784966,
+      "consciousness": -0.327725887298584,
+      "zero_loss": -0.049156539142131805,
+      "phase_coherence": 0.004424387123435736,
+      "topological": 0.002442177152261138
+    },
+    {
+      "epoch": 4,
+      "batch": 200,
+      "total": 0.05809078365564346,
+      "classification": 0.08460728079080582,
+      "consciousness": -0.327725887298584,
+      "zero_loss": -0.045827899128198624,
+      "phase_coherence": 0.004266968462616205,
+      "topological": 0.0024473995435982943
+    },
+    {
+      "epoch": 4,
+      "batch": 250,
+      "total": -0.02460581064224243,
+      "classification": 0.0018488728674128652,
+      "consciousness": -0.327725887298584,
+      "zero_loss": -0.04444999247789383,
+      "phase_coherence": 0.004314177669584751,
+      "topological": 0.002448231913149357
+    },
+    {
+      "epoch": 4,
+      "batch": 300,
+      "total": -0.024253275245428085,
+      "classification": 0.0024628033861517906,
+      "consciousness": -0.3277258276939392,
+      "zero_loss": -0.04276005178689957,
+      "phase_coherence": 0.004040500149130821,
+      "topological": 0.0024436016101390123
+    },
+    {
+      "epoch": 4,
+      "batch": 350,
+      "total": -0.024742333218455315,
+      "classification": 0.0019725458696484566,
+      "consciousness": -0.3277258574962616,
+      "zero_loss": -0.04306146502494812,
+      "phase_coherence": 0.0040454561822116375,
+      "topological": 0.0024428649339824915
+    },
+    {
+      "epoch": 4,
+      "batch": 400,
+      "total": -0.022885669022798538,
+      "classification": 0.0037964507937431335,
+      "consciousness": -0.3277257978916168,
+      "zero_loss": -0.04463672265410423,
+      "phase_coherence": 0.004089757334440947,
+      "topological": 0.0024470717180520296
+    },
+    {
+      "epoch": 4,
+      "batch": 450,
+      "total": -0.015976734459400177,
+      "classification": 0.010738679207861423,
+      "consciousness": -0.3277258574962616,
+      "zero_loss": -0.04422053322196007,
+      "phase_coherence": 0.004051995929330587,
+      "topological": 0.0024473825469613075
+    },
+    {
+      "epoch": 4,
+      "batch": 500,
+      "total": -0.0251377634704113,
+      "classification": 0.0017202722374349833,
+      "consciousness": -0.3277258574962616,
+      "zero_loss": -0.04282788187265396,
+      "phase_coherence": 0.003889660118147731,
+      "topological": 0.002453168388456106
+    },
+    {
+      "epoch": 4,
+      "batch": 550,
+      "total": 0.21711845695972443,
+      "classification": 0.24407318234443665,
+      "consciousness": -0.327725887298584,
+      "zero_loss": -0.0429396890103817,
+      "phase_coherence": 0.0037987791001796722,
+      "topological": 0.002448473824188113
+    },
+    {
+      "epoch": 4,
+      "batch": 600,
+      "total": -0.024316133931279182,
+      "classification": 0.0026398682966828346,
+      "consciousness": -0.327725887298584,
+      "zero_loss": -0.042960043996572495,
+      "phase_coherence": 0.0037958496250212193,
+      "topological": 0.0024503394961357117
+    },
+    {
+      "epoch": 4,
+      "batch": 650,
+      "total": -0.025402791798114777,
+      "classification": 0.0012718688230961561,
+      "consciousness": -0.327725887298584,
+      "zero_loss": -0.04760465398430824,
+      "phase_coherence": 0.004133459646254778,
+      "topological": 0.0024405159056186676
+    },
+    {
+      "epoch": 4,
+      "batch": 700,
+      "total": -0.02482839860022068,
+      "classification": 0.0020070199389010668,
+      "consciousness": -0.3277258574962616,
+      "zero_loss": -0.044095300137996674,
+      "phase_coherence": 0.0039361584931612015,
+      "topological": 0.002441961783915758
+    },
+    {
+      "epoch": 4,
+      "batch": 750,
+      "total": 0.2024763822555542,
+      "classification": 0.2292596846818924,
+      "consciousness": -0.3277258574962616,
+      "zero_loss": -0.04338674619793892,
+      "phase_coherence": 0.003982555586844683,
+      "topological": 0.0024405887816101313
+    },
+    {
+      "epoch": 4,
+      "batch": 800,
+      "total": 0.05821235850453377,
+      "classification": 0.08518092334270477,
+      "consciousness": -0.3277258574962616,
+      "zero_loss": -0.043556585907936096,
+      "phase_coherence": 0.0037920624017715454,
+      "topological": 0.002447521546855569
+    },
+    {
+      "epoch": 4,
+      "batch": 850,
+      "total": -0.014594647102057934,
+      "classification": 0.012215218506753445,
+      "consciousness": -0.3277258276939392,
+      "zero_loss": -0.04387786611914635,
+      "phase_coherence": 0.003962069284170866,
+      "topological": 0.0024394250940531492
+    },
+    {
+      "epoch": 4,
+      "batch": 900,
+      "total": 0.004318227991461754,
+      "classification": 0.03158945217728615,
+      "consciousness": -0.327725887298584,
+      "zero_loss": -0.03997502103447914,
+      "phase_coherence": 0.0034595876932144165,
+      "topological": 0.0024415275547653437
+    },
+    {
+      "epoch": 4,
+      "batch": 950,
+      "total": -0.026330817490816116,
+      "classification": 0.000410635577281937,
+      "consciousness": -0.327725887298584,
+      "zero_loss": -0.047320108860731125,
+      "phase_coherence": 0.004060880746692419,
+      "topological": 0.0024434563238173723
+    },
+    {
+      "epoch": 4,
+      "batch": 1000,
+      "total": -0.021273618564009666,
+      "classification": 0.005755051504820585,
+      "consciousness": -0.3277257978916168,
+      "zero_loss": -0.04080985486507416,
+      "phase_coherence": 0.003705911338329315,
+      "topological": 0.0024460984859615564
+    },
+    {
+      "epoch": 4,
+      "batch": 1050,
+      "total": -0.02514028549194336,
+      "classification": 0.0018261340446770191,
+      "consciousness": -0.327725887298584,
+      "zero_loss": -0.04323193430900574,
+      "phase_coherence": 0.0038034021854400635,
+      "topological": 0.0024350881576538086
+    },
+    {
+      "epoch": 4,
+      "batch": 1100,
+      "total": -0.014679020270705223,
+      "classification": 0.012311161495745182,
+      "consciousness": -0.327725887298584,
+      "zero_loss": -0.04361915588378906,
+      "phase_coherence": 0.0037745300214737654,
+      "topological": 0.002444071928039193
+    },
+    {
+      "epoch": 4,
+      "batch": 1150,
+      "total": 0.08434946835041046,
+      "classification": 0.1111798956990242,
+      "consciousness": -0.327725887298584,
+      "zero_loss": -0.04749303311109543,
+      "phase_coherence": 0.003974740393459797,
+      "topological": 0.0024423557333648205
+    },
+    {
+      "epoch": 4,
+      "batch": 1200,
+      "total": 0.15780141949653625,
+      "classification": 0.1849670708179474,
+      "consciousness": -0.3277258574962616,
+      "zero_loss": -0.04190892353653908,
+      "phase_coherence": 0.0035768572706729174,
+      "topological": 0.0024491760414093733
+    },
+    {
+      "epoch": 4,
+      "batch": 1250,
+      "total": -0.026555554941296577,
+      "classification": 0.0004973448812961578,
+      "consciousness": -0.3277258276939392,
+      "zero_loss": -0.04504001513123512,
+      "phase_coherence": 0.0037320603150874376,
+      "topological": 0.002438019495457411
+    },
+    {
+      "epoch": 4,
+      "batch": 1300,
+      "total": -0.021888913586735725,
+      "classification": 0.00523629505187273,
+      "consciousness": -0.327725887298584,
+      "zero_loss": -0.04187207296490669,
+      "phase_coherence": 0.003627059981226921,
+      "topological": 0.002439043251797557
+    },
+    {
+      "epoch": 4,
+      "batch": 1350,
+      "total": 0.0027640829794108868,
+      "classification": 0.029551811516284943,
+      "consciousness": -0.327725887298584,
+      "zero_loss": -0.049008745700120926,
+      "phase_coherence": 0.0040288446471095085,
+      "topological": 0.0024461038410663605
+    },
+    {
+      "epoch": 4,
+      "batch": 1400,
+      "total": -0.026863591745495796,
+      "classification": 0.0003207105619367212,
+      "consciousness": -0.327725887298584,
+      "zero_loss": -0.04563838243484497,
+      "phase_coherence": 0.0036106188781559467,
+      "topological": 0.0024340541567653418
+    },
+    {
+      "epoch": 4,
+      "batch": 1450,
+      "total": 0.02198021113872528,
+      "classification": 0.04915802925825119,
+      "consciousness": -0.3277171552181244,
+      "zero_loss": -0.04514792561531067,
+      "phase_coherence": 0.003602211130782962,
+      "topological": 0.0024431683123111725
+    },
+    {
+      "epoch": 4,
+      "batch": 1500,
+      "total": 0.08422821760177612,
+      "classification": 0.1115177720785141,
+      "consciousness": -0.3277256488800049,
+      "zero_loss": -0.04174957424402237,
+      "phase_coherence": 0.0034555108286440372,
+      "topological": 0.002444994868710637
+    },
+    {
+      "epoch": 4,
+      "batch": 1550,
+      "total": 0.14572155475616455,
+      "classification": 0.17296060919761658,
+      "consciousness": -0.3277246952056885,
+      "zero_loss": -0.04387760907411575,
+      "phase_coherence": 0.003525619627907872,
+      "topological": 0.002446584403514862
+    },
+    {
+      "epoch": 4,
+      "batch": 1600,
+      "total": 0.035785023123025894,
+      "classification": 0.0630120262503624,
+      "consciousness": -0.3277258276939392,
+      "zero_loss": -0.046383365988731384,
+      "phase_coherence": 0.003565616672858596,
+      "topological": 0.0024437983520329
+    },
+    {
+      "epoch": 4,
+      "batch": 1650,
+      "total": -0.024461643770337105,
+      "classification": 0.0027606498915702105,
+      "consciousness": -0.3277249336242676,
+      "zero_loss": -0.04656188562512398,
+      "phase_coherence": 0.003569319611415267,
+      "topological": 0.002446497557684779
+    },
+    {
+      "epoch": 4,
+      "batch": 1700,
+      "total": -0.026719573885202408,
+      "classification": 0.0006612145807594061,
+      "consciousness": -0.3277226388454437,
+      "zero_loss": -0.042374592274427414,
+      "phase_coherence": 0.0033734391909092665,
+      "topological": 0.0024417841341346502
+    },
+    {
+      "epoch": 4,
+      "batch": 1750,
+      "total": 0.006240774877369404,
+      "classification": 0.033666253089904785,
+      "consciousness": -0.32772529125213623,
+      "zero_loss": -0.040704790502786636,
+      "phase_coherence": 0.003303846111521125,
+      "topological": 0.0024502533487975597
+    },
+    {
+      "epoch": 4,
+      "batch": 1800,
+      "total": 0.07505469769239426,
+      "classification": 0.10248538106679916,
+      "consciousness": -0.32772311568260193,
+      "zero_loss": -0.042811375111341476,
+      "phase_coherence": 0.0033239261247217655,
+      "topological": 0.002445810940116644
+    },
+    {
+      "epoch": 4,
+      "batch": 1850,
+      "total": -0.01598474383354187,
+      "classification": 0.011308333836495876,
+      "consciousness": -0.3277246654033661,
+      "zero_loss": -0.04594411328434944,
+      "phase_coherence": 0.0034951933193951845,
+      "topological": 0.002443635370582342
+    },
+    {
+      "epoch": 5,
+      "batch": 0,
+      "total": 0.024244464933872223,
+      "classification": 0.05163680389523506,
+      "consciousness": -0.32772311568260193,
+      "zero_loss": -0.04076993092894554,
+      "phase_coherence": 0.0033484548330307007,
+      "topological": 0.002439220203086734
+    },
+    {
+      "epoch": 5,
+      "batch": 50,
+      "total": -0.018361173570156097,
+      "classification": 0.009112391620874405,
+      "consciousness": -0.32772505283355713,
+      "zero_loss": -0.04004981741309166,
+      "phase_coherence": 0.0032474123872816563,
+      "topological": 0.0024520286824554205
+    },
+    {
+      "epoch": 5,
+      "batch": 100,
+      "total": 0.05257081612944603,
+      "classification": 0.07990828901529312,
+      "consciousness": -0.32772576808929443,
+      "zero_loss": -0.04427200183272362,
+      "phase_coherence": 0.003437554929405451,
+      "topological": 0.0024402684066444635
+    },
+    {
+      "epoch": 5,
+      "batch": 150,
+      "total": -0.02687140367925167,
+      "classification": 0.0003884706529788673,
+      "consciousness": -0.3277254104614258,
+      "zero_loss": -0.04620752111077309,
+      "phase_coherence": 0.003522068029269576,
+      "topological": 0.002452672692015767
+    },
+    {
+      "epoch": 5,
+      "batch": 200,
+      "total": -0.014385928399860859,
+      "classification": 0.013011785224080086,
+      "consciousness": -0.3277185559272766,
+      "zero_loss": -0.04387318342924118,
+      "phase_coherence": 0.003360159695148468,
+      "topological": 0.00245271367020905
+    },
+    {
+      "epoch": 5,
+      "batch": 250,
+      "total": 0.018977928906679153,
+      "classification": 0.04641813412308693,
+      "consciousness": -0.32772567868232727,
+      "zero_loss": -0.042200710624456406,
+      "phase_coherence": 0.0033086431212723255,
+      "topological": 0.002445724792778492
+    },
+    {
+      "epoch": 5,
+      "batch": 300,
+      "total": -0.024429932236671448,
+      "classification": 0.003210175782442093,
+      "consciousness": -0.32772505283355713,
+      "zero_loss": -0.038457926362752914,
+      "phase_coherence": 0.003067695302888751,
+      "topological": 0.002449283841997385
+    },
+    {
+      "epoch": 5,
+      "batch": 350,
+      "total": -0.024533692747354507,
+      "classification": 0.0028235383797436953,
+      "consciousness": -0.3277255892753601,
+      "zero_loss": -0.042527999728918076,
+      "phase_coherence": 0.003391894744709134,
+      "topological": 0.002448711544275284
+    },
+    {
+      "epoch": 5,
+      "batch": 400,
+      "total": -0.02594645321369171,
+      "classification": 0.0016519523924216628,
+      "consciousness": -0.32772552967071533,
+      "zero_loss": -0.040111247450113297,
+      "phase_coherence": 0.003125961171463132,
+      "topological": 0.002449295949190855
+    },
+    {
+      "epoch": 5,
+      "batch": 450,
+      "total": -0.020501384511590004,
+      "classification": 0.006960203405469656,
+      "consciousness": -0.32772576808929443,
+      "zero_loss": -0.04214075207710266,
+      "phase_coherence": 0.0032902024686336517,
+      "topological": 0.0024421936832368374
+    },
+    {
+      "epoch": 5,
+      "batch": 500,
+      "total": -0.02230067364871502,
+      "classification": 0.005148901138454676,
+      "consciousness": -0.3277202248573303,
+      "zero_loss": -0.04324929416179657,
+      "phase_coherence": 0.0033148687798529863,
+      "topological": 0.002440072363242507
+    },
+    {
+      "epoch": 5,
+      "batch": 550,
+      "total": 0.183843195438385,
+      "classification": 0.21127374470233917,
+      "consciousness": -0.3277212083339691,
+      "zero_loss": -0.043086662888526917,
+      "phase_coherence": 0.0033272409345954657,
+      "topological": 0.002445206046104431
+    },
+    {
+      "epoch": 5,
+      "batch": 600,
+      "total": 0.16594667732715607,
+      "classification": 0.19362764060497284,
+      "consciousness": -0.3277244567871094,
+      "zero_loss": -0.04370158538222313,
+      "phase_coherence": 0.0030840144027024508,
+      "topological": 0.0024444935843348503
+    },
+    {
+      "epoch": 5,
+      "batch": 650,
+      "total": -0.027313631027936935,
+      "classification": 0.00026136511587537825,
+      "consciousness": -0.3277253210544586,
+      "zero_loss": -0.043070826679468155,
+      "phase_coherence": 0.0031867329962551594,
+      "topological": 0.0024415110237896442
+    },
+    {
+      "epoch": 5,
+      "batch": 700,
+      "total": 0.13465362787246704,
+      "classification": 0.16244788467884064,
+      "consciousness": -0.3277236223220825,
+      "zero_loss": -0.041056737303733826,
+      "phase_coherence": 0.0029402971267700195,
+      "topological": 0.002448380459100008
+    },
+    {
+      "epoch": 5,
+      "batch": 750,
+      "total": -0.012772981077432632,
+      "classification": 0.014792886562645435,
+      "consciousness": -0.32772552967071533,
+      "zero_loss": -0.04429227113723755,
+      "phase_coherence": 0.003201520536094904,
+      "topological": 0.002448087790980935
+    },
+    {
+      "epoch": 5,
+      "batch": 800,
+      "total": -0.02653524838387966,
+      "classification": 0.0012471521040424705,
+      "consciousness": -0.3277250826358795,
+      "zero_loss": -0.04185209050774574,
+      "phase_coherence": 0.0029558383394032717,
+      "topological": 0.002452789107337594
+    },
+    {
+      "epoch": 5,
+      "batch": 850,
+      "total": 0.0297675933688879,
+      "classification": 0.05739699676632881,
+      "consciousness": -0.32772302627563477,
+      "zero_loss": -0.042495228350162506,
+      "phase_coherence": 0.003116157604381442,
+      "topological": 0.0024516950361430645
+    },
+    {
+      "epoch": 5,
+      "batch": 900,
+      "total": -0.019103696569800377,
+      "classification": 0.008924074470996857,
+      "consciousness": -0.3277258276939392,
+      "zero_loss": -0.03793010860681534,
+      "phase_coherence": 0.002684213686734438,
+      "topological": 0.002439898904412985
+    },
+    {
+      "epoch": 5,
+      "batch": 950,
+      "total": -0.01228283904492855,
+      "classification": 0.015458283945918083,
+      "consciousness": -0.3277226388454437,
+      "zero_loss": -0.04105754569172859,
+      "phase_coherence": 0.00299695017747581,
+      "topological": 0.0024447678588330746
+    },
+    {
+      "epoch": 5,
+      "batch": 1000,
+      "total": -0.026295408606529236,
+      "classification": 0.0013408476952463388,
+      "consciousness": -0.327722430229187,
+      "zero_loss": -0.04234931617975235,
+      "phase_coherence": 0.003109346842393279,
+      "topological": 0.002450134139508009
+    },
+    {
+      "epoch": 5,
+      "batch": 1050,
+      "total": -0.027512049302458763,
+      "classification": 0.0001188829992315732,
+      "consciousness": -0.3277156352996826,
+      "zero_loss": -0.0452396385371685,
+      "phase_coherence": 0.0031477108132094145,
+      "topological": 0.002445319201797247
+    },
+    {
+      "epoch": 5,
+      "batch": 1100,
+      "total": -0.025381239131093025,
+      "classification": 0.002599222119897604,
+      "consciousness": -0.3277257978916168,
+      "zero_loss": -0.03828366473317146,
+      "phase_coherence": 0.002725559053942561,
+      "topological": 0.0024493990931659937
+    },
+    {
+      "epoch": 5,
+      "batch": 1150,
+      "total": -0.026064647361636162,
+      "classification": 0.0017339945770800114,
+      "consciousness": -0.32772478461265564,
+      "zero_loss": -0.04205549135804176,
+      "phase_coherence": 0.0029449628200381994,
+      "topological": 0.002449426567181945
+    },
+    {
+      "epoch": 5,
+      "batch": 1200,
+      "total": 0.049478594213724136,
+      "classification": 0.07715464383363724,
+      "consciousness": -0.32772576808929443,
+      "zero_loss": -0.04686930403113365,
+      "phase_coherence": 0.0031203441321849823,
+      "topological": 0.0024448782205581665
+    },
+    {
+      "epoch": 5,
+      "batch": 1250,
+      "total": -0.026668095961213112,
+      "classification": 0.0009972916450351477,
+      "consciousness": -0.32772430777549744,
+      "zero_loss": -0.04405416175723076,
+      "phase_coherence": 0.0031031977850943804,
+      "topological": 0.002444389509037137
+    },
+    {
+      "epoch": 5,
+      "batch": 1300,
+      "total": 0.0005602256860584021,
+      "classification": 0.02845030277967453,
+      "consciousness": -0.3277255892753601,
+      "zero_loss": -0.041737038642168045,
+      "phase_coherence": 0.002851865952834487,
+      "topological": 0.002447986975312233
+    },
+    {
+      "epoch": 5,
+      "batch": 1350,
+      "total": -0.016372688114643097,
+      "classification": 0.011437919922173023,
+      "consciousness": -0.3277254104614258,
+      "zero_loss": -0.04053226113319397,
+      "phase_coherence": 0.002910669194534421,
+      "topological": 0.0024565872736275196
+    },
+    {
+      "epoch": 5,
+      "batch": 1400,
+      "total": -0.024440154433250427,
+      "classification": 0.003401584457606077,
+      "consciousness": -0.3277251720428467,
+      "zero_loss": -0.04180169850587845,
+      "phase_coherence": 0.0028979890048503876,
+      "topological": 0.0024508070200681686
+    },
+    {
+      "epoch": 5,
+      "batch": 1450,
+      "total": -0.020338399335741997,
+      "classification": 0.007571233436465263,
+      "consciousness": -0.3277229070663452,
+      "zero_loss": -0.04238203912973404,
+      "phase_coherence": 0.002833418780937791,
+      "topological": 0.002453060820698738
+    },
+    {
+      "epoch": 5,
+      "batch": 1500,
+      "total": -0.02536533586680889,
+      "classification": 0.002523424569517374,
+      "consciousness": -0.3277246356010437,
+      "zero_loss": -0.04300006851553917,
+      "phase_coherence": 0.0028633142355829477,
+      "topological": 0.0024503895547240973
+    },
+    {
+      "epoch": 5,
+      "batch": 1550,
+      "total": -0.0257857833057642,
+      "classification": 0.002119307406246662,
+      "consciousness": -0.32772281765937805,
+      "zero_loss": -0.04312742501497269,
+      "phase_coherence": 0.0028548194095492363,
+      "topological": 0.002443650970235467
+    },
+    {
+      "epoch": 5,
+      "batch": 1600,
+      "total": -0.02485230192542076,
+      "classification": 0.002987411804497242,
+      "consciousness": -0.3277257978916168,
+      "zero_loss": -0.04294503480195999,
+      "phase_coherence": 0.0029166850727051497,
+      "topological": 0.0024456337559968233
+    },
+    {
+      "epoch": 5,
+      "batch": 1650,
+      "total": -0.025662945583462715,
+      "classification": 0.0021303188987076283,
+      "consciousness": -0.32772576808929443,
+      "zero_loss": -0.041897065937519073,
+      "phase_coherence": 0.002952330280095339,
+      "topological": 0.002445954130962491
+    },
+    {
+      "epoch": 5,
+      "batch": 1700,
+      "total": 0.06587961316108704,
+      "classification": 0.09371451288461685,
+      "consciousness": -0.3277248740196228,
+      "zero_loss": -0.04635147005319595,
+      "phase_coherence": 0.002951750298961997,
+      "topological": 0.0024493522942066193
+    },
+    {
+      "epoch": 5,
+      "batch": 1750,
+      "total": 0.017860442399978638,
+      "classification": 0.04559912905097008,
+      "consciousness": -0.3277258276939392,
+      "zero_loss": -0.042475342750549316,
+      "phase_coherence": 0.0030124234035611153,
+      "topological": 0.002446225844323635
+    },
+    {
+      "epoch": 5,
+      "batch": 1800,
+      "total": 0.0531117282807827,
+      "classification": 0.08079305291175842,
+      "consciousness": -0.3277241885662079,
+      "zero_loss": -0.04487531632184982,
+      "phase_coherence": 0.003090144833549857,
+      "topological": 0.0024497017730027437
+    },
+    {
+      "epoch": 5,
+      "batch": 1850,
+      "total": -0.011696888133883476,
+      "classification": 0.016036847606301308,
+      "consciousness": -0.3277249336242676,
+      "zero_loss": -0.04304511100053787,
+      "phase_coherence": 0.0030230546835809946,
+      "topological": 0.0024461543653160334
+    }
+  ],
+  "summary": {
+    "final_test_accuracy": 99.16,
+    "final_reflexivity": 0.8955,
+    "reference_accuracy": 93.74,
+    "accuracy_delta": 5.42,
+    "reflexivity_in_optimal": false,
+    "total_time_sec": 94.7,
+    "total_parameters": 588257
+  }
+}

@@ -49,7 +49,7 @@ def test_compute_loss(model, mnist_batch):
     target = torch.randint(0, 10, (4,))
     losses = model.compute_loss(output, target)
 
-    expected = {'total', 'classification', 'consciousness',
+    expected = {'total', 'classification', 'abstract', 'consciousness',
                 'zero_loss', 'phase_coherence', 'topological'}
     assert expected == set(losses.keys())
 

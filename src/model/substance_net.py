@@ -113,7 +113,7 @@ class SubstanceNet(nn.Module):
         wave_channels: int = 128,
         orient_expand: int = 8,
         consciousness_dim: int = 32,
-        abstract_dim: int = 16,
+        abstract_dim: int = 3,
         num_iterations: int = 3,
         num_attn_heads: int = 2,
     ):
@@ -157,6 +157,13 @@ class SubstanceNet(nn.Module):
             nn.Dropout(0.3),
             nn.Linear(256, num_classes),
         )
+
+        # === Abstract Classification Head ===
+        # Forces abstract representations to be class-discriminative.
+        # Without this, abstraction layer collapses (all samples -> same output)
+        # and consciousness trivially converges to R -> 1.0.
+        # In v3.1.1 this was abstract_loss = CE(abstract_pred, abstract_target).
+        self.abstract_classifier = nn.Linear(abstract_dim, num_classes)
 
         # === Loss Functions ===
         self.phase_loss = PhaseCoherenceLoss(weight=0.1)
@@ -236,11 +243,18 @@ class SubstanceNet(nn.Module):
         Returns
         -------
         dict
-            Keys: total, classification, consciousness, zero_loss,
-            phase_coherence, topological.
+            Keys: total, classification, abstract, consciousness,
+            zero_loss, phase_coherence, topological.
         """
         # Classification loss
         cls_loss = F.cross_entropy(output['logits'], target)
+
+        # Abstract classification loss — CRITICAL for preventing
+        # abstract collapse. Without this, abstraction layer produces
+        # identical output for all samples, consciousness trivially
+        # converges to R -> 1.0 (SubstanceNet v4 diagnostic finding).
+        abstract_logits = self.abstract_classifier(output['abstract'])
+        abstract_loss = F.cross_entropy(abstract_logits, target)
 
         # Consciousness loss (reflexivity + coherence + stability)
         cons_loss = self.consciousness.consciousness_loss(
@@ -262,8 +276,9 @@ class SubstanceNet(nn.Module):
         else:
             topo_loss = torch.tensor(0.0, device=target.device)
 
-        # Total loss
+        # Total loss (v3.1.1 compatible weighting)
         total = (cls_loss +
+                 abstract_loss +
                  0.1 * cons_loss +
                  0.01 * zero_loss +
                  phase_loss +
@@ -272,6 +287,7 @@ class SubstanceNet(nn.Module):
         return {
             'total': total,
             'classification': cls_loss,
+            'abstract': abstract_loss,
             'consciousness': cons_loss,
             'zero_loss': zero_loss,
             'phase_coherence': phase_loss,
@@ -307,6 +323,7 @@ class SubstanceNet(nn.Module):
             ('abstraction', self.abstraction),
             ('consciousness', self.consciousness),
             ('classifier', self.classifier),
+            ('abstract_classifier', self.abstract_classifier),
         ]:
             counts[name] = sum(p.numel() for p in module.parameters())
         counts['total'] = sum(p.numel() for p in self.parameters())
