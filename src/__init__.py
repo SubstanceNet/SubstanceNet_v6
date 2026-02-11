@@ -8,17 +8,16 @@ License: MIT
 SubstanceNet v4 — Bio-Inspired Neural Network
 with Reflexive Consciousness
 ===========================================================
-Neural network architecture implementing reflexive consciousness
-based on 2D-Substance Theory.
-
     from src import BiologicalV1, QuantumWaveFunction
     from src import ReflexiveConsciousness, TemporalConsciousnessController
+    from src import Hippocampus
 
 Theoretical Foundations:
     - 2D-Substance Theory: psi_i on Sigma -> P_hat -> R^(3+1)
     - Reflexive Consciousness: psi_C = F[P_hat[psi_C]] (Th 6.22)
     - Emergence Parameter: kappa ~ 1 at criticality
     - Visual Cortex: V1->V2->V3->V4 projection (Hubel & Wiesel)
+    - Hippocampal Memory: grid/place/time cells (O'Keefe, Moser)
 """
 
 __version__ = "0.1.0"
@@ -26,6 +25,7 @@ __version__ = "0.1.0"
 from .wave import QuantumWaveFunction
 from .cortex import BiologicalV1
 from .consciousness import ReflexiveConsciousness, TemporalConsciousnessController
+from .hippocampus import Hippocampus
 
 __all__ = [
     '__version__',
@@ -33,4 +33,5 @@ __all__ = [
     'BiologicalV1',
     'ReflexiveConsciousness',
     'TemporalConsciousnessController',
+    'Hippocampus',
 ]
