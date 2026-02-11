@@ -9,25 +9,28 @@ SubstanceNet v4 — Bio-Inspired Neural Network
 with Reflexive Consciousness
 ===========================================================
 Neural network architecture implementing reflexive consciousness
-based on 2D-Substance Theory. The model combines quantum wave
-functions, visual cortex hierarchy (V1→V2→V3→V4), hippocampal
-memory, and temporal consciousness control.
+based on 2D-Substance Theory.
+
+    from src import BiologicalV1, QuantumWaveFunction
+    from src import ReflexiveConsciousness, TemporalConsciousnessController
 
 Theoretical Foundations:
-    - 2D-Substance Theory: ψ_i on Σ → P̂ → R^(3+1) (Onasenko)
-    - Reflexive Consciousness: ψ_C = F[P̂[ψ_C]] (Th 6.22)
-    - Emergence Parameter: κ ≈ 1 at criticality
-    - Visual Cortex: V1→V2→V3→V4 projection (Hubel & Wiesel)
-
-Usage:
-    from src import SubstanceNet
-    from src.constants import CONSCIOUSNESS_MODES
+    - 2D-Substance Theory: psi_i on Sigma -> P_hat -> R^(3+1)
+    - Reflexive Consciousness: psi_C = F[P_hat[psi_C]] (Th 6.22)
+    - Emergence Parameter: kappa ~ 1 at criticality
+    - Visual Cortex: V1->V2->V3->V4 projection (Hubel & Wiesel)
 """
 
 __version__ = "0.1.0"
 
-# Imports will be added as modules are implemented
-# from .wave import QuantumWaveFunction
-# from .cortex import V1, V2, V3, V4
-# from .consciousness import ReflexiveConsciousness, TemporalController
-# from .model import SubstanceNet
+from .wave import QuantumWaveFunction
+from .cortex import BiologicalV1
+from .consciousness import ReflexiveConsciousness, TemporalConsciousnessController
+
+__all__ = [
+    '__version__',
+    'QuantumWaveFunction',
+    'BiologicalV1',
+    'ReflexiveConsciousness',
+    'TemporalConsciousnessController',
+]
