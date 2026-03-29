@@ -3,7 +3,7 @@ System Classification: src.cortex.v1
 Author: Oleksii Onasenko
 Developer: SubstanceNet — https://github.com/SubstanceNet
 Code: Claude (Anthropic)
-License: MIT
+License: Apache-2.0
 
 Theoretical Framework:
     - 2D-Substance Theory (Onasenko, 2025-2026)
@@ -85,6 +85,82 @@ def create_gabor_filter(size: int = 11, sigma: float = 3.0,
     return torch.FloatTensor(gabor)
 
 
+class RetinalLayer(nn.Module):
+    """
+    Retinal preprocessing: converts RGB to 4 photoreceptor channels.
+
+    Models the four types of photoreceptors in the human retina:
+        - Rods:    Luminance (achromatic, scotopic vision)
+        - L-cones: Long wavelength (~564nm, "red")
+        - M-cones: Medium wavelength (~534nm, "green")
+        - S-cones: Short wavelength (~420nm, "blue")
+
+    Uses fixed spectral sensitivity functions based on
+    CIE physiological data (Stockman & Sharpe, 2000).
+
+    For grayscale input (1 channel), duplicates to rods only.
+
+    Parameters
+    ----------
+    in_channels : int
+        Input channels (1 for grayscale, 3 for RGB).
+    """
+
+    def __init__(self, in_channels: int = 3):
+        super().__init__()
+        self.in_channels = in_channels
+
+        if in_channels == 3:
+            # Spectral sensitivity matrix: RGB → [Rods, L, M, S]
+            # Based on CIE cone fundamentals (approximate)
+            sensitivity = torch.tensor([
+                [0.2126, 0.7152, 0.0722],  # Rods (luminance, ITU-R BT.709)
+                [0.7000, 0.3000, 0.0000],  # L-cones (red-sensitive)
+                [0.2000, 0.7000, 0.1000],  # M-cones (green-sensitive)
+                [0.0000, 0.1000, 0.9000],  # S-cones (blue-sensitive)
+            ], dtype=torch.float32)
+            # Shape for 1x1 conv: [out_channels=4, in_channels=3, 1, 1]
+            self.register_buffer(
+                'spectral_weights',
+                sensitivity.unsqueeze(-1).unsqueeze(-1))
+
+            # Center-surround antagonism (retinal ganglion cells)
+            self.center_surround = nn.Sequential(
+                nn.Conv2d(4, 4, kernel_size=5, padding=2, groups=4, bias=False),
+                nn.BatchNorm2d(4),
+            )
+        else:
+            # Grayscale: single rod channel
+            self.spectral_weights = None
+            self.center_surround = None
+
+    @property
+    def out_channels(self) -> int:
+        return 4 if self.in_channels == 3 else 1
+
+    def forward(self, x: torch.Tensor) -> torch.Tensor:
+        """
+        Parameters
+        ----------
+        x : torch.Tensor
+            Input image [B, 1, H, W] or [B, 3, H, W].
+
+        Returns
+        -------
+        torch.Tensor
+            Retinal activations [B, 4, H, W] or [B, 1, H, W].
+        """
+        if self.in_channels == 3 and x.shape[1] == 3:
+            # RGB → 4 photoreceptor channels
+            retinal = F.conv2d(x, self.spectral_weights.type_as(x))
+            # Center-surround antagonism
+            retinal = retinal + self.center_surround(retinal)
+            return retinal
+        else:
+            # Grayscale passthrough
+            return x
+
+
 class GaborFilterBank(nn.Module):
     """
     Bank of Gabor filters for multi-scale, multi-orientation edge detection.
@@ -101,11 +177,12 @@ class GaborFilterBank(nn.Module):
     """
 
     def __init__(self, n_orientations: int = 8, n_scales: int = 4,
-                 size: int = 11):
+                 size: int = 11, in_channels: int = 1):
         super().__init__()
         self.n_orientations = n_orientations
         self.n_scales = n_scales
         self.size = size
+        self.in_channels = in_channels
 
         filters = []
         for scale_idx in range(n_scales):
@@ -122,7 +199,9 @@ class GaborFilterBank(nn.Module):
                     size, sigma, theta, lambda_, 0.5, math.pi / 2))
 
         # Shape: [n_scales * n_orientations * 2, 1, size, size]
-        filter_tensor = torch.stack(filters).unsqueeze(1).float()
+        filter_single = torch.stack(filters).unsqueeze(1).float()
+        # Replicate Gabor across input channels (each V1 cell sees all retinal channels)
+        filter_tensor = filter_single.repeat(1, self.in_channels, 1, 1) / self.in_channels
         self.register_buffer('gabor_filters', filter_tensor)
 
     @property
@@ -274,10 +353,20 @@ class BiologicalV1(nn.Module):
     """
 
     def __init__(self, n_orientations: int = 8, n_scales: int = 4,
-                 output_dim: int = 64):
+                 output_dim: int = 64, in_channels: int = 1):
         super().__init__()
+        self.in_channels = in_channels
 
-        self.gabor_bank = GaborFilterBank(n_orientations, n_scales)
+        # Retinal preprocessing (RGB -> 4 photoreceptor channels)
+        if in_channels == 3:
+            self.retina = RetinalLayer(in_channels=3)
+            gabor_in = self.retina.out_channels  # 4
+        else:
+            self.retina = None
+            gabor_in = 1
+
+        self.gabor_bank = GaborFilterBank(n_orientations, n_scales,
+                                          in_channels=gabor_in)
         self.simple_cells = SimpleCells(self.gabor_bank)
         self.complex_cells = ComplexCells(n_orientations, n_scales)
         self.hypercolumns = HyperColumns(n_orientations, n_scales, output_dim)
@@ -299,6 +388,20 @@ class BiologicalV1(nn.Module):
         activations : dict
             Keys: 'simple', 'complex', 'hypercolumns'.
         """
+        # Retinal preprocessing (if RGB input)
+        if self.retina is not None and x.shape[1] == 3:
+            x = self.retina(x)
+        elif x.shape[1] == 3 and self.retina is None:
+            # Fallback: convert RGB to grayscale if no retina
+            x = 0.2126 * x[:, 0:1] + 0.7152 * x[:, 1:2] + 0.0722 * x[:, 2:3]
+
+        # Retinal preprocessing (if RGB input)
+        if self.retina is not None and x.shape[1] == 3:
+            x = self.retina(x)
+        elif x.shape[1] == 3 and self.retina is None:
+            # Fallback: convert RGB to grayscale
+            x = 0.2126 * x[:, 0:1] + 0.7152 * x[:, 1:2] + 0.0722 * x[:, 2:3]
+
         simple = self.simple_cells(x)
         complex_ = self.complex_cells(simple)
         hypercolumns = self.hypercolumns(complex_)

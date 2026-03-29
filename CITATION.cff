@@ -1,0 +1,39 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+type: software
+title: "SubstanceNet v4: Bio-inspired Neural Architecture for Numerical Verification of Neuroscience Hypotheses"
+version: 0.4.0
+date-released: 2026-03-29
+license: Apache-2.0
+url: "https://github.com/SubstanceNet/SubstanceNet_v4"
+repository-code: "https://github.com/SubstanceNet/SubstanceNet_v4"
+authors:
+  - family-names: Onasenko
+    given-names: Oleksii
+    orcid: "https://orcid.org/0009-0007-7017-8161"
+    email: olexxa62@gmail.com
+keywords:
+  - bio-inspired neural networks
+  - computational neuroscience
+  - reflexive consciousness
+  - visual cortex hierarchy
+  - Hebbian learning
+  - episodic memory
+  - emergence parameter
+  - criticality
+abstract: >-
+  SubstanceNet is an experimental bio-inspired neural architecture designed
+  as a computational platform for numerical verification of empirical and
+  theoretical results from neuroscience and cognitive science. The system
+  integrates hierarchical visual processing (V1-V4), wave-based feature
+  representation, reflexive self-monitoring, Hebbian plasticity, and
+  hippocampal episodic memory into a unified architecture governed by the
+  emergence parameter κ ≈ 1.
+references:
+  - type: article
+    authors:
+      - family-names: Onasenko
+        given-names: Oleksii
+    title: "Emergence Parameter κ ≈ 1: An Empirical Signature of Criticality in Physical and Biological Systems"
+    year: 2025
+    doi: "10.5281/zenodo.17844282"

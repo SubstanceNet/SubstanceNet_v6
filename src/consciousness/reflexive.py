@@ -3,7 +3,7 @@ System Classification: src.consciousness.reflexive
 Author: Oleksii Onasenko
 Developer: SubstanceNet — https://github.com/SubstanceNet
 Code: Claude (Anthropic)
-License: MIT
+License: Apache-2.0
 
 Theoretical Framework:
     - 2D-Substance Theory (Onasenko, 2025-2026)
@@ -178,10 +178,16 @@ class ReflexiveConsciousness(nn.Module):
         device = amplitude.device
         batch_size = amplitude.shape[0]
 
-        # 1. Reflexivity loss: how well psi_C = F[P_hat[psi_C]]
+        # 1. Reflexivity loss: target OPTIMAL R, not R -> 1.0
+        # R = 1/(1+MSE), optimal R ~ 0.41 -> target MSE ~ 1.44
+        # Instead of minimizing MSE (which pushes R -> 1.0),
+        # we penalize deviation from the optimal MSE value.
+        # This implements kappa ~ 1 critical regime.
         psi_c = torch.cat([amplitude, phase], dim=-1)
         psi_c_proj = self.project(psi_c)
-        reflexivity_loss = F.mse_loss(psi_c, psi_c_proj)
+        mse = F.mse_loss(psi_c, psi_c_proj)
+        target_mse = torch.tensor(1.44, device=device)  # R ~ 0.41
+        reflexivity_loss = (mse - target_mse) ** 2
 
         # 2. Phase coherence loss (batch-level)
         if batch_size > 1:

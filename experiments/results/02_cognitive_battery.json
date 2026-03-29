@@ -1,0 +1,88 @@
+{
+  "logic": {
+    "accuracy": 1.0,
+    "reflexivity": 0.4087725549298256,
+    "coherence": 0.9999297658195754,
+    "abstract_variance": 21.31665802001953,
+    "phase": "critical"
+  },
+  "memory": {
+    "accuracy": 1.0,
+    "reflexivity": 0.4078456265470562,
+    "coherence": 0.9997016649307742,
+    "abstract_variance": 29.47870445251465,
+    "phase": "critical"
+  },
+  "categorization": {
+    "accuracy": 1.0,
+    "reflexivity": 0.40977351347211083,
+    "coherence": 0.9998822115267427,
+    "abstract_variance": 29.373342514038086,
+    "phase": "critical"
+  },
+  "analogy": {
+    "accuracy": 1.0,
+    "reflexivity": 0.40893876917279504,
+    "coherence": 0.9998754502506005,
+    "abstract_variance": 28.726028442382812,
+    "phase": "critical"
+  },
+  "spatial": {
+    "accuracy": 1.0,
+    "reflexivity": 0.4106533016570334,
+    "coherence": 0.9999242656406857,
+    "abstract_variance": 24.4189510345459,
+    "phase": "critical"
+  },
+  "raven": {
+    "accuracy": 0.984375,
+    "reflexivity": 0.4089984048853142,
+    "coherence": 0.999753850729252,
+    "abstract_variance": 11.348264694213867,
+    "phase": "critical"
+  },
+  "numerical": {
+    "accuracy": 1.0,
+    "reflexivity": 0.40851189823979583,
+    "coherence": 0.99980990553781,
+    "abstract_variance": 24.226634979248047,
+    "phase": "critical"
+  },
+  "verbal": {
+    "accuracy": 1.0,
+    "reflexivity": 0.40854178103513905,
+    "coherence": 0.9998754202762257,
+    "abstract_variance": 26.996389389038086,
+    "phase": "critical"
+  },
+  "emotional": {
+    "accuracy": 1.0,
+    "reflexivity": 0.40921779697165656,
+    "coherence": 0.9998771724609682,
+    "abstract_variance": 25.9005126953125,
+    "phase": "critical"
+  },
+  "insight": {
+    "accuracy": 1.0,
+    "reflexivity": 0.4089742175266293,
+    "coherence": 0.9998962562957179,
+    "abstract_variance": 22.870506286621094,
+    "phase": "critical"
+  },
+  "summary": {
+    "mean_accuracy": 0.9984375,
+    "mean_reflexivity": 0.4090227864437356,
+    "std_reflexivity": 0.0007218660909595902,
+    "all_in_critical_regime": true,
+    "v311_reference": {
+      "accuracy": 0.9934,
+      "reflexivity": 0.9563
+    }
+  },
+  "_meta": {
+    "timestamp": "2026-03-29T19:39:07.641333",
+    "seed": 42,
+    "device": "cuda",
+    "torch_version": "2.8.0+cu128"
+  }
+}

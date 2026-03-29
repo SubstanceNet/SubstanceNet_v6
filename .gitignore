@@ -1,3 +1,4 @@
+# Python
 __pycache__/
 *.pyc
 *.pyo
@@ -6,14 +7,28 @@ dist/
 build/
 .eggs/
 *.so
+
+# Datasets (large, downloadable)
 data/MNIST/
-data/CIFAR10/
-checkpoints/*.pt
-checkpoints/*.pth
-outputs/*.png
-outputs/*.json
+data/cifar-10-batches-py/
+data/*.tar.gz
+
+# Model checkpoints (large binaries)
+*.pt
+*.pth
+
+# Virtual environments
 .venv/
 my_env/
+env/
+
+# IDE
 *.swp
 *.swo
 .DS_Store
+.idea/
+.vscode/
+*.code-workspace
+
+# OS
+Thumbs.db

@@ -3,7 +3,7 @@ System Classification: src.__init__
 Author: Oleksii Onasenko
 Developer: SubstanceNet — https://github.com/SubstanceNet
 Code: Claude (Anthropic)
-License: MIT
+License: Apache-2.0
 
 SubstanceNet v4 — Bio-Inspired Neural Network
 with Reflexive Consciousness

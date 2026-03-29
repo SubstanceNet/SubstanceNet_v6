@@ -3,7 +3,7 @@ System Classification: src.consciousness.controller
 Author: Oleksii Onasenko
 Developer: SubstanceNet — https://github.com/SubstanceNet
 Code: Claude (Anthropic)
-License: MIT
+License: Apache-2.0
 
 Theoretical Framework:
     - 2D-Substance Theory (Onasenko, 2025-2026)
@@ -130,14 +130,21 @@ class TemporalConsciousnessController:
         self.current_level = self.base_level
 
     def get_phase(self) -> str:
-        """Determine current consciousness phase."""
-        if self.current_level < 0.5:
-            return 'initialization'
-        elif self.current_level < 0.8:
-            return 'accumulation'
-        elif self.current_level < 0.95:
-            return 'convergence'
-        return 'saturation'
+        """Determine consciousness phase relative to kappa ~ 1 regime.
+        
+        Calibrated for optimal R in [0.35, 0.47]:
+            subcritical:   R too low, insufficient self-observation
+            critical:      optimal regime, kappa ~ 1
+            supercritical: excessive reflexivity, approaching fixed point
+            saturated:     trivial fixed point, consciousness not working
+        """
+        if self.current_level < 0.30:
+            return 'subcritical'
+        elif self.current_level <= 0.50:
+            return 'critical'
+        elif self.current_level < 0.80:
+            return 'supercritical'
+        return 'saturated'
 
     def analyze(self) -> dict:
         """

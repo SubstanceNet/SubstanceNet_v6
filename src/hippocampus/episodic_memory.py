@@ -4,7 +4,7 @@ System Classification: src.hippocampus.episodic_memory
 Author: Oleksii Onasenko
 Developer: SubstanceNet — https://github.com/SubstanceNet
 Code: Claude (Anthropic)
-License: MIT
+License: Apache-2.0
 
 Theoretical Framework:
     - 2D-Substance Theory (Onasenko, 2025-2026)

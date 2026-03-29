@@ -3,7 +3,7 @@ System Classification: src.model.substance_net
 Author: Oleksii Onasenko
 Developer: SubstanceNet — https://github.com/SubstanceNet
 Code: Claude (Anthropic)
-License: MIT
+License: Apache-2.0
 
 Theoretical Framework:
     - 2D-Substance Theory (Onasenko, 2025-2026)
@@ -53,7 +53,9 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-from src.cortex import BiologicalV1
+from src.cortex import BiologicalV1, MosaicField18, DynamicFormV3, ObjectFeaturesV4
+from src.hippocampus import Hippocampus
+from src.constants import OPTIMAL_REFLEXIVITY_MIN, OPTIMAL_REFLEXIVITY_MAX
 from src.wave import QuantumWaveFunction
 from src.consciousness import ReflexiveConsciousness
 from src.model.layers import (
@@ -107,6 +109,7 @@ class SubstanceNet(nn.Module):
     def __init__(
         self,
         num_classes: int = 10,
+        in_channels: int = 1,
         v1_orientations: int = 8,
         v1_scales: int = 3,
         v1_dim: int = 64,
@@ -126,7 +129,7 @@ class SubstanceNet(nn.Module):
         # === Core Modules ===
 
         # V1: image -> sequence [B, 9, v1_dim]
-        self.v1 = BiologicalV1(v1_orientations, v1_scales, v1_dim)
+        self.v1 = BiologicalV1(v1_orientations, v1_scales, v1_dim, in_channels)
 
         # Orientation expansion: [B, 9, v1_dim] -> [B, 9, v1_dim * orient_expand]
         self.orientation = OrientationSelectivity(v1_dim, orient_expand)
@@ -140,8 +143,25 @@ class SubstanceNet(nn.Module):
         self.nonlocal_interaction = NonLocalInteraction(
             feature_dim, num_attn_heads)
 
-        # Abstraction: [B, 9, feature_dim] -> [B, abstract_dim]
-        self.abstraction = AbstractionLayer(feature_dim, abstract_dim)
+        # V2: three-stripe contour/texture processing (Hubel & Wiesel V2 cortex)
+        # CRITICAL: prevents abstract collapse and consciousness saturation
+        self.v2 = MosaicField18(feature_dim, feature_dim)
+
+        # V3: cross-stream gating for dynamic form (Felleman & Van Essen)
+        self.v3 = DynamicFormV3(feature_dim)
+
+        # V4: object-level feature extraction (Zeki)
+        self.v4 = ObjectFeaturesV4(feature_dim)
+
+        # Coherence compression: V4 output -> reduced dim (matches v3.1.1)
+        self.coherent_dim = feature_dim // 2  # 128 -> 64
+        self.coherence_fc = nn.Linear(feature_dim, self.coherent_dim)
+
+        # Stability pathway for classifier (matches v3.1.1)
+        self.stability_fc = nn.Linear(self.coherent_dim, self.coherent_dim)
+
+        # Abstraction: [B, 9, coherent_dim] -> [B, abstract_dim]
+        self.abstraction = AbstractionLayer(self.coherent_dim, abstract_dim)
 
         # Reflexive consciousness: [B, abstract_dim] -> psi_C
         self.consciousness = ReflexiveConsciousness(
@@ -152,7 +172,7 @@ class SubstanceNet(nn.Module):
         # does not directly produce classification features)
         seq_len = 9  # V1 output: 3x3 patches
         self.classifier = nn.Sequential(
-            nn.Linear(feature_dim * seq_len, 256),
+            nn.Linear(self.coherent_dim * seq_len, 256),
             nn.ReLU(),
             nn.Dropout(0.3),
             nn.Linear(256, num_classes),
@@ -165,36 +185,117 @@ class SubstanceNet(nn.Module):
         # In v3.1.1 this was abstract_loss = CE(abstract_pred, abstract_target).
         self.abstract_classifier = nn.Linear(abstract_dim, num_classes)
 
+        # === Cognitive Input Path ===
+        # Bypasses V1 for non-image cognitive tasks (logic, memory, etc.)
+        # Maps flat cognitive data to same shape as V1 output: [B, 9, feature_dim]
+        self.cognitive_input = nn.Sequential(
+            nn.Linear(64, 64 * 9),  # max input=64, output matches V1 (64 per patch)
+            nn.ReLU(),
+        )
+        self._v1_dim = 64  # V1 output dim
+        self._seq_len = 9  # V1 output sequence length
+
+        # === Hippocampus (episodic memory) ===
+        # Receives abstract representations modulated by consciousness.
+        # Not part of forward pass — controlled by training loop via
+        # store_episode(), recall(), and consolidate_memory() methods.
+        self.hippocampus = Hippocampus(
+            input_dim=abstract_dim,
+            hidden_dim=256,
+            consciousness_dim=consciousness_dim,
+            buffer_size=1000,
+            num_prototypes=num_classes,
+        )
+
         # === Loss Functions ===
         self.phase_loss = PhaseCoherenceLoss(weight=0.1)
         self.topo_loss = TopologicalLoss(weight=0.01)
 
-    def forward(self, x: torch.Tensor) -> Dict[str, torch.Tensor]:
+    def forward(self, x: torch.Tensor,
+                mode: str = "auto") -> Dict[str, torch.Tensor]:
         """
         Forward pass through the complete pipeline.
 
         Parameters
         ----------
         x : torch.Tensor
-            Grayscale image [B, 1, H, W].
-
-        Returns
-        -------
-        dict
-            Keys:
-            - logits: classification logits [B, num_classes]
-            - abstract: abstract representation [B, abstract_dim]
-            - psi_c: complex consciousness wave function [B, c_dim/2]
-            - amplitude_c: consciousness amplitude [B, c_dim/2]
-            - phase_c: consciousness phase [B, c_dim/2]
-            - amplitude: wave function amplitude [B, 9, wave_ch/2]
-            - phase: wave function phase [B, 9, wave_ch/2]
-            - v1_activations: dict of V1 layer activations
+            Image [B, 1, H, W] or flat cognitive data [B, *].
+        mode : str
+            "image" — force V1 path.
+            "cognitive" — force cognitive input path (bypass V1).
+            "auto" — detect from tensor shape (4D = image, else cognitive).
         """
         batch_size = x.shape[0]
 
-        # V1: biological visual processing
-        v1_seq, v1_act = self.v1(x)
+        # Determine input mode
+        if mode == "auto":
+            if x.dim() == 5:
+                mode = "video"
+            elif x.dim() == 4:
+                mode = "image"
+            else:
+                mode = "cognitive"
+
+        if mode == "video":
+            # Video path: process each frame through V1->V2, collect for V3 temporal
+            # Input: [B, T, C, H, W]
+            B, T, C, H, W = x.shape
+            v2_sequence = []
+            amp_sequence = []
+            phase_sequence = []
+            for t in range(T):
+                frame = x[:, t]  # [B, C, H, W]
+                v1_seq_t, _ = self.v1(frame)
+                oriented_t = self.orientation(v1_seq_t)
+                _, amp_t, phase_t = self.wave(oriented_t)
+                feat_t = torch.cat([amp_t, phase_t], dim=-1)
+                feat_t = self.nonlocal_interaction(feat_t)
+                v2_t = self.v2(feat_t)
+                v2_sequence.append(v2_t)
+                amp_sequence.append(amp_t)
+                phase_sequence.append(phase_t)
+            # Stack: [B, T, seq_len, dim]
+            v2_temporal = torch.stack(v2_sequence, dim=1)
+            amp_temporal = torch.stack(amp_sequence, dim=1)
+            phase_temporal = torch.stack(phase_sequence, dim=1)
+            # V3 temporal integration with phase interference
+            v3_features = self.v3(v2_temporal, amp_temporal, phase_temporal)
+            # V4 onward uses the temporally integrated features
+            v4_features = self.v4(v3_features)
+            coherent = F.relu(self.coherence_fc(v4_features))
+            abstract = self.abstraction(coherent)
+            psi_c, amplitude_c, phase_c = self.consciousness(abstract)
+            stable = F.relu(self.stability_fc(coherent))
+            logits = self.classifier(stable.reshape(B, -1))
+            # Use last frame for amplitude/phase output
+            _, amplitude, phase = self.wave(self.orientation(self.v1(x[:, -1])[0]))
+            psi = amplitude * torch.exp(1j * phase)
+            return {
+                'logits': logits,
+                'abstract': abstract,
+                'psi_c': psi_c,
+                'amplitude_c': amplitude_c,
+                'phase_c': phase_c,
+                'amplitude': amplitude,
+                'phase': phase,
+                'psi': psi,
+                'v2_temporal': v2_temporal,
+            }
+        elif mode == "image":
+            # V1: biological visual processing
+            v1_seq, v1_act = self.v1(x)
+        else:
+            # Cognitive path: flat tensor -> [B, 9, feature_dim]
+            x_flat = x.reshape(batch_size, -1)
+            if x_flat.shape[1] < 64:
+                pad = torch.zeros(batch_size, 64 - x_flat.shape[1],
+                                  device=x.device, dtype=x.dtype)
+                x_flat = torch.cat([x_flat, pad], dim=1)
+            elif x_flat.shape[1] > 64:
+                x_flat = x_flat[:, :64]
+            v1_seq = self.cognitive_input(x_flat).reshape(
+                batch_size, self._seq_len, self._v1_dim)
+            v1_act = {}
 
         # Orientation expansion
         oriented = self.orientation(v1_seq)
@@ -208,14 +309,29 @@ class SubstanceNet(nn.Module):
         # Nonlocal interaction (attention-based V_ij)
         features = self.nonlocal_interaction(features)
 
+        # V2: three-stripe processing (Hubel V2 cortex)
+        v2_features = self.v2(features)
+
+        # V3: dynamic form (cross-stream gating)
+        v3_features = self.v3(v2_features)
+
+        # V4: object features (multi-scale attention)
+        v4_features = self.v4(v3_features)
+
+        # Coherence compression (V4 -> reduced representation)
+        coherent = F.relu(self.coherence_fc(v4_features))
+
         # Abstract representation (for consciousness)
-        abstract = self.abstraction(features)
+        abstract = self.abstraction(coherent)
 
         # Reflexive consciousness
         psi_c, amplitude_c, phase_c = self.consciousness(abstract)
 
-        # Classification (from processed features)
-        logits = self.classifier(features.reshape(batch_size, -1))
+        # Stability pathway (for classifier)
+        stable = F.relu(self.stability_fc(coherent))
+
+        # Classification (from stability-processed features)
+        logits = self.classifier(stable.reshape(batch_size, -1))
 
         return {
             'logits': logits,
@@ -276,13 +392,27 @@ class SubstanceNet(nn.Module):
         else:
             topo_loss = torch.tensor(0.0, device=target.device)
 
-        # Total loss (v3.1.1 compatible weighting)
+        # R-regulation: penalize reflexivity outside optimal range [0.35, 0.47]
+        # This prevents consciousness from saturating to trivial fixed point
+        with torch.no_grad():
+            psi_c_cat = torch.cat([output['amplitude_c'], output['phase_c']], dim=-1)
+            psi_c_proj = self.consciousness.project(psi_c_cat)
+            ref_error = F.mse_loss(psi_c_cat, psi_c_proj)
+            current_r = 1.0 / (1.0 + ref_error.item())
+
+        # Soft penalty: quadratic cost for R outside optimal band
+        r_target = (OPTIMAL_REFLEXIVITY_MIN + OPTIMAL_REFLEXIVITY_MAX) / 2  # 0.41
+        r_penalty = torch.tensor((current_r - r_target) ** 2,
+                                 device=target.device, dtype=cls_loss.dtype)
+
+        # Total loss (v3.1.1 compatible weighting + R-regulation)
         total = (cls_loss +
                  abstract_loss +
                  0.1 * cons_loss +
                  0.01 * zero_loss +
                  phase_loss +
-                 topo_loss)
+                 topo_loss +
+                 0.5 * r_penalty)
 
         return {
             'total': total,
@@ -292,6 +422,8 @@ class SubstanceNet(nn.Module):
             'zero_loss': zero_loss,
             'phase_coherence': phase_loss,
             'topological': topo_loss,
+            'r_penalty': r_penalty,
+            'current_r': current_r,
         }
 
     def get_consciousness_metrics(self,
@@ -312,6 +444,65 @@ class SubstanceNet(nn.Module):
         return self.consciousness.get_metrics(
             output['amplitude_c'], output['phase_c'])
 
+    def store_episode(self, output: Dict[str, torch.Tensor],
+                       task_type: str = 'unknown',
+                       metrics: Optional[dict] = None) -> dict:
+        """
+        Store current abstract state as episodic memory.
+
+        Call from training loop after forward() and compute_loss().
+        Consciousness state modulates importance scoring.
+
+        Parameters
+        ----------
+        output : dict
+            Output from forward().
+        task_type : str
+            Task identifier.
+        metrics : dict, optional
+            Performance metrics (accuracy, loss, etc).
+
+        Returns
+        -------
+        dict
+            Episode info: id, importance, buffer_size.
+        """
+        abstract = output['abstract'].detach()
+        # Use consciousness amplitude as importance signal
+        consciousness_state = output['amplitude_c'].detach()
+        return self.hippocampus.encode_and_store(
+            abstract, consciousness_state, task_type, metrics)
+
+    def recall(self, output: Dict[str, torch.Tensor],
+               top_k: int = 5) -> list:
+        """
+        Retrieve similar episodes from memory.
+
+        Parameters
+        ----------
+        output : dict
+            Output from forward().
+        top_k : int
+            Number of episodes to retrieve.
+
+        Returns
+        -------
+        list
+            Similar episodes with context and importance.
+        """
+        abstract = output['abstract'].detach()
+        consciousness_state = output['amplitude_c'].detach()
+        return self.hippocampus.retrieve_similar(
+            abstract, consciousness_state, top_k)
+
+    def consolidate_memory(self):
+        """Consolidate short-term episodic memory into long-term prototypes."""
+        self.hippocampus.consolidate()
+
+    def get_memory_state(self) -> dict:
+        """Return current hippocampus state summary."""
+        return self.hippocampus.get_state()
+
     def count_parameters(self) -> Dict[str, int]:
         """Count parameters per module."""
         counts = {}
@@ -319,11 +510,18 @@ class SubstanceNet(nn.Module):
             ('v1', self.v1),
             ('orientation', self.orientation),
             ('wave', self.wave),
+            ('v2', self.v2),
+            ('v3', self.v3),
+            ('v4', self.v4),
             ('nonlocal', self.nonlocal_interaction),
+            ('coherence_fc', self.coherence_fc),
+            ('stability_fc', self.stability_fc),
             ('abstraction', self.abstraction),
             ('consciousness', self.consciousness),
             ('classifier', self.classifier),
             ('abstract_classifier', self.abstract_classifier),
+            ('cognitive_input', self.cognitive_input),
+            ('hippocampus', self.hippocampus),
         ]:
             counts[name] = sum(p.numel() for p in module.parameters())
         counts['total'] = sum(p.numel() for p in self.parameters())
