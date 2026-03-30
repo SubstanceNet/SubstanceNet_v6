@@ -10,3 +10,4 @@ from .reflexive import ReflexiveConsciousness
 from .controller import TemporalConsciousnessController
 
 __all__ = ['ReflexiveConsciousness', 'TemporalConsciousnessController']
+from .reflexive_v2 import ReflexiveConsciousnessV2

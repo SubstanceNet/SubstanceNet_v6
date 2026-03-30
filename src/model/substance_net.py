@@ -57,7 +57,7 @@ from src.cortex import BiologicalV1, MosaicField18, DynamicFormV3, ObjectFeature
 from src.hippocampus import Hippocampus
 from src.constants import OPTIMAL_REFLEXIVITY_MIN, OPTIMAL_REFLEXIVITY_MAX
 from src.wave import QuantumWaveFunction, WaveFunctionOnT, NonlocalWaveInteraction
-from src.consciousness import ReflexiveConsciousness
+from src.consciousness import ReflexiveConsciousness, ReflexiveConsciousnessV2
 from src.model.layers import (
     OrientationSelectivity,
     NonLocalInteraction,
@@ -120,6 +120,7 @@ class SubstanceNet(nn.Module):
         num_iterations: int = 3,
         num_attn_heads: int = 2,
         use_wave_on_t: bool = False,
+        use_consciousness_v2: bool = False,
     ):
         super().__init__()
 
@@ -174,8 +175,13 @@ class SubstanceNet(nn.Module):
         self.abstraction = AbstractionLayer(self.coherent_dim, abstract_dim)
 
         # Reflexive consciousness: [B, abstract_dim] -> psi_C
-        self.consciousness = ReflexiveConsciousness(
-            abstract_dim, consciousness_dim, num_iterations)
+        self.use_consciousness_v2 = use_consciousness_v2
+        if use_consciousness_v2:
+            self.consciousness = ReflexiveConsciousnessV2(
+                abstract_dim, consciousness_dim, num_iterations)
+        else:
+            self.consciousness = ReflexiveConsciousness(
+                abstract_dim, consciousness_dim, num_iterations)
 
         # === Classification Head ===
         # Uses features before consciousness (consciousness monitors,
@@ -427,20 +433,24 @@ class SubstanceNet(nn.Module):
         else:
             topo_loss = torch.tensor(0.0, device=target.device)
 
-        # R-regulation: penalize reflexivity outside optimal range [0.35, 0.47]
-        # This prevents consciousness from saturating to trivial fixed point
-        with torch.no_grad():
-            psi_c_cat = torch.cat([output['amplitude_c'], output['phase_c']], dim=-1)
-            psi_c_proj = self.consciousness.project(psi_c_cat)
-            ref_error = F.mse_loss(psi_c_cat, psi_c_proj)
-            current_r = 1.0 / (1.0 + ref_error.item())
+        # R-regulation
+        if self.use_consciousness_v2:
+            # V2: R emerges from wave dynamics, no artificial target
+            # consciousness_loss already handles coherence balance
+            r_penalty = torch.tensor(0.0, device=target.device)
+            current_r = self.get_consciousness_metrics(output)['reflexivity_score']
+        else:
+            # V1: penalize reflexivity outside optimal range [0.35, 0.47]
+            with torch.no_grad():
+                psi_c_cat = torch.cat([output['amplitude_c'], output['phase_c']], dim=-1)
+                psi_c_proj = self.consciousness.project(psi_c_cat)
+                ref_error = F.mse_loss(psi_c_cat, psi_c_proj)
+                current_r = 1.0 / (1.0 + ref_error.item())
+            r_target = (OPTIMAL_REFLEXIVITY_MIN + OPTIMAL_REFLEXIVITY_MAX) / 2
+            r_penalty = torch.tensor((current_r - r_target) ** 2,
+                                     device=target.device, dtype=cls_loss.dtype)
 
-        # Soft penalty: quadratic cost for R outside optimal band
-        r_target = (OPTIMAL_REFLEXIVITY_MIN + OPTIMAL_REFLEXIVITY_MAX) / 2  # 0.41
-        r_penalty = torch.tensor((current_r - r_target) ** 2,
-                                 device=target.device, dtype=cls_loss.dtype)
-
-        # Total loss (v3.1.1 compatible weighting + R-regulation)
+        # Total loss
         total = (cls_loss +
                  abstract_loss +
                  0.1 * cons_loss +
