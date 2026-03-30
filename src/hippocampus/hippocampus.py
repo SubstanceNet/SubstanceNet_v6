@@ -79,7 +79,8 @@ class Hippocampus(nn.Module):
 
     def __init__(self, input_dim: int, hidden_dim: int = 256,
                  consciousness_dim: int = 64, buffer_size: int = 1000,
-                 num_prototypes: int = 10, forgetting_rate: float = 0.01):
+                 num_prototypes: int = 10, forgetting_rate: float = 0.01,
+                 feature_dim: int = 128):
         super().__init__()
 
         self.encoder = EpisodicEncoder(
@@ -92,6 +93,16 @@ class Hippocampus(nn.Module):
         self.total_episodes = 0
         self.forgetting_rate = forgetting_rate
         self.memory_decay = nn.Parameter(torch.tensor(0.99))
+
+        # Feature encoder for recognition (128-dim amp+phase → hidden_dim)
+        self.feature_dim = feature_dim
+        self.feature_encoder = nn.Sequential(
+            nn.Linear(feature_dim, hidden_dim),
+            nn.ReLU(),
+            nn.Linear(hidden_dim, hidden_dim),
+        )
+        self.feature_memory = []
+        self.max_feature_memory = buffer_size
 
     def encode_and_store(self, x: torch.Tensor,
                          consciousness_state: Optional[torch.Tensor] = None,
@@ -219,6 +230,98 @@ class Hippocampus(nn.Module):
 
         for episode in to_remove:
             self.short_term_buffer.remove(episode)
+
+    def store_feature(self, features: torch.Tensor, label: int):
+        """
+        Store recognition features (128-dim) in feature memory.
+
+        Parameters
+        ----------
+        features : torch.Tensor
+            [feature_dim] — amplitude+phase features.
+        label : int
+            Class label.
+        """
+        with torch.no_grad():
+            encoded = self.feature_encoder(features.unsqueeze(0)).squeeze(0)
+        self.feature_memory.append((encoded.detach().cpu(), label))
+        if len(self.feature_memory) > self.max_feature_memory:
+            self.feature_memory.pop(0)
+
+    def recognize(self, features: torch.Tensor, top_k: int = 5) -> int:
+        """
+        Recognize by comparing features with stored memory.
+
+        Parameters
+        ----------
+        features : torch.Tensor
+            [feature_dim] — query features.
+        top_k : int
+            Number of neighbors for voting.
+
+        Returns
+        -------
+        int
+            Predicted class label (-1 if memory empty).
+        """
+        if not self.feature_memory:
+            return -1
+
+        with torch.no_grad():
+            query = self.feature_encoder(features.unsqueeze(0)).squeeze(0)
+            query = query.cpu()
+
+            mem_feats = torch.stack([m[0] for m in self.feature_memory])
+            sims = torch.nn.functional.cosine_similarity(
+                query.unsqueeze(0), mem_feats, dim=1)
+            topk_vals, topk_idx = sims.topk(min(top_k, len(self.feature_memory)))
+
+            votes = {}
+            for j in range(topk_vals.shape[0]):
+                lbl = self.feature_memory[topk_idx[j].item()][1]
+                votes[lbl] = votes.get(lbl, 0) + topk_vals[j].item()
+
+        return max(votes, key=votes.get) if votes else -1
+
+    def clear_feature_memory(self):
+        """Clear feature memory."""
+        self.feature_memory = []
+
+    def get_feature_memory_size(self) -> int:
+        """Return number of stored features."""
+        return len(self.feature_memory)
+
+    def store_feature(self, features: torch.Tensor, label: int):
+        """Store 128-dim recognition features in feature memory."""
+        with torch.no_grad():
+            encoded = self.feature_encoder(features.unsqueeze(0)).squeeze(0)
+        self.feature_memory.append((encoded.detach().cpu(), label))
+        if len(self.feature_memory) > self.max_feature_memory:
+            self.feature_memory.pop(0)
+
+    def recognize(self, features: torch.Tensor, top_k: int = 5) -> int:
+        """Recognize by kNN voting on encoded feature memory."""
+        if not self.feature_memory:
+            return -1
+        with torch.no_grad():
+            query = self.feature_encoder(features.unsqueeze(0)).squeeze(0).cpu()
+            mem_feats = torch.stack([m[0] for m in self.feature_memory])
+            sims = torch.nn.functional.cosine_similarity(
+                query.unsqueeze(0), mem_feats, dim=1)
+            topk_vals, topk_idx = sims.topk(min(top_k, len(self.feature_memory)))
+            votes = {}
+            for j in range(topk_vals.shape[0]):
+                lbl = self.feature_memory[topk_idx[j].item()][1]
+                votes[lbl] = votes.get(lbl, 0) + topk_vals[j].item()
+        return max(votes, key=votes.get) if votes else -1
+
+    def clear_feature_memory(self):
+        """Clear feature memory."""
+        self.feature_memory = []
+
+    def get_feature_memory_size(self) -> int:
+        """Return number of stored features."""
+        return len(self.feature_memory)
 
     def get_state(self) -> Dict[str, Any]:
         """Return current memory system state summary."""

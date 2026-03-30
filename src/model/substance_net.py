@@ -221,6 +221,7 @@ class SubstanceNet(nn.Module):
             consciousness_dim=consciousness_dim,
             buffer_size=1000,
             num_prototypes=num_classes,
+            feature_dim=wave_channels,  # 128 — amplitude+phase dim
         )
 
         # === Loss Functions ===
