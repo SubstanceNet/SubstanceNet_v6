@@ -56,7 +56,7 @@ import torch.nn.functional as F
 from src.cortex import BiologicalV1, MosaicField18, DynamicFormV3, ObjectFeaturesV4
 from src.hippocampus import Hippocampus
 from src.constants import OPTIMAL_REFLEXIVITY_MIN, OPTIMAL_REFLEXIVITY_MAX
-from src.wave import QuantumWaveFunction
+from src.wave import QuantumWaveFunction, WaveFunctionOnT, NonlocalWaveInteraction
 from src.consciousness import ReflexiveConsciousness
 from src.model.layers import (
     OrientationSelectivity,
@@ -119,6 +119,7 @@ class SubstanceNet(nn.Module):
         abstract_dim: int = 3,
         num_iterations: int = 3,
         num_attn_heads: int = 2,
+        use_wave_on_t: bool = False,
     ):
         super().__init__()
 
@@ -146,6 +147,15 @@ class SubstanceNet(nn.Module):
         # V2: three-stripe contour/texture processing (Hubel & Wiesel V2 cortex)
         # CRITICAL: prevents abstract collapse and consciousness saturation
         self.v2 = MosaicField18(feature_dim, feature_dim)
+
+        # Wave function on configuration space T (Onasenko/Dubovikov/Tsien)
+        self.use_wave_on_t = use_wave_on_t
+        if use_wave_on_t:
+            v2_stream_dim = feature_dim // 3  # V2 has 3 streams
+            self.wave_on_t = WaveFunctionOnT(
+                n_streams=3, stream_dim=v2_stream_dim)
+            self.wave_on_t_interaction = NonlocalWaveInteraction(
+                self.wave_on_t, output_dim=feature_dim)
 
         # V3: cross-stream gating for dynamic form (Felleman & Van Essen)
         self.v3 = DynamicFormV3(feature_dim)
@@ -258,6 +268,21 @@ class SubstanceNet(nn.Module):
             v2_temporal = torch.stack(v2_sequence, dim=1)
             amp_temporal = torch.stack(amp_sequence, dim=1)
             phase_temporal = torch.stack(phase_sequence, dim=1)
+            # Wave function on T (if enabled) — per frame
+            if self.use_wave_on_t:
+                v2_processed = []
+                for t in range(T):
+                    v2_t = v2_temporal[:, t]  # [B, seq, dim]
+                    ss = v2_t.shape[-1] // 3
+                    streams_t = [
+                        v2_t[..., :ss],
+                        v2_t[..., ss:2*ss],
+                        v2_t[..., 2*ss:2*ss+ss],
+                    ]
+                    v2_processed.append(
+                        self.wave_on_t_interaction(streams_t))
+                v2_temporal = torch.stack(v2_processed, dim=1)
+
             # V3 temporal integration with phase interference
             v3_features = self.v3(v2_temporal, amp_temporal, phase_temporal)
             # V4 onward uses the temporally integrated features
@@ -311,6 +336,16 @@ class SubstanceNet(nn.Module):
 
         # V2: three-stripe processing (Hubel V2 cortex)
         v2_features = self.v2(features)
+
+        # Wave function on T (if enabled)
+        if self.use_wave_on_t:
+            ss = v2_features.shape[-1] // 3
+            v2_streams = [
+                v2_features[..., :ss],
+                v2_features[..., ss:2*ss],
+                v2_features[..., 2*ss:2*ss+ss],
+            ]
+            v2_features = self.wave_on_t_interaction(v2_streams)
 
         # V3: dynamic form (cross-stream gating)
         v3_features = self.v3(v2_features)
