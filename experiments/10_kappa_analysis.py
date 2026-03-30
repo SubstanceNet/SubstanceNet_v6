@@ -20,6 +20,7 @@ Tests:
   4. Comparison: consciousness v1 (forced R) vs v2 (emergent R)
 """
 from config import *
+import gc
 set_seed()
 
 import torch.optim as optim
@@ -143,6 +144,9 @@ def run():
                 'R': kappa_data['R'],
                 'trajectory': kappa_data['trajectory'],
             })
+            del model, optimizer, out
+            torch.cuda.empty_cache()
+            gc.collect()
         
         results_by_version[version_name] = task_results
         
@@ -237,6 +241,9 @@ def run():
                 
                 print(f'  {epoch+1:>6} {acc:>7.4f} {Lambda:>8.4f} '
                       f'{A:>8.4f} {kd["R"]:>7.4f} {kappa:>7.4f}')
+        del model, optimizer
+        torch.cuda.empty_cache()
+        gc.collect()
     
     # =============================================
     # TEST 3: Disabled vs enabled consciousness
@@ -285,6 +292,9 @@ def run():
         
         print(f'  {label:<25} acc={acc:.4f}  R={kd["R"]:.4f}  '
               f'Λ={kd["Lambda"]:.4f}  A={kd["A"]:.4f}')
+        del model, optimizer
+        torch.cuda.empty_cache()
+        gc.collect()
     
     # =============================================
     # PLOTS

@@ -1,78 +1,78 @@
 {
   "logic": {
     "accuracy": 1.0,
-    "reflexivity": 0.4087725549298256,
-    "coherence": 0.9999297658195754,
-    "abstract_variance": 21.31665802001953,
+    "reflexivity": 0.4102196961405858,
+    "coherence": 0.9998218122275261,
+    "abstract_variance": 27.844120025634766,
     "phase": "critical"
   },
   "memory": {
     "accuracy": 1.0,
-    "reflexivity": 0.4078456265470562,
-    "coherence": 0.9997016649307742,
-    "abstract_variance": 29.47870445251465,
+    "reflexivity": 0.4095107394560092,
+    "coherence": 0.9998513943315215,
+    "abstract_variance": 24.78866195678711,
     "phase": "critical"
   },
   "categorization": {
     "accuracy": 1.0,
-    "reflexivity": 0.40977351347211083,
-    "coherence": 0.9998822115267427,
-    "abstract_variance": 29.373342514038086,
+    "reflexivity": 0.4088164218835636,
+    "coherence": 0.9998565901668023,
+    "abstract_variance": 24.43830680847168,
     "phase": "critical"
   },
   "analogy": {
     "accuracy": 1.0,
-    "reflexivity": 0.40893876917279504,
-    "coherence": 0.9998754502506005,
-    "abstract_variance": 28.726028442382812,
+    "reflexivity": 0.41027129839889387,
+    "coherence": 0.9996515263608138,
+    "abstract_variance": 25.31581687927246,
     "phase": "critical"
   },
   "spatial": {
     "accuracy": 1.0,
-    "reflexivity": 0.4106533016570334,
-    "coherence": 0.9999242656406857,
-    "abstract_variance": 24.4189510345459,
+    "reflexivity": 0.4086698769382887,
+    "coherence": 0.9999374292267204,
+    "abstract_variance": 25.234893798828125,
     "phase": "critical"
   },
   "raven": {
-    "accuracy": 0.984375,
-    "reflexivity": 0.4089984048853142,
-    "coherence": 0.999753850729252,
-    "abstract_variance": 11.348264694213867,
+    "accuracy": 0.9921875,
+    "reflexivity": 0.40898436669645905,
+    "coherence": 0.9996855484763227,
+    "abstract_variance": 12.525938987731934,
     "phase": "critical"
   },
   "numerical": {
     "accuracy": 1.0,
-    "reflexivity": 0.40851189823979583,
-    "coherence": 0.99980990553781,
-    "abstract_variance": 24.226634979248047,
+    "reflexivity": 0.41085463128126615,
+    "coherence": 0.9998889193865128,
+    "abstract_variance": 25.857589721679688,
     "phase": "critical"
   },
   "verbal": {
     "accuracy": 1.0,
-    "reflexivity": 0.40854178103513905,
-    "coherence": 0.9998754202762257,
-    "abstract_variance": 26.996389389038086,
+    "reflexivity": 0.410081264804667,
+    "coherence": 0.9996380149819378,
+    "abstract_variance": 25.585952758789062,
     "phase": "critical"
   },
   "emotional": {
     "accuracy": 1.0,
-    "reflexivity": 0.40921779697165656,
-    "coherence": 0.9998771724609682,
-    "abstract_variance": 25.9005126953125,
+    "reflexivity": 0.40955066594273043,
+    "coherence": 0.9999293566960807,
+    "abstract_variance": 25.417404174804688,
     "phase": "critical"
   },
   "insight": {
     "accuracy": 1.0,
-    "reflexivity": 0.4089742175266293,
-    "coherence": 0.9998962562957179,
-    "abstract_variance": 22.870506286621094,
+    "reflexivity": 0.40867533215130725,
+    "coherence": 0.9998874820177098,
+    "abstract_variance": 15.323829650878906,
     "phase": "critical"
   },
   "summary": {
-    "mean_accuracy": 0.9984375,
-    "mean_reflexivity": 0.4090227864437356,
-    "std_reflexivity": 0.0007218660909595902,
+    "mean_accuracy": 0.99921875,
+    "mean_reflexivity": 0.4095634293693771,
+    "std_reflexivity": 0.0007314742691411488,
     "all_in_critical_regime": true,
     "v311_reference": {
       "accuracy": 0.9934,
@@ -80,7 +80,7 @@
     }
   },
   "_meta": {
-    "timestamp": "2026-03-29T21:49:07.423323",
+    "timestamp": "2026-03-31T01:40:01.499809",
     "seed": 42,
     "device": "cuda",
     "torch_version": "2.8.0+cu128"
