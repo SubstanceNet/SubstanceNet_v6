@@ -264,7 +264,7 @@ def run():
     ax.set_title('Motion Signal Amplification')
     ax.legend(fontsize=8, loc='center right')
     ax.annotate(f'Stabilizes: {v3_history[-1]:.2f}\n'
-                f'({v3_history[-1]/max(diffs_before[3], 1e-8):.0f}\u00d7 from baseline)',
+                f'({v3_history[-1]/max(diffs_before[3], 1e-8):.1f}\u00d7 from baseline)',
                 xy=(350, v3_history[-1]),
                 xytext=(200, v3_history[-1] * 1.25),
                 arrowprops=dict(arrowstyle='->', color=COLORS['primary']),

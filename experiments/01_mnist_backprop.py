@@ -127,7 +127,7 @@ def run():
     ax.set_ylabel('Accuracy (%)')
     ax.set_title('Training Accuracy')
     ax.legend(fontsize=8, loc='lower right')
-    ax.set_ylim(0, 100)
+    ax.set_ylim(75, 100)
 
     # R over training
     ax = axes[2]

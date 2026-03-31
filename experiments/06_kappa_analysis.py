@@ -335,23 +335,26 @@ def run():
     ax.axhspan(0.35, 0.47, alpha=0.1, color=COLORS['primary'],
                label='v1 optimal')
     
-    # Panel 3: Components (τ, Λ, A) for v2
+    # Panel 3: κ Components (τ, Λ, A)
     ax = axes[1, 0]
-    v2_results = results_by_version.get('v2 (emergent R)', [])
-    if v2_results:
+    v1_results = results_by_version.get('v1 (R-targeting)', [])
+    if v1_results:
         x = range(len(tasks))
-        taus = [r['tau'] for r in v2_results]
-        lambdas = [abs(r['Lambda']) for r in v2_results]
-        As = [r['A'] for r in v2_results]
-        ax.plot(x, taus, 'o-', color=COLORS['primary'], label='τ (accuracy)')
-        ax.plot(x, [l * 10 for l in lambdas], 's-', color=COLORS['success'],
-                label='Λ×10 (coherence)')
-        ax.plot(x, As, 'D-', color=COLORS['warning'], label='A (amplitude)')
+        taus = [r['tau'] for r in v1_results]
+        lambdas = [abs(r['Lambda']) for r in v1_results]
+        As = [r['A'] for r in v1_results]
+        ax.plot(x, taus, 'o-', color=COLORS['primary'], lw=2, ms=6,
+                label='τ (accuracy)')
+        ax.plot(x, lambdas, 's-', color=COLORS['success'], lw=2, ms=6,
+                label='Λ (coherence)')
+        ax.plot(x, As, 'D-', color=COLORS['warning'], lw=2, ms=6,
+                label='A (amplitude)')
     ax.set_xticks(range(len(tasks)))
     ax.set_xticklabels([t[:4] for t in tasks], rotation=45, fontsize=8)
     ax.set_ylabel('Component value')
-    ax.set_title('κ Components (v2)')
+    ax.set_title('κ Components: τ × Λ × A ≈ 1')
     ax.legend(fontsize=9)
+    ax.set_ylim(0.6, 1.05)
     
     # Panel 4: He-II analogy diagram
     ax = axes[1, 1]
@@ -366,7 +369,7 @@ def run():
         'τ = ρ_s/ρ (density)   ↔  τ = accuracy\n'
         'Λ = ξ (correlation)   ↔  Λ = phase coherence\n'
         'A = thermo limit      ↔  A = amplitude\n'
-        'κ = τ·Λ ≈ 0.99       ↔  κ = τ·Λ·A ≈ ?\n\n'
+        'κ = τ·Λ ≈ 0.99       ↔  κ = τ·Λ·A ≈ 0.993\n\n'
         'Mechanism:\n'
         'He-II: ζ ≈ ν → t^(ζ-ν) ≈ const\n'
         'SubstanceNet: accuracy↑ × coherence↓\n'

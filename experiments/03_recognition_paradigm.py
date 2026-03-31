@@ -263,8 +263,8 @@ def run():
                       f'\u00b1 {np.std(trial_accs)*100:.1f}%')
     ax.axhline(y=10, color=COLORS['danger'], linestyle=':',
                alpha=0.5, label='Random baseline (10%)')
-    ax.axhline(y=95.94, color=COLORS['gray'], linestyle='--',
-               alpha=0.4, label='Backprop reference (95.9%)')
+    ax.axhline(y=97.43, color=COLORS['gray'], linestyle='--',
+               alpha=0.4, label='Backprop reference (97.4%)')
     ax.set_xscale('log')
     ax.set_xlabel('Examples per class (N)')
     ax.set_ylabel('Recognition accuracy (%)')
@@ -313,7 +313,7 @@ def run():
     ax.text(0.5, stage_accs[0] * 100 - 5, 'FFT+diff\nno training',
             ha='center', fontsize=8, color=COLORS['success'], style='italic')
     ax.text(2.5, stage_accs[2] * 100 + 8,
-            'V3/V4 random weights:\nneutral (neither help nor hurt)',
+            'V4 random weights:\nattention without training hurts',
             fontsize=8, color=COLORS['gray'], ha='center', style='italic')
     from matplotlib.patches import Patch
     legend_elements = [
