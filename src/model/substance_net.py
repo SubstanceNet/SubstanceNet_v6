@@ -171,6 +171,18 @@ class SubstanceNet(nn.Module):
         self.consciousness = ReflexiveConsciousness(
             abstract_dim, consciousness_dim, num_iterations)
 
+        # Top-down gate: ψ_C → V4 modulation (infrastructure for v7)
+        # Biological basis: prefrontal cortex → V4 feedback connections
+        # Initially inactive (bias=0 → sigmoid=0.5 → neutral gate)
+        self.topdown_gate = nn.Sequential(
+            nn.Linear(consciousness_dim // 2, feature_dim),
+            nn.Sigmoid(),
+        )
+        # Start with zero weight → gate outputs 0.5 (neutral)
+        nn.init.zeros_(self.topdown_gate[0].weight)
+        nn.init.zeros_(self.topdown_gate[0].bias)
+        self.topdown_weight = nn.Parameter(torch.tensor(0.0))  # off by default
+
         # === Classification Head ===
         # Uses features before consciousness (consciousness monitors,
         # does not directly produce classification features)
@@ -337,6 +349,15 @@ class SubstanceNet(nn.Module):
 
         # Reflexive consciousness
         psi_c, amplitude_c, phase_c = self.consciousness(abstract)
+
+        # Top-down modulation: ψ_C → V4 gate (inactive in v6, active in v7)
+        # gate = sigmoid(Linear(amplitude_c)) ∈ [0, 1] per feature
+        # w = 0 → gate = 0.5 → v4 * (1 + 0*0.5) = v4 (no effect)
+        td_gate = self.topdown_gate(amplitude_c)  # [B, feature_dim]
+        td_weight = torch.sigmoid(self.topdown_weight)  # scalar in [0,1]
+        # Modulate: v4 * (1 + w * (gate - 0.5))
+        # When w=0: no effect. When w>0: gate amplifies/suppresses features.
+        v4_features = v4_features * (1.0 + td_weight * (td_gate.unsqueeze(1) - 0.5))
 
         # Stability pathway (for classifier)
         stable = F.relu(self.stability_fc(coherent))
@@ -529,8 +550,10 @@ class SubstanceNet(nn.Module):
             ('classifier', self.classifier),
             ('abstract_classifier', self.abstract_classifier),
             ('cognitive_input', self.cognitive_input),
+            ('topdown_gate', self.topdown_gate),
             ('hippocampus', self.hippocampus),
         ]:
             counts[name] = sum(p.numel() for p in module.parameters())
+        counts['topdown_weight'] = self.topdown_weight.numel()
         counts['total'] = sum(p.numel() for p in self.parameters())
         return counts
