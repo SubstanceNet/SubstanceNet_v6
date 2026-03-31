@@ -1,58 +1,50 @@
 """
-System Classification: tests.test_wave
-Author: Oleksii Onasenko
-Developer: SubstanceNet — https://github.com/SubstanceNet
-Code: Claude (Anthropic)
-License: Apache-2.0
-
-Tests for QuantumWaveFunction module.
+Tests for feature projection (v6).
+Replaces QuantumWaveFunction tests after v6 cleanup.
 """
-
-import torch
 import pytest
+import torch
+from src.model.substance_net import SubstanceNet
 
 
-def test_wave_function_output_shape():
-    """Wave function produces correct output shapes."""
-    from src.wave import QuantumWaveFunction
-
-    wf = QuantumWaveFunction(in_channels=48, out_channels=32, grid_size=256)
-    x = torch.randn(2, 256, 48)
-    psi, amp, phase = wf(x)
-
-    assert psi.shape == (2, 256, 16), f"psi shape: {psi.shape}"
-    assert amp.shape == (2, 256, 16), f"amp shape: {amp.shape}"
-    assert phase.shape == (2, 256, 16), f"phase shape: {phase.shape}"
-    assert psi.is_complex(), "psi must be complex"
+@pytest.fixture
+def model():
+    return SubstanceNet(num_classes=10)
 
 
-def test_amplitude_non_negative():
-    """Amplitude is always non-negative (softplus guarantee)."""
-    from src.wave import QuantumWaveFunction
-
-    wf = QuantumWaveFunction(in_channels=16, out_channels=8)
-    x = torch.randn(4, 64, 16)
-    _, amp, _ = wf(x)
-
-    assert (amp >= 0).all(), "Amplitude must be non-negative"
-
-
-def test_zero_loss_computable():
-    """Zero-minimization loss computes without errors."""
-    from src.wave import QuantumWaveFunction
-
-    wf = QuantumWaveFunction(in_channels=16, out_channels=8)
-    x = torch.randn(2, 64, 16)
-    _, amp, phase = wf(x)
-    loss = wf.zero_loss(amp, phase)
-
-    assert loss.shape == (), "Loss must be scalar"
-    assert not torch.isnan(loss), "Loss must not be NaN"
+def test_feature_proj_output_shape(model):
+    """Feature projection produces correct shape."""
+    x = torch.randn(2, 1, 28, 28)
+    out = model(x, mode='image')
+    # amplitude and phase should have same shape
+    assert out['amplitude'].shape == out['phase'].shape
+    assert out['amplitude'].shape[0] == 2  # batch
+    assert out['amplitude'].shape[-1] == 64  # half of wave_channels=128
 
 
-def test_even_channels_required():
-    """Odd out_channels raises ValueError."""
-    from src.wave import QuantumWaveFunction
+def test_amplitude_non_negative(model):
+    """Amplitude-like features are non-negative (ReLU)."""
+    x = torch.randn(4, 1, 28, 28)
+    out = model(x, mode='image')
+    # After ReLU, features should be >= 0
+    features = torch.cat([out['amplitude'], out['phase']], dim=-1)
+    assert (features >= 0).all()
 
-    with pytest.raises(ValueError):
-        QuantumWaveFunction(in_channels=16, out_channels=7)
+
+def test_feature_regularization_computable(model):
+    """Feature regularization loss is computable."""
+    x = torch.randn(2, 1, 28, 28)
+    out = model(x, mode='image')
+    reg = 0.01 * (out['amplitude'].pow(2).mean() +
+                   out['phase'].pow(2).mean())
+    assert reg.item() >= 0
+    assert not torch.isnan(reg)
+
+
+def test_feature_dim_consistency(model):
+    """Feature dimensions consistent across modes."""
+    img = torch.randn(2, 1, 28, 28)
+    cog = torch.randn(2, 3, 3)
+    out_img = model(img, mode='image')
+    out_cog = model(cog, mode='cognitive')
+    assert out_img['amplitude'].shape[-1] == out_cog['amplitude'].shape[-1]

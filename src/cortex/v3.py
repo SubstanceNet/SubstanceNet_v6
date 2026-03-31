@@ -62,7 +62,7 @@ class DynamicFormV3(nn.Module):
     num_streams : int
         Number of V2 streams (3: thick/thin/pale).
     phase_dim : int
-        Dimensionality of phase signal from QuantumWaveFunction.
+        Dimensionality of phase signal from feature projection.
     """
 
     def __init__(self, dim: int, num_streams: int = 3, phase_dim: int = 64):

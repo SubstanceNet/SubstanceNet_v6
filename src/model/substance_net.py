@@ -26,7 +26,7 @@ Data Flow:
     Image [B, 1, H, W]
         -> BiologicalV1        (Gabor -> Simple -> Complex -> Hyper)
         -> OrientationSelectivity  (per-channel orientation expansion)
-        -> QuantumWaveFunction     (psi = A * exp(i * phi))
+        -> FeatureProjection       (plain vectors, v6)
         -> NonLocalInteraction     (attention-based V_ij)
         -> AbstractionLayer        (spatial pooling + projection)
         -> ReflexiveConsciousness  (psi_C = F[P_hat[psi_C]])
@@ -56,8 +56,9 @@ import torch.nn.functional as F
 from src.cortex import BiologicalV1, MosaicField18, DynamicFormV3, ObjectFeaturesV4
 from src.hippocampus import Hippocampus
 from src.constants import OPTIMAL_REFLEXIVITY_MIN, OPTIMAL_REFLEXIVITY_MAX
-from src.wave import QuantumWaveFunction, WaveFunctionOnT, NonlocalWaveInteraction
-from src.consciousness import ReflexiveConsciousness, ReflexiveConsciousnessV2
+# Wave modules moved to research/ in v6
+# Plain vector projection replaces QuantumWaveFunction
+from src.consciousness import ReflexiveConsciousness
 from src.model.layers import (
     OrientationSelectivity,
     NonLocalInteraction,
@@ -119,8 +120,7 @@ class SubstanceNet(nn.Module):
         abstract_dim: int = 3,
         num_iterations: int = 3,
         num_attn_heads: int = 2,
-        use_wave_on_t: bool = False,
-        use_consciousness_v2: bool = False,
+
     ):
         super().__init__()
 
@@ -138,7 +138,9 @@ class SubstanceNet(nn.Module):
         oriented_dim = v1_dim * orient_expand
 
         # Wave function: [B, 9, oriented_dim] -> psi, amp, phase
-        self.wave = QuantumWaveFunction(oriented_dim, wave_channels)
+        # Plain vector projection (replaces QuantumWaveFunction in v6)
+        # Split into two streams for V3 compatibility (amplitude-like, phase-like)
+        self.feature_proj = nn.Linear(oriented_dim, wave_channels)
         feature_dim = wave_channels  # amp + phase concatenated
 
         # Nonlocal interaction (V_ij analogue)
@@ -148,15 +150,6 @@ class SubstanceNet(nn.Module):
         # V2: three-stripe contour/texture processing (Hubel & Wiesel V2 cortex)
         # CRITICAL: prevents abstract collapse and consciousness saturation
         self.v2 = MosaicField18(feature_dim, feature_dim)
-
-        # Wave function on configuration space T (Onasenko/Dubovikov/Tsien)
-        self.use_wave_on_t = use_wave_on_t
-        if use_wave_on_t:
-            v2_stream_dim = feature_dim // 3  # V2 has 3 streams
-            self.wave_on_t = WaveFunctionOnT(
-                n_streams=3, stream_dim=v2_stream_dim)
-            self.wave_on_t_interaction = NonlocalWaveInteraction(
-                self.wave_on_t, output_dim=feature_dim)
 
         # V3: cross-stream gating for dynamic form (Felleman & Van Essen)
         self.v3 = DynamicFormV3(feature_dim)
@@ -175,13 +168,8 @@ class SubstanceNet(nn.Module):
         self.abstraction = AbstractionLayer(self.coherent_dim, abstract_dim)
 
         # Reflexive consciousness: [B, abstract_dim] -> psi_C
-        self.use_consciousness_v2 = use_consciousness_v2
-        if use_consciousness_v2:
-            self.consciousness = ReflexiveConsciousnessV2(
-                abstract_dim, consciousness_dim, num_iterations)
-        else:
-            self.consciousness = ReflexiveConsciousness(
-                abstract_dim, consciousness_dim, num_iterations)
+        self.consciousness = ReflexiveConsciousness(
+            abstract_dim, consciousness_dim, num_iterations)
 
         # === Classification Head ===
         # Uses features before consciousness (consciousness monitors,
@@ -264,8 +252,10 @@ class SubstanceNet(nn.Module):
                 frame = x[:, t]  # [B, C, H, W]
                 v1_seq_t, _ = self.v1(frame)
                 oriented_t = self.orientation(v1_seq_t)
-                _, amp_t, phase_t = self.wave(oriented_t)
-                feat_t = torch.cat([amp_t, phase_t], dim=-1)
+                feat_t = F.relu(self.feature_proj(oriented_t))
+                half_t = feat_t.shape[-1] // 2
+                amp_t = feat_t[..., :half_t]
+                phase_t = feat_t[..., half_t:]
                 feat_t = self.nonlocal_interaction(feat_t)
                 v2_t = self.v2(feat_t)
                 v2_sequence.append(v2_t)
@@ -275,21 +265,6 @@ class SubstanceNet(nn.Module):
             v2_temporal = torch.stack(v2_sequence, dim=1)
             amp_temporal = torch.stack(amp_sequence, dim=1)
             phase_temporal = torch.stack(phase_sequence, dim=1)
-            # Wave function on T (if enabled) — per frame
-            if self.use_wave_on_t:
-                v2_processed = []
-                for t in range(T):
-                    v2_t = v2_temporal[:, t]  # [B, seq, dim]
-                    ss = v2_t.shape[-1] // 3
-                    streams_t = [
-                        v2_t[..., :ss],
-                        v2_t[..., ss:2*ss],
-                        v2_t[..., 2*ss:2*ss+ss],
-                    ]
-                    v2_processed.append(
-                        self.wave_on_t_interaction(streams_t))
-                v2_temporal = torch.stack(v2_processed, dim=1)
-
             # V3 temporal integration with phase interference
             v3_features = self.v3(v2_temporal, amp_temporal, phase_temporal)
             # V4 onward uses the temporally integrated features
@@ -300,7 +275,11 @@ class SubstanceNet(nn.Module):
             stable = F.relu(self.stability_fc(coherent))
             logits = self.classifier(stable.reshape(B, -1))
             # Use last frame for amplitude/phase output
-            _, amplitude, phase = self.wave(self.orientation(self.v1(x[:, -1])[0]))
+            last_oriented = self.orientation(self.v1(x[:, -1])[0])
+            last_features = F.relu(self.feature_proj(last_oriented))
+            half = last_features.shape[-1] // 2
+            amplitude = last_features[..., :half]
+            phase = last_features[..., half:]
             psi = amplitude * torch.exp(1j * phase)
             return {
                 'logits': logits,
@@ -332,27 +311,17 @@ class SubstanceNet(nn.Module):
         # Orientation expansion
         oriented = self.orientation(v1_seq)
 
-        # Wave function generation
-        psi, amplitude, phase = self.wave(oriented)
-
-        # Combine amplitude and phase as real-valued features
-        features = torch.cat([amplitude, phase], dim=-1)
+        # Feature projection (plain vectors, v6)
+        features = F.relu(self.feature_proj(oriented))
+        half = features.shape[-1] // 2
+        amplitude = features[..., :half]
+        phase = features[..., half:]
 
         # Nonlocal interaction (attention-based V_ij)
         features = self.nonlocal_interaction(features)
 
         # V2: three-stripe processing (Hubel V2 cortex)
         v2_features = self.v2(features)
-
-        # Wave function on T (if enabled)
-        if self.use_wave_on_t:
-            ss = v2_features.shape[-1] // 3
-            v2_streams = [
-                v2_features[..., :ss],
-                v2_features[..., ss:2*ss],
-                v2_features[..., 2*ss:2*ss+ss],
-            ]
-            v2_features = self.wave_on_t_interaction(v2_streams)
 
         # V3: dynamic form (cross-stream gating)
         v3_features = self.v3(v2_features)
@@ -418,9 +387,9 @@ class SubstanceNet(nn.Module):
         cons_loss = self.consciousness.consciousness_loss(
             output['amplitude_c'], output['phase_c'])
 
-        # Wave function zero-minimization loss
-        zero_loss = self.wave.zero_loss(
-            output['amplitude'], output['phase'])
+        # Feature regularization (replaces wave zero_loss in v6)
+        zero_loss = 0.01 * (output['amplitude'].pow(2).mean() +
+                            output['phase'].pow(2).mean())
 
         # Phase coherence loss
         phase_loss = self.phase_loss(output['phase'])
@@ -434,22 +403,15 @@ class SubstanceNet(nn.Module):
         else:
             topo_loss = torch.tensor(0.0, device=target.device)
 
-        # R-regulation
-        if self.use_consciousness_v2:
-            # V2: R emerges from wave dynamics, no artificial target
-            # consciousness_loss already handles coherence balance
-            r_penalty = torch.tensor(0.0, device=target.device)
-            current_r = self.get_consciousness_metrics(output)['reflexivity_score']
-        else:
-            # V1: penalize reflexivity outside optimal range [0.35, 0.47]
-            with torch.no_grad():
-                psi_c_cat = torch.cat([output['amplitude_c'], output['phase_c']], dim=-1)
-                psi_c_proj = self.consciousness.project(psi_c_cat)
-                ref_error = F.mse_loss(psi_c_cat, psi_c_proj)
-                current_r = 1.0 / (1.0 + ref_error.item())
-            r_target = (OPTIMAL_REFLEXIVITY_MIN + OPTIMAL_REFLEXIVITY_MAX) / 2
-            r_penalty = torch.tensor((current_r - r_target) ** 2,
-                                     device=target.device, dtype=cls_loss.dtype)
+        # R-regulation: penalize reflexivity outside optimal range [0.35, 0.47]
+        with torch.no_grad():
+            psi_c_cat = torch.cat([output['amplitude_c'], output['phase_c']], dim=-1)
+            psi_c_proj = self.consciousness.project(psi_c_cat)
+            ref_error = F.mse_loss(psi_c_cat, psi_c_proj)
+            current_r = 1.0 / (1.0 + ref_error.item())
+        r_target = (OPTIMAL_REFLEXIVITY_MIN + OPTIMAL_REFLEXIVITY_MAX) / 2
+        r_penalty = torch.tensor((current_r - r_target) ** 2,
+                                 device=target.device, dtype=cls_loss.dtype)
 
         # Total loss
         total = (cls_loss +
@@ -555,7 +517,7 @@ class SubstanceNet(nn.Module):
         for name, module in [
             ('v1', self.v1),
             ('orientation', self.orientation),
-            ('wave', self.wave),
+            ('feature_proj', self.feature_proj),
             ('v2', self.v2),
             ('v3', self.v3),
             ('v4', self.v4),

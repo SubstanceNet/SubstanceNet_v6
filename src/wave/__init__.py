@@ -1,12 +1,4 @@
 """
-System Classification: src.wave
-Author: Oleksii Onasenko
-Developer: SubstanceNet — https://github.com/SubstanceNet
-Code: Claude (Anthropic)
-License: Apache-2.0
+Wave module — v6: core wave modules moved to research/wave_dynamics/
+Retained: NonlocalInteraction (attention-based, used in pipeline)
 """
-
-from .quantum_wave import QuantumWaveFunction
-
-__all__ = ['QuantumWaveFunction']
-from src.wave.wave_on_t import WaveFunctionOnT, NonlocalWaveInteraction

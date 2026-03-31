@@ -10,7 +10,7 @@ with Reflexive Consciousness
 ===========================================================
 Usage:
     from src import SubstanceNet                  # Full model template
-    from src import BiologicalV1, QuantumWaveFunction    # Core modules
+    from src import BiologicalV1    # Core modules
     from src import ReflexiveConsciousness, TemporalConsciousnessController
     from src import Hippocampus
 
@@ -24,7 +24,6 @@ Theoretical Foundations:
 
 __version__ = "0.1.0"
 
-from .wave import QuantumWaveFunction
 from .cortex import BiologicalV1
 from .consciousness import ReflexiveConsciousness, TemporalConsciousnessController
 from .hippocampus import Hippocampus
@@ -33,7 +32,6 @@ from .model import SubstanceNet
 __all__ = [
     '__version__',
     'SubstanceNet',
-    'QuantumWaveFunction',
     'BiologicalV1',
     'ReflexiveConsciousness',
     'TemporalConsciousnessController',
