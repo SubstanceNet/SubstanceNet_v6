@@ -1,5 +1,5 @@
 """
-Experiment 10: κ ≈ 1 Emergence Analysis
+Experiment 06: κ ≈ 1 Emergence Analysis
 ========================================
 Does SubstanceNet exhibit κ ≈ 1 plateau analogous to He-II λ-transition?
 
@@ -78,7 +78,7 @@ def measure_kappa_components(model, output):
 
 
 def run():
-    print_header('Experiment 10: κ ≈ 1 Emergence Analysis')
+    print_header('Experiment 06: κ ≈ 1 Emergence Analysis')
     
     # =============================================
     # TEST 1: κ across cognitive tasks (trained)
@@ -93,15 +93,13 @@ def run():
     
     results_by_version = {}
     
-    for version_name, use_v2 in [('v1 (forced R)', False), 
-                                   ('v2 (emergent R)', True)]:
+    for version_name, use_v2 in [('v1 (R-targeting)', False)]:
         print(f'\n  --- {version_name} ---')
         task_results = []
         
         for task in tasks:
             set_seed()
-            model = SubstanceNet(
-                num_classes=2, use_consciousness_v2=use_v2).to(DEVICE)
+            model = SubstanceNet(num_classes=2).to(DEVICE)
             for mod in model.modules():
                 if hasattr(mod, 'set_learning'):
                     mod.set_learning(False)
@@ -182,13 +180,11 @@ def run():
     print(f'  Analogy: He-II cooling through T_λ')
     print(f'{"="*60}')
     
-    for version_name, use_v2 in [('v1 (forced R)', False),
-                                   ('v2 (emergent R)', True)]:
+    for version_name, use_v2 in [('v1 (R-targeting)', False)]:
         print(f'\n  --- {version_name} ---')
         
         set_seed()
-        model = SubstanceNet(
-            num_classes=2, use_consciousness_v2=use_v2).to(DEVICE)
+        model = SubstanceNet(num_classes=2).to(DEVICE)
         for mod in model.modules():
             if hasattr(mod, 'set_learning'):
                 mod.set_learning(False)
@@ -257,8 +253,7 @@ def run():
             ('Full model (v2)', True, False),
             ('No consciousness', True, True)]:
         set_seed()
-        model = SubstanceNet(
-            num_classes=2, use_consciousness_v2=use_v2).to(DEVICE)
+        model = SubstanceNet(num_classes=2).to(DEVICE)
         for mod in model.modules():
             if hasattr(mod, 'set_learning'):
                 mod.set_learning(False)
@@ -384,7 +379,7 @@ def run():
     fig.suptitle('κ ≈ 1 Emergence Analysis: He-II Analogy',
                  fontsize=14, fontweight='bold')
     plt.tight_layout(rect=[0, 0, 1, 0.95])
-    save_figure('kappa_emergence', fig)
+    save_figure('kappa_analysis', fig)
     
     # === Save ===
     all_results = {
@@ -399,7 +394,7 @@ def run():
             'accs': training_accs,
         },
     }
-    save_results('10_kappa_analysis', all_results)
+    save_results('06_kappa_analysis', all_results)
     
     # === VERDICT ===
     print(f'\n{"="*60}')

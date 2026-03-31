@@ -104,10 +104,11 @@ def get_features_at_stage(model, images, stage):
     with torch.no_grad():
         v1, _ = model.v1(images.to(DEVICE))
         o = model.orientation(v1)
-        _, a, p = model.wave(o)
+        f = F.relu(model.feature_proj(o))
+        half = f.shape[-1] // 2
+        a, p = f[..., :half], f[..., half:]
         if stage == 'after_wave':
-            return torch.cat([a, p], dim=-1).mean(dim=1)
-        f = torch.cat([a, p], dim=-1)
+            return f.mean(dim=1)
         f = model.nonlocal_interaction(f)
         v2 = model.v2(f)
         if stage == 'after_v2':

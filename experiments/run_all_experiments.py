@@ -5,7 +5,7 @@ Master script that runs all experiments sequentially.
 Generates all JSON results and PNG/PDF figures.
 
 Usage: python experiments/run_all_experiments.py
-Time: ~40 minutes on GPU (includes statistical analysis with 5 seeds)
+Time: ~5 minutes on GPU
 """
 import time
 import sys
@@ -20,10 +20,7 @@ EXPERIMENTS = [
     ('03_recognition_paradigm', '03: Recognition Paradigm'),
     ('04_velocity_tuning', '04: Velocity Tuning Curve'),
     ('05_hebbian_maturation', '05: Hebbian Maturation'),
-    ('08_moving_mnist', '08: Moving MNIST'),
-    ('09_wave_ablation', '09: Wave Formalism Ablation'),
-    ('10_kappa_analysis', '10: κ ≈ 1 Emergence Analysis'),
-    ('11_statistical_analysis', '11: Statistical Analysis'),
+    ('06_kappa_analysis', '06: κ ≈ 1 Emergence Analysis'),
 ]
 
 
