@@ -1,7 +1,17 @@
-# SubstanceNet v4 — Architecture
+# SubstanceNet v6 — Architecture
 
-**Version:** 0.4.0
-**Updated:** 2026-03-18
+**Version:** 0.6.0
+**Updated:** 2026-04-01
+
+---
+
+## Design Principles
+
+1. **Biological correspondence:** Each module maps to a brain structure
+2. **Vectors for features:** V1→V4 use plain vectors (Linear, Conv, ReLU) — matches neuronal spike coding
+3. **Wave formalism for binding:** Reserved for inter-modal synchronization (future v7+)
+4. **Consciousness as constraint:** R-targeting models physiological limits, not computation
+5. **Modular extensibility:** Architecture ready for auditory (A1→A3) and speech (M1→M2) modules
 
 ---
 
@@ -10,173 +20,161 @@
 ### Image mode (`mode='image'`)
 ```
 Input [B, C, H, W]
-  → RetinalLayer (RGB→4ch: rods+L/M/S cones, if C=3)
-  → BiologicalV1 (GaborFilterBank→SimpleCells→ComplexCells→HyperColumns)
+  → RetinalLayer (RGB → 4ch: rods + L/M/S cones, if C=3)
+  → BiologicalV1 (GaborFilterBank → Simple → Complex → HyperColumns)
   → AdaptiveAvgPool2d(3,3) → flatten → [B, 9, 64]
   → OrientationSelectivity (Conv1d, ×8 orientations) → [B, 9, 512]
-  → QuantumWaveFunction (amplitude_fc + phase_fc)
-      → amplitude [B, 9, 64], phase [B, 9, 64]
-      → cat → features [B, 9, 128]
+  → FeatureProjection (Linear + ReLU) → [B, 9, 128]
+      → split: amplitude [B, 9, 64], phase [B, 9, 64]
   → NonLocalInteraction (MultiheadAttention + gate) → [B, 9, 128]
   → MosaicField18 / V2 (thick/thin/pale stripes) → [B, 9, 128]
-  → DynamicFormV3 / V3 (spatial gating, static mode) → [B, 9, 128]
-  → ObjectFeaturesV4 / V4 (multi-scale attention) → [B, 9, 128]
-  → coherence_fc (128→64) → stability_fc (64→64) → Classifier (576→256→10)
-  → coherence output → AbstractionLayer (64→3) → ReflexiveConsciousness (3 iters)
+  → DynamicFormV3 / V3 (spatial gating) → [B, 9, 128]
+  → ObjectFeaturesV4 / V4 (multi-scale attention + Hebbian) → [B, 9, 128]
+  ├→ coherence_fc (128→64) → stability_fc (64→64)
+  │   → Classifier (576→256→num_classes) → logits
+  └→ coherence_fc → AbstractionLayer (64→3) → abstract
+      → ReflexiveConsciousness (3 iterations) → ψ_C, amplitude_c, phase_c
+      → Top-down gate (ψ_C → V4, inactive in v6) ← infrastructure for v7
 ```
 
 ### Video mode (`mode='video'`)
 ```
 Input [B, T, C, H, W]
-  → per-frame: V1 → Orientation → Wave → NonLocal → V2
-      → collect V2 sequence [B, T, 9, 128] + amplitude/phase sequences
+  → per-frame: V1 → Orientation → FeatureProj → NonLocal → V2
+      → collect: V2 [B, T, 9, 128] + amplitude/phase sequences
   → DynamicFormV3 / V3 (temporal mode: phase interference thick×pale)
-  → ObjectFeaturesV4 / V4 → coherence → stability → Classifier
-  → AbstractionLayer → ReflexiveConsciousness
+  → V4 → coherence → stability → Classifier
+  → AbstractionLayer → Consciousness
 ```
 
 ### Cognitive mode (`mode='cognitive'`)
 ```
 Input [B, *] (flat tensor)
-  → pad/truncate to 64 → cognitive_input (Linear(64,576)+ReLU)
+  → pad/truncate to 64 → cognitive_input (Linear(64, 576) + ReLU)
   → reshape [B, 9, 64]
-  → OrientationSelectivity → Wave → NonLocal → V2 → V3 → V4 → ...
+  → Orientation → FeatureProj → NonLocal → V2 → V3 → V4 → ...
 ```
 
 ---
 
 ## Module Reference
 
-### Visual Cortex (src/cortex/)
+### Visual Cortex (`src/cortex/`)
 
-| Module | File | Function | Innate? | Params |
-|--------|------|----------|---------|--------|
-| RetinalLayer | v1.py | RGB → 4 photoreceptors (rods+cones) | Yes (fixed) | 0 |
-| BiologicalV1 | v1.py | Gabor→Simple→Complex→Hyper | Yes (fixed filters) | 141K |
-| MosaicField18 | v2.py | thick(roll-diff) / thin(FFT) / pale(pass) | Yes (parameter-free) | 0 |
-| DynamicFormV3 | v3.py | Phase interference + HebbianLinear | Partially (Hebbian) | 52K |
-| ObjectFeaturesV4 | v4.py | Multi-scale attention + HebbianLinear | No (Hebbian) | 49K |
-| HebbianLinear | hebbian.py | ΔW = η·(coherence·x·y − α·W·y²) | N/A | varies |
+| Module | File | Biological Basis | Parameters |
+|--------|------|-----------------|------------|
+| BiologicalV1 | v1.py | Hubel & Wiesel (1962) | GaborFilterBank (fixed) + Simple/Complex/Hyper |
+| MosaicField18 (V2) | v2.py | Livingstone & Hubel (1987) | Thick/thin/pale stripes, FFT+diff |
+| DynamicFormV3 | v3.py | Felleman & Van Essen (1991) | Cross-stream gating, temporal diff |
+| ObjectFeaturesV4 | v4.py | Zeki (1983), Pasupathy (2001) | Multi-scale attention + Hebbian |
+| HebbianLinear | hebbian.py | Hebb (1949), Oja (1982) | Oja-normalized weight updates |
 
-### Wave (src/wave/)
+### Consciousness (`src/consciousness/`)
 
-| Module | File | Function | Params |
-|--------|------|----------|--------|
-| QuantumWaveFunction | quantum_wave.py | features → amplitude A, phase φ; ψ = A·e^(iφ) | 66K |
+| Module | File | Theory | Role |
+|--------|------|--------|------|
+| ReflexiveConsciousness | reflexive.py | Th 6.22: ψ_C = F[P̂[ψ_C]] | R-targeting, regularization |
+| TemporalController | controller.py | κ ≈ 1 (Onasenko, 2025) | Phase monitoring, inertia |
 
-### Consciousness (src/consciousness/)
+**Consciousness data flow:**
+```
+abstract [B, 3] → psi_c_init → iterate 3× {
+    P̂: project → threshold → LayerNorm
+    F: cat(projected, abstract) → Linear+Tanh+Linear
+    mix: α·new + (1-α)·old
+} → amplitude_c [B, 16], phase_c [B, 16]
+→ consciousness_loss (R-targeting, coherence, stability, entropy)
+→ top-down gate (inactive): sigmoid(Linear(amplitude_c)) → V4 modulation
+```
 
-| Module | File | Function | Params |
-|--------|------|----------|--------|
-| ReflexiveConsciousness | reflexive.py | ψ_C = F[P̂[ψ_C]], 3 iterations, R-targeting | 6K |
-| TemporalController | controller.py | Phase monitoring: subcritical/critical/supercritical/saturated | 0 |
+R-targeting: R = 1/(1+MSE(ψ_C, P̂[ψ_C])) → target_mse=1.44 → R ≈ 0.41
+This models physiological constraints (GABA/glutamate balance, metabolic budget).
 
-### Memory (src/hippocampus/)
+### Hippocampus (`src/hippocampus/`)
 
-| Module | File | Function | Params |
-|--------|------|----------|--------|
-| GridCells | cells.py | Hexagonal spatial encoding | — |
-| PlaceCells | cells.py | Gaussian receptive fields | — |
-| TimeCells | cells.py | Logarithmic temporal scales | — |
-| EpisodicEncoder | episodic_memory.py | Episode formation from context | — |
-| ConsciousRetrieval | episodic_memory.py | Similarity search modulated by ψ_C | — |
-| MemoryConsolidation | episodic_memory.py | Short-term → prototype compression | — |
-| Hippocampus | hippocampus.py | Integrated episodic memory system | 757K |
+| Module | File | Biological Basis |
+|--------|------|-----------------|
+| GridCells | cells.py | Moser et al. (2005) |
+| PlaceCells | cells.py | O'Keefe (1976) |
+| EpisodicEncoder | episodic_memory.py | Tulving (1972) |
+| ConsciousRetrieval | episodic_memory.py | Consciousness-modulated recall |
+| MemoryConsolidation | episodic_memory.py | McClelland et al. (1995) |
+| Hippocampus | hippocampus.py | Complete memory system |
 
-### Model (src/model/)
+**Two memory interfaces:**
+- `store_episode(abstract)` → episodic memory (dim=3, contextual)
+- `store_feature(features, label)` → recognition memory (dim=128, discriminative)
+- `recognize(features)` → kNN on encoded feature memory
 
-| Module | File | Function | Params |
-|--------|------|----------|--------|
-| SubstanceNet | substance_net.py | Main model: 3 modes, loss, metrics | 1.36M |
-| OrientationSelectivity | layers.py | Conv1d ×8 orientations | 2K |
-| NonLocalInteraction | layers.py | MultiheadAttention + learnable gate | 66K |
-| AbstractionLayer | layers.py | mean→Linear→ReLU→Linear (dim→3) | 2K |
+### Other Modules
+
+| Module | File | Role |
+|--------|------|------|
+| FeatureProjection | model/substance_net.py | Linear(512→128) + ReLU, replaces wave |
+| NonLocalInteraction | model/layers.py | MultiheadAttention + sigmoid gate |
+| OrientationSelectivity | model/layers.py | Conv1d ×8 orientations |
+| AbstractionLayer | model/layers.py | Linear(64→32→3) + dropout |
+| RetinalLayer | model/layers.py | RGB→rods+L/M/S cones |
 
 ---
 
-## Key Metrics
+## Parameters
 
-| Metric | Meaning | Optimal |
-|--------|---------|---------|
-| R (reflexivity) | Convergence of ψ_C = F[P̂[ψ_C]] | 0.35–0.47 |
-| κ (emergence) | Critical regime indicator | ≈ 1.0 |
-| Coherence | Phase alignment across positions | High (>0.99) |
-| Abstract variance | Diversity of abstraction layer output | >10 (not collapsed) |
+Total: **1,458,775** (v6)
 
-### R interpretation
-
-| R range | Phase | Interpretation |
-|---------|-------|---------------|
-| < 0.30 | Subcritical | Insufficient self-monitoring |
-| 0.30–0.50 | **Critical** | Optimal operating regime (κ ≈ 1) |
-| 0.50–0.80 | Supercritical | Excessive synchronization |
-| > 0.80 | Saturated | Representation collapse |
-
----
-
-## Loss Function
-```
-L_total = L_classification
-        + 0.5 · L_abstract
-        + 0.1 · L_consciousness (R-targeting: (MSE − 1.44)²)
-        + 0.01 · L_phase_coherence
-        + 0.01 · L_topological
-        + L_r_penalty (when R outside [0.35, 0.47])
-```
+| Module | Count | % |
+|--------|-------|---|
+| V1 (BiologicalV1) | ~50K | 3.4% |
+| Orientation | ~33K | 2.3% |
+| FeatureProjection | ~66K | 4.5% |
+| NonLocal | ~100K | 6.9% |
+| V2 (MosaicField18) | ~200K | 13.7% |
+| V3 (DynamicFormV3) | ~130K | 8.9% |
+| V4 (ObjectFeaturesV4) | ~50K | 3.4% |
+| Classifier | ~160K | 11.0% |
+| Consciousness | ~5K | 0.3% |
+| Top-down gate | ~2K | 0.1% |
+| Hippocampus | ~660K | 45.3% |
 
 ---
 
-## Hebbian Learning
+## Infrastructure for v7
 
-V3 and V4 use HebbianLinear instead of nn.Linear for upper cortical layers.
-Weights update during forward pass, not backward:
-```
-ΔW_ij = η · (cos(φ_i − φ_j) · x_i · y_j − α · W_ij · y_j²)
-```
-
-- First term (Hebb): strengthen where phases cohere
-- Second term (Oja): normalize to prevent unbounded growth
-- `requires_grad=False` — no backpropagation for these weights
-- V3 learning_rate=0.0001, oja_alpha=0.1
-- V4 learning_rate=0.0001, oja_alpha=1.0
-
----
-
-## Hippocampus API
+### Top-down modulation (inactive in v6)
 ```python
-# Store episode (after forward + compute_loss)
-model.store_episode(output, task_type='logic', metrics={'accuracy': 0.95})
-
-# Recall similar episodes
-similar = model.recall(output, top_k=5)
-
-# Consolidate (short-term buffer → prototypes)
-model.consolidate_memory()
+self.topdown_gate = nn.Sequential(
+    nn.Linear(consciousness_dim // 2, feature_dim),
+    nn.Sigmoid())
+# Initialized to zero weights → gate = 0.5 → neutral
+# v4_features *= (1 + topdown_weight * (gate - 0.5))
+# topdown_weight = 0 → no effect
 ```
 
-Hippocampus operates parallel to the forward pass, not inline.
-Consciousness amplitude modulates storage importance.
+Activation: set `topdown_weight > 0` and train. Biological basis: prefrontal → V4 feedback.
+
+### Wave dynamics (in research/)
+
+WaveFunctionOnT and ReflexiveConsciousnessV2 preserved in `research/wave_dynamics/` for future inter-modal binding experiments. Not used in v6 pipeline.
+
+### Modality interface (future)
+
+Architecture supports plug-and-play modules:
+```
+Layer 1 (sensory):  V1→V4 (visual), A1→A3 (auditory), M1→M2 (speech)
+Layer 2 (memory):   Hippocampus (multimodal, feature_dim=128 per modality)
+Layer 3 (binding):  WaveFunctionOnT (wave resonance, future)
+Layer 4 (consciousness): ψ_C = F[P̂[ψ_C]] with top-down to V4
+```
 
 ---
 
-## File Dependencies
-```
-substance_net.py
-├── cortex/v1.py        (BiologicalV1, RetinalLayer)
-├── cortex/v2.py        (MosaicField18)
-├── cortex/v3.py        (DynamicFormV3)
-│   └── cortex/hebbian.py (HebbianLinear)
-├── cortex/v4.py        (ObjectFeaturesV4)
-│   └── cortex/hebbian.py (HebbianLinear)
-├── wave/quantum_wave.py (QuantumWaveFunction)
-├── consciousness/reflexive.py (ReflexiveConsciousness)
-├── model/layers.py     (OrientationSelectivity, NonLocal, Abstraction)
-├── hippocampus/hippocampus.py
-│   ├── hippocampus/episodic_memory.py
-│   └── hippocampus/cells.py
-└── constants.py
+## Key Results (v6, seed=42)
 
-consciousness/controller.py  (external, used by training scripts)
-data/dynamic_primitives.py   (video data generator)
-utils.py                     (cognitive task generators)
-```
+| Experiment | Result | Reference |
+|------------|--------|-----------|
+| MNIST backprop | 97.4% | v3.1.1: 93.7% |
+| Cognitive R | 0.4090 ± 0.0009 | κ-plateau |
+| Recognition 100-shot | 73.2% ± 2.1% | No backprop |
+| Velocity peak | 4.64 | Logarithmic saturation |
+| Hebbian amplification | 1.6× | +2.4% recognition |
+| κ ≈ 1 | 0.993 ± 0.010 | He-II: 0.989 ± 0.007 |
