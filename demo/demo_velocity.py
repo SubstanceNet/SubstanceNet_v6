@@ -1,10 +1,10 @@
-"""SubstanceNet v4 — Velocity Tuning Demo"""
+"""SubstanceNet v6 — Velocity Tuning Demo"""
 import sys, os
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 import torch
 
 print()
-print('  SubstanceNet v4 — Velocity Tuning Demo')
+print('  SubstanceNet v6 — Velocity Tuning Demo')
 print('  =======================================')
 print('  V3 phase interference detects motion')
 print()

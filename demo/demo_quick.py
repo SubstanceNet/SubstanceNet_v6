@@ -1,10 +1,10 @@
-"""SubstanceNet v4 — Quick Demo (30 seconds)"""
+"""SubstanceNet v6 — Quick Demo (30 seconds)"""
 import sys, os
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 import torch
 
 print()
-print('  SubstanceNet v4 — Quick Demo')
+print('  SubstanceNet v6 — Quick Demo')
 print('  ============================')
 
 from src.model.substance_net import SubstanceNet

@@ -1,91 +1,66 @@
 # Changelog
 
-All notable changes to SubstanceNet v4 are documented in this file.
-Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)
-Versioning: [Semantic Versioning](https://semver.org/)
+## v0.6.0 (2026-04-01)
 
-## [0.4.0] — 2026-03-18
+### Architecture
+- **Plain vectors replace wave formalism** in V1→V4 pipeline. FeatureProjection (Linear+ReLU) instead of QuantumWaveFunction (softplus+cos/sin). Confirmed by ablation: plain vectors outperform wave on all metrics.
+- **Top-down gate infrastructure** (ψ_C → V4 modulation, inactive). Biological basis: prefrontal → V4 feedback. Ready for v7 activation.
+- **Hippocampus feature_dim=128** for recognition. store_feature/recognize API alongside existing episodic memory (abstract_dim=3).
 
-### Added
-- **HebbianLinear** (`src/cortex/hebbian.py`) — phase-coherence plasticity without backpropagation (Oja stabilization)
-- **V4 Hebbian compression** — `ObjectFeaturesV4` with HebbianLinear replacing nn.Linear
-- **Moving MNIST** experiments — cross-modal recognition (static→moving, moving→static)
-- **Hebbian maturation** — unsupervised V3/V4 weight adaptation through observation
-- Video mode tests, cognitive mode tests, reflexivity range test in test_model.py
+### Experiments
+- 6 clean experiments (01-06) with methodology documents
+- Exp06: κ ≈ 1 emergence analysis — **κ = 0.993 ± 0.010** (He-II ref: 0.989 ± 0.007)
+- All results improved vs v5: MNIST +2.0%, Recognition +6.3%, κ closer to He-II
 
-### Changed
-- V3 `output_proj` replaced with HebbianLinear (phase-coherence learning)
-- V4 `compress` replaced with two HebbianLinear layers
-- V4 `oja_alpha` tuned to 1.0 for stability
-- `count_parameters()` now includes v2, coherence_fc, stability_fc, cognitive_input
-- Tests updated for current architecture (38 tests, all passing)
+### Key Results
+| Metric | v6 | v5 |
+|--------|-----|-----|
+| MNIST backprop | 97.4% | 95.4% |
+| Recognition 100-shot | 73.2% ± 2.1% | 66.9% |
+| Cognitive R | 0.409 ± 0.001 | 0.410 ± 0.001 |
+| κ ≈ 1 | 0.993 ± 0.010 | 0.986 ± 0.013 |
 
-### Results
-- Hebbian V3: 11× motion signal amplification after 50 unsupervised steps
-- Hebbian maturation on MNIST: V4 accuracy +5.0% (0.510→0.561)
-- Moving MNIST recognition: 36.0% at speed=2.0 (3.6× random)
-- Cross-modal: moving protos → static test = 34.3%
-- CIFAR-10 RGB: 24.4% (100-shot, matured)
+### Cleanup
+- Wave modules moved to research/wave_dynamics/ (quantum_wave, wave_on_t, reflexive_v2)
+- Old docs moved to research/docs_v4_v5/
+- Deprecated experiments (08, 09, 11) moved to research/experiments_v5/
+- 38/38 tests pass
 
-## [0.3.0] — 2026-03-17
+---
 
-### Added
-- **DynamicFormV3** (`src/cortex/v3.py`) — phase interference for form-motion binding
-- **Dynamic primitives generator** (`src/data/dynamic_primitives.py`) — moving shapes [B,T,1,H,W]
-- **Video mode** in SubstanceNet — `mode='video'` for frame sequences
-- V2 streams interface — `return_streams=True` for thick/thin/pale separation
+## v0.5.0 (2026-03-31)
 
-### Results
-- Velocity tuning curve: 0.0→1.19, logarithmic saturation matching primate MT/V3
-- V3 raw diff (moving vs static): 1.17 (V4 abstract diff: 0.001 — correct invariance)
+### New Modules
+- WaveFunctionOnT: wave function on configuration space T = 2^i − 1
+- ReflexiveConsciousnessV2: energy-based evolution (experimental, unstable)
+- Hippocampus feature_dim=128 fix
 
-## [0.2.0] — 2026-03-16
+### Experiments
+- Exp09: Wave ablation (3-way: Classic/WaveOnT/Plain)
+- Exp10: κ ≈ 1 emergence analysis with He-II analogy
+- Exp11: Statistical analysis with 95% CIs
 
-### Added
-- **RetinalLayer** (`src/cortex/v1.py`) — RGB→4 photoreceptor channels (rods + L/M/S cones)
-- **Recognition paradigm** (`research/recognition_paradigm.py`) — encode→store→recognize without backprop
-- GaborFilterBank `in_channels` parameter for color support
+### Theoretical Insights
+- Three frameworks converge: Onasenko (Σ) ≡ Dubovikov (T) ≡ Tsien (FCM)
+- R-targeting = model of physiological constraints
+- Wave dynamics belongs in consciousness, not feature extraction
 
-### Results
-- CIFAR-10 RGB: 40.56% vs grayscale 36.36% (+4.2%)
-- Recognition 100-shot: 71.9% without backpropagation
-- Consolidation: 10 prototypes > 200 raw episodes (46.3% vs 44.7%, 20× compression)
-- Innate V1+V2 features: 53.7% without any training
+---
 
-## [0.1.1] — 2026-03-15
+## v0.4.0 (2026-03-29)
 
-### Added
-- **MosaicField18** (`src/cortex/v2.py`) — V2 cortex (thick/thin/pale stripes)
-- **DynamicFormV3** (`src/cortex/v3.py`) — V3 cortex (cross-stream gating)
-- **ObjectFeaturesV4** (`src/cortex/v4.py`) — V4 cortex (multi-scale attention)
-- **R-targeting** in consciousness loss (target MSE=1.44 → R≈0.41)
-- **TemporalConsciousnessController** integration with κ≈1 phase calibration
-- **Hippocampus** integration (store_episode, recall, consolidate_memory)
-- `src/utils.py` — cognitive data generators (transferred from v3.1.1)
-- coherence_fc, stability_fc in SubstanceNet
+### Infrastructure
+- 6 reproducible experiments with publication-quality figures
+- Full demo suite (4 scripts)
+- run_all_experiments.py (~74s)
+- CITATION.cff, CHANGELOG, ARCHITECTURE.md
 
-### Fixed
-- Consciousness saturation R→0.999 resolved (root cause: missing V2)
-- Abstract representation collapse (variance 2.5e-11 → 10–259)
-- Zero gradients in abstraction and consciousness modules
-- External dependency on v3.1.1 sys.path hack removed
+### Experiments
+- Exp01-05, Exp08: MNIST, cognitive battery, recognition, velocity, Hebbian, moving MNIST
+- External review: 8.7/10
 
-### Results
-- MNIST 1-epoch: 95.94% (vs v3.1.1: 93.74%), R=0.41
-- Cognitive tasks: 99.61% accuracy, R=0.41 (κ-plateau)
-- V2 ablation: -46.9% accuracy drop (critical module)
+---
 
-## [0.1.0] — 2026-02-11
+## v0.3.0 — v0.1.0 (2026-02 — 2026-03)
 
-### Added
-- Initial project structure with modular architecture
-- `src/constants.py` — single source of truth for parameters
-- BiologicalV1 with Gabor filter bank
-- QuantumWaveFunction (ψ = A·e^(iφ))
-- ReflexiveConsciousness (ported from v3.1.1)
-- Hippocampus modules (ported from v3.1.1, not connected)
-- 6 test files, research templates
-
-### Known Issues
-- Consciousness saturated (R→0.999) — resolved in v0.1.1
-- V2/V3/V4 cortex were empty stubs — implemented in v0.1.1
+Historical development: V1-V4 cortex, consciousness module, Hebbian learning, hippocampus, MosaicField18 restoration, recognition paradigm. See research/docs_v4_v5/ for session logs.

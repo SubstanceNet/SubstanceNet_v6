@@ -1,10 +1,10 @@
-"""SubstanceNet v4 — Consciousness States Demo"""
+"""SubstanceNet v6 — Consciousness States Demo"""
 import sys, os
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 import torch, torch.optim as optim
 
 print()
-print('  SubstanceNet v4 — Consciousness States Demo')
+print('  SubstanceNet v6 — Consciousness States Demo')
 print('  ============================================')
 print()
 

@@ -1,11 +1,11 @@
-"""SubstanceNet v4 — Recognition Demo"""
+"""SubstanceNet v6 — Recognition Demo"""
 import sys, os
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 import torch, torch.nn.functional as F
 from collections import defaultdict
 
 print()
-print('  SubstanceNet v4 — Recognition Demo')
+print('  SubstanceNet v6 — Recognition Demo')
 print('  ===================================')
 print('  Encode → Store → Recognize (no backprop)')
 print()
