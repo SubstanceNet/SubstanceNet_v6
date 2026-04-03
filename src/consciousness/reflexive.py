@@ -6,9 +6,9 @@ Code: Claude (Anthropic)
 License: Apache-2.0
 
 Theoretical Framework:
-    - 2D-Substance Theory (Onasenko, 2025-2026)
+    - SubstanceNet theoretical framework (Onasenko, 2025-2026)
     - The Emergence Parameter kappa ~ 1 (Onasenko, 2025)
-    - Reflexive Consciousness Theorem (Th 6.22)
+    - Reflexive consciousness equation: psi_C = F[P_hat[psi_C]]
 
 Reflexive Consciousness Module
 ===========================================================
@@ -23,12 +23,11 @@ Empirical finding: optimal R in [0.35, 0.47] (SubstanceNet v3.1.1).
 This corresponds to kappa ~ 1 critical regime.
 
 Mathematical Basis:
-    psi_C = F[P_hat[psi_C]]  — reflexive projection (Th 6.22)
-    P_hat = P3 . P2 . P1  — projection operator (Chapter 6)
+    psi_C = F[P_hat[psi_C]]  — reflexive fixed-point equation
+    P_hat = P3 . P2 . P1  — projection operator
     Theta_delta(|psi| - eps)  — projection threshold
 
 Key References:
-    - Onasenko O. (2026) Monograph "2D-Substance", Chapter 6, Th 6.22
     - Yerkes R.M., Dodson J.D. (1908) J. Comp. Neurol. Psychol. 18:459-482
     - Beggs J.M., Plenz D. (2003) J. Neurosci. 23:11167-11177
 
@@ -77,7 +76,7 @@ class ReflexiveConsciousness(nn.Module):
         self.half_dim = consciousness_dim // 2
         self.num_iterations = num_iterations
 
-        # Projection threshold from theory (Chapter 6)
+        # Projection threshold (see ARCHITECTURE.md)
         self.epsilon = nn.Parameter(torch.tensor(1e-3))
         self.delta = nn.Parameter(torch.tensor(1e-6))
 
@@ -112,7 +111,7 @@ class ReflexiveConsciousness(nn.Module):
         Simplified projection operator P_hat.
 
         Applies threshold filtering and normalization, analogous to
-        P_hat = P3 . P2 . P1 from Chapter 6.
+        P_hat = P3 . P2 . P1 (see ARCHITECTURE.md).
         """
         amp, ph = psi_c.chunk(2, dim=-1)
 

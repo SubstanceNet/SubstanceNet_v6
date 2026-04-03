@@ -6,7 +6,7 @@ Code: Claude (Anthropic)
 License: Apache-2.0
 
 Theoretical Framework:
-    - 2D-Substance Theory (Onasenko, 2025-2026)
+    - SubstanceNet theoretical framework (Onasenko, 2025-2026)
     - Visual Cortex V2 Stripes (Hubel & Wiesel, 1968)
 
 Visual Cortex V2 — Contour and Texture Processing (MosaicField18)
@@ -36,7 +36,6 @@ Empirical Evidence:
 Key References:
     - Hubel D.H., Wiesel T.N. (1968) J. Physiol. 195:215-243
     - Livingstone M.S., Hubel D.H. (1988) Science 240:740-749
-    - Onasenko O. (2026) Monograph "2D-Substance", Chapter 6
 
 Changelog:
     2026-03-15 v1.0.0 — Ported from v3.1.1 MosaicField18, documented as V2

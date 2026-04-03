@@ -6,7 +6,7 @@ Code: Claude (Anthropic)
 License: Apache-2.0
 
 Theoretical Framework:
-    - 2D-Substance Theory (Onasenko, 2025-2026)
+    - SubstanceNet theoretical framework (Onasenko, 2025-2026)
     - Visual Cortex V4 (Zeki, 1983)
 
 Visual Cortex V4 — Object Feature Extraction
@@ -55,6 +55,13 @@ class ObjectFeaturesV4(nn.Module):
         Number of attention scales.
     compression : float
         Bottleneck ratio (0-1).
+
+    Notes
+    -----
+    Without Hebbian maturation, V4 compression may degrade features
+    (exp03: after_v4=0.628 < after_v2=0.684). This is expected —
+    randomly initialized HebbianLinear acts as noise. Maturation on
+    relevant data (exp05) resolves this (+2.4% recognition).
     """
 
     def __init__(self, dim: int, num_scales: int = 3,

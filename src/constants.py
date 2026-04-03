@@ -6,7 +6,7 @@ Code: Claude (Anthropic)
 License: Apache-2.0
 
 Theoretical Framework:
-    - 2D-Substance Theory (Onasenko, 2025-2026)
+    - SubstanceNet theoretical framework (Onasenko, 2025-2026)
     - The Emergence Parameter κ ≈ 1 (Onasenko, 2025)
 
 Constants and Configuration — Single Source of Truth

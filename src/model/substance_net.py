@@ -6,8 +6,8 @@ Code: Claude (Anthropic)
 License: Apache-2.0
 
 Theoretical Framework:
-    - 2D-Substance Theory (Onasenko, 2025-2026)
-    - Reflexive Consciousness Theorem (Th 6.22)
+    - SubstanceNet theoretical framework (Onasenko, 2025-2026)
+    - Reflexive consciousness equation: psi_C = F[P_hat[psi_C]]
     - The Emergence Parameter kappa ~ 1 (Onasenko, 2025)
     - Visual Cortex Hierarchy (Hubel & Wiesel, 1962, 1968)
 
@@ -37,7 +37,6 @@ Reference Results (SubstanceNet v3.1.1 / v3.2):
     CIFAR-10: 74.23% accuracy (5.64M params)
 
 Key References:
-    - Onasenko O. (2026) Monograph "2D-Substance", Chapters 1, 6
     - Hubel D.H., Wiesel T.N. (1962, 1968)
     - Yerkes R.M., Dodson J.D. (1908) — optimal arousal
     - Beggs J.M., Plenz D. (2003) — criticality
@@ -212,9 +211,13 @@ class SubstanceNet(nn.Module):
         self._seq_len = 9  # V1 output sequence length
 
         # === Hippocampus (episodic memory) ===
-        # Receives abstract representations modulated by consciousness.
+        # Two memory interfaces with different dimensionalities:
+        #   1. Episodic: store_episode(abstract, dim=3) — contextual memory
+        #      with grid/place/time cells, consciousness-modulated retrieval
+        #   2. Recognition: store_feature(features, dim=128) — discriminative
+        #      kNN matching on amplitude+phase features from V1→V4 pipeline
         # Not part of forward pass — controlled by training loop via
-        # store_episode(), recall(), and consolidate_memory() methods.
+        # store_episode(), recall(), store_feature(), recognize() methods.
         self.hippocampus = Hippocampus(
             input_dim=abstract_dim,
             hidden_dim=256,

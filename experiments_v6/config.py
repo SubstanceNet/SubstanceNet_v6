@@ -1,5 +1,5 @@
 """
-SubstanceNet v4 — Experiment Configuration
+SubstanceNet v6 — Experiment Configuration
 ==========================================
 Single source of truth for all experiment parameters.
 Ensures reproducibility across runs and machines.
@@ -18,8 +18,8 @@ from datetime import datetime
 PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 sys.path.insert(0, PROJECT_ROOT)
 
-RESULTS_DIR = os.path.join(PROJECT_ROOT, 'experiments', 'results')
-FIGURES_DIR = os.path.join(PROJECT_ROOT, 'figures')
+RESULTS_DIR = os.path.join(PROJECT_ROOT, 'experiments_v6', 'results')
+FIGURES_DIR = os.path.join(PROJECT_ROOT, 'experiments_v6', 'figures')
 os.makedirs(RESULTS_DIR, exist_ok=True)
 os.makedirs(FIGURES_DIR, exist_ok=True)
 

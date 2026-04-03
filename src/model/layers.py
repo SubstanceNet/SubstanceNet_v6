@@ -6,8 +6,8 @@ Code: Claude (Anthropic)
 License: Apache-2.0
 
 Theoretical Framework:
-    - 2D-Substance Theory (Onasenko, 2025-2026)
-    - Nonlocal Potential V_ij (Chapter 4)
+    - SubstanceNet theoretical framework (Onasenko, 2025-2026)
+    - Nonlocal Potential V_ij
     - Visual Cortex V2 Stripes (Hubel & Wiesel, 1968)
 
 Model Assembly Layers
@@ -200,7 +200,7 @@ class TopologicalLoss(nn.Module):
     Topological number regularization.
 
     Encourages phase field to have target winding number n_i,
-    corresponding to topological invariant from Def 1.5.
+    corresponding to the topological winding number.
 
     Parameters
     ----------

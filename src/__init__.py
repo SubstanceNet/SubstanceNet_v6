@@ -15,8 +15,8 @@ Usage:
     from src import Hippocampus
 
 Theoretical Foundations:
-    - 2D-Substance Theory: psi_i on Sigma -> P_hat -> R^(3+1)
-    - Reflexive Consciousness: psi_C = F[P_hat[psi_C]] (Th 6.22)
+    - Theoretical framework: psi_i on Sigma -> P_hat -> R^(3+1)
+    - Reflexive Consciousness: psi_C = F[P_hat[psi_C]]
     - Emergence Parameter: kappa ~ 1 at criticality
     - Visual Cortex: V1->V2->V3->V4 projection (Hubel & Wiesel)
     - Hippocampal Memory: grid/place/time cells (O'Keefe, Moser)

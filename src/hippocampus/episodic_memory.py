@@ -7,7 +7,7 @@ Code: Claude (Anthropic)
 License: Apache-2.0
 
 Theoretical Framework:
-    - 2D-Substance Theory (Onasenko, 2025-2026)
+    - SubstanceNet theoretical framework (Onasenko, 2025-2026)
     - Episodic Memory (Tulving, 1972)
     - Memory Consolidation (Frankland & Bontempi, 2005)
 

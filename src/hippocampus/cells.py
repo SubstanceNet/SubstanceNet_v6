@@ -6,7 +6,7 @@ Code: Claude (Anthropic)
 License: Apache-2.0
 
 Theoretical Framework:
-    - 2D-Substance Theory (Onasenko, 2025-2026)
+    - SubstanceNet theoretical framework (Onasenko, 2025-2026)
     - Hippocampal Spatial Representation (O'Keefe & Dostrovsky, 1971)
     - Grid Cells (Hafting et al., 2005)
 
@@ -19,7 +19,7 @@ Implements biologically-inspired cell types found in hippocampus:
 
 These provide the spatial-temporal scaffolding for episodic memory
 formation and retrieval, analogous to the coordinate system on
-manifold Sigma in 2D-Substance Theory.
+SubstanceNet theoretical framework.
 
 Mathematical Basis:
     Grid cells: cos(2 pi <pos, v_k> / scale_i) for 6 hex directions

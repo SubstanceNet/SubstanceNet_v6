@@ -6,7 +6,7 @@ Code: Claude (Anthropic)
 License: Apache-2.0
 
 Theoretical Framework:
-    - 2D-Substance Theory (Onasenko, 2025-2026)
+    - SubstanceNet theoretical framework (Onasenko, 2025-2026)
     - Visual Cortex Hierarchy (Hubel & Wiesel, 1962, 1968)
 
 Visual Cortex V1 — Orientation Selectivity
@@ -27,7 +27,6 @@ Mathematical Basis:
     Hypercolumns: integration across orientations
 
 Key References:
-    - Onasenko O. (2026) Monograph "2D-Substance", Chapter 6
     - Hubel D.H., Wiesel T.N. (1962) J. Physiol. 160:106-154
     - Hubel D.H., Wiesel T.N. (1968) J. Physiol. 195:215-243
     - Daugman J.G. (1985) J. Opt. Soc. Am. A 2:1160-1169
@@ -393,13 +392,6 @@ class BiologicalV1(nn.Module):
             x = self.retina(x)
         elif x.shape[1] == 3 and self.retina is None:
             # Fallback: convert RGB to grayscale if no retina
-            x = 0.2126 * x[:, 0:1] + 0.7152 * x[:, 1:2] + 0.0722 * x[:, 2:3]
-
-        # Retinal preprocessing (if RGB input)
-        if self.retina is not None and x.shape[1] == 3:
-            x = self.retina(x)
-        elif x.shape[1] == 3 and self.retina is None:
-            # Fallback: convert RGB to grayscale
             x = 0.2126 * x[:, 0:1] + 0.7152 * x[:, 1:2] + 0.0722 * x[:, 2:3]
 
         simple = self.simple_cells(x)

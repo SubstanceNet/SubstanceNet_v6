@@ -6,7 +6,7 @@ Code: Claude (Anthropic)
 License: Apache-2.0
 
 Theoretical Framework:
-    - 2D-Substance Theory (Onasenko, 2025-2026)
+    - SubstanceNet theoretical framework (Onasenko, 2025-2026)
     - Spike-Timing-Dependent Plasticity (Bi & Poo, 2001)
 
 Hebbian Linear Layer — Phase-Coherence Learning

@@ -6,7 +6,7 @@ Code: Claude (Anthropic)
 License: Apache-2.0
 
 Theoretical Framework:
-    - 2D-Substance Theory (Onasenko, 2025-2026)
+    - SubstanceNet theoretical framework (Onasenko, 2025-2026)
     - The Emergence Parameter kappa ~ 1 (Onasenko, 2025)
 
 Temporal Consciousness Controller
@@ -21,7 +21,6 @@ Mathematical Basis:
     kappa = (A/A_c) * tau * (Lambda/Lambda_c) ~ 1  — target regime
 
 Key References:
-    - Onasenko O. (2026) Monograph "2D-Substance", Chapter 6
     - SubstanceNet v3.1.1: discovery of accumulative integration effect
 
 Changelog:

@@ -73,7 +73,7 @@ Input [B, *] (flat tensor)
 
 | Module | File | Theory | Role |
 |--------|------|--------|------|
-| ReflexiveConsciousness | reflexive.py | Th 6.22: ψ_C = F[P̂[ψ_C]] | R-targeting, regularization |
+| ReflexiveConsciousness | reflexive.py | ψ_C = F[P̂[ψ_C]] | R-targeting, regularization |
 | TemporalController | controller.py | κ ≈ 1 (Onasenko, 2025) | Phase monitoring, inertia |
 
 **Consciousness data flow:**

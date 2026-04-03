@@ -81,7 +81,7 @@ def main():
 
     # Check outputs
     results_dir = os.path.join(os.path.dirname(__file__), 'results')
-    figures_dir = os.path.join(os.path.dirname(__file__), '..', 'figures')
+    figures_dir = os.path.join(os.path.dirname(__file__), 'figures')
 
     json_files = [f for f in os.listdir(results_dir) if f.endswith('.json')]
     png_files = [f for f in os.listdir(figures_dir) if f.endswith('.png')]

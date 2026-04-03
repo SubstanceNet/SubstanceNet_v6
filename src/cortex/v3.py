@@ -6,7 +6,7 @@ Code: Claude (Anthropic)
 License: Apache-2.0
 
 Theoretical Framework:
-    - 2D-Substance Theory (Onasenko, 2025-2026)
+    - SubstanceNet theoretical framework (Onasenko, 2025-2026)
     - Visual Cortex V3 (Felleman & Van Essen, 1991)
 
 Visual Cortex V3 — Dynamic Form via Phase Interference
@@ -32,7 +32,6 @@ No nn.Linear in the interference path — pure wave mechanics.
 
 Key References:
     - Felleman D.J., Van Essen D.C. (1991) Cereb. Cortex 1:1-47
-    - Onasenko O. (2026) Monograph "2D-Substance", Chapter 6
 
 Changelog:
     2026-03-15 v1.0.0 — Cross-stream gating (spatial only)

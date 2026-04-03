@@ -6,7 +6,7 @@ Code: Claude (Anthropic)
 License: Apache-2.0
 
 Theoretical Framework:
-    - 2D-Substance Theory (Onasenko, 2025-2026)
+    - SubstanceNet theoretical framework (Onasenko, 2025-2026)
     - Hippocampal Memory System (Squire, 1992)
     - Complementary Learning Systems (McClelland et al., 1995)
 
@@ -32,7 +32,6 @@ Key References:
     - Squire L.R. (1992) Psychol. Rev. 99:195-231
     - McClelland J.L. et al. (1995) Psychol. Rev. 102:419-457
     - Kumaran D. et al. (2016) Trends Cogn. Sci. 20:512-534
-    - Onasenko O. (2026) Monograph "2D-Substance", Chapter 6
 
 Changelog:
     2026-02-11 v0.1.0 — Ported from SubstanceNet v3.2 hippocampus_module_v2.py
@@ -290,39 +289,6 @@ class Hippocampus(nn.Module):
     def get_feature_memory_size(self) -> int:
         """Return number of stored features."""
         return len(self.feature_memory)
-
-    def store_feature(self, features: torch.Tensor, label: int):
-        """Store 128-dim recognition features in feature memory."""
-        with torch.no_grad():
-            encoded = self.feature_encoder(features.unsqueeze(0)).squeeze(0)
-        self.feature_memory.append((encoded.detach().cpu(), label))
-        if len(self.feature_memory) > self.max_feature_memory:
-            self.feature_memory.pop(0)
-
-    def recognize(self, features: torch.Tensor, top_k: int = 5) -> int:
-        """Recognize by kNN voting on encoded feature memory."""
-        if not self.feature_memory:
-            return -1
-        with torch.no_grad():
-            query = self.feature_encoder(features.unsqueeze(0)).squeeze(0).cpu()
-            mem_feats = torch.stack([m[0] for m in self.feature_memory])
-            sims = torch.nn.functional.cosine_similarity(
-                query.unsqueeze(0), mem_feats, dim=1)
-            topk_vals, topk_idx = sims.topk(min(top_k, len(self.feature_memory)))
-            votes = {}
-            for j in range(topk_vals.shape[0]):
-                lbl = self.feature_memory[topk_idx[j].item()][1]
-                votes[lbl] = votes.get(lbl, 0) + topk_vals[j].item()
-        return max(votes, key=votes.get) if votes else -1
-
-    def clear_feature_memory(self):
-        """Clear feature memory."""
-        self.feature_memory = []
-
-    def get_feature_memory_size(self) -> int:
-        """Return number of stored features."""
-        return len(self.feature_memory)
-
     def get_state(self) -> Dict[str, Any]:
         """Return current memory system state summary."""
         recent = list(self.short_term_buffer)[-10:]
