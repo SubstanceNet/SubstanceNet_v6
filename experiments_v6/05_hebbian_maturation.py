@@ -252,7 +252,7 @@ def run():
     # === PLOTS ===
 
     # Fig 6: Hebbian maturation dynamics (3 panels)
-    fig, axes = plt.subplots(1, 3, figsize=(16, 5))
+    fig, axes = plt.subplots(1, 3, figsize=(16, 7))
 
     # Panel 1: V3 motion response during maturation
     ax = axes[0]
@@ -266,7 +266,7 @@ def run():
     ax.annotate(f'Stabilizes: {v3_history[-1]:.2f}\n'
                 f'({v3_history[-1]/max(diffs_before[3], 1e-8):.1f}\u00d7 from baseline)',
                 xy=(350, v3_history[-1]),
-                xytext=(200, v3_history[-1] * 1.25),
+                xytext=(100, (v3_history[-1] + diffs_before[3]) / 2),
                 arrowprops=dict(arrowstyle='->', color=COLORS['primary']),
                 fontsize=9, color=COLORS['primary'])
 
@@ -305,7 +305,7 @@ def run():
 
     fig.suptitle('Hebbian Maturation: Unsupervised V3/V4 Learning (500 steps)',
                  fontsize=14, fontweight='bold')
-    plt.tight_layout(rect=[0, 0, 1, 0.93])
+    plt.tight_layout(rect=[0, 0, 1, 0.94])
     save_figure('hebbian_maturation', fig)
 
     # Fig: Recognition comparison
@@ -323,17 +323,17 @@ def run():
     ax.set_xticklabels(conditions)
     ax.set_ylabel('Recognition accuracy (%), 20-shot kNN')
     ax.set_title('Effect of Hebbian Maturation on Recognition')
-    ax.set_ylim(0, 75)
+    ax.set_ylim(0, 74)
     ax.axhline(y=10, color=COLORS['danger'], linestyle=':', alpha=0.4)
     delta_prim = (recog_primitives - recog_before) * 100
     delta_mnist = (recog_mnist - recog_before) * 100
-    ax.text(1, accs[1] + 2, f'{delta_prim:+.1f}%\nirrelevant stimuli',
+    ax.text(1, accs[1] + 1, f'{delta_prim:+.1f}%\nirrelevant stimuli',
             ha='center', fontsize=9, color=COLORS['warning'], style='italic')
-    ax.text(2, accs[2] + 2, f'{delta_mnist:+.1f}%\nrelevant stimuli',
+    ax.text(2, accs[2] + 1, f'{delta_mnist:+.1f}%\nrelevant stimuli',
             ha='center', fontsize=9, color=COLORS['success'], style='italic')
     ax.annotate('', xy=(2, max(accs) + 9), xytext=(1, max(accs[1:2]) + 9),
                 arrowprops=dict(arrowstyle='<->', color=COLORS['gray'], lw=1))
-    ax.text(1.5, max(accs) + 11, 'Relevant data\nhelps more',
+    ax.text(1.5, max(accs) + 4, 'Relevant data\nhelps more',
             ha='center', fontsize=8, color=COLORS['gray'], style='italic')
     save_figure('hebbian_recognition', fig2)
 

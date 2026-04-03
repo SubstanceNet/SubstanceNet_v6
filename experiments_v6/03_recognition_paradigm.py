@@ -293,9 +293,9 @@ def run():
     bars = ax.bar(x_st, [a * 100 for a in stage_accs], color=colors_bars,
                   width=0.55, edgecolor='white', linewidth=0.5)
     for i, (bar, acc) in enumerate(zip(bars, stage_accs)):
-        ax.text(bar.get_x() + bar.get_width()/2, bar.get_height() + 0.8,
-                f'{acc*100:.1f}%', ha='center', va='bottom',
-                fontweight='bold', fontsize=11, color=colors_bars[i])
+        ax.text(bar.get_x() + bar.get_width()/2, bar.get_height() - 3,
+                f'{acc*100:.1f}%', ha='center', va='top',
+                fontweight='bold', fontsize=13, color='white')
     ax.axhline(y=10, color=COLORS['danger'], linestyle=':', alpha=0.4)
     ax.set_xticks(x_st)
     ax.set_xticklabels(['V1\n(Gabor)', 'V2\n(FFT+diff)',
@@ -303,16 +303,16 @@ def run():
     ax.set_ylabel('Recognition accuracy (%), 20-shot kNN')
     ax.set_title('Feature Quality by Processing Stage')
     ax.set_ylim(0, 78)
-    ax.annotate(f'+{(stage_accs[1]-stage_accs[0])*100:.0f}%',
-                xy=(1, stage_accs[1] * 100 - 1),
-                xytext=(0, stage_accs[0] * 100 - 1),
+    # V1→V2 improvement annotation (between bars, above both)
+    v2_top = stage_accs[1] * 100
+    ax.annotate('', xy=(1, v2_top + 1), xytext=(0, v2_top + 1),
                 arrowprops=dict(arrowstyle='->', color=COLORS['success'],
-                                lw=2, connectionstyle='arc3,rad=-0.2'),
-                fontsize=12, fontweight='bold', color=COLORS['success'],
-                ha='center', va='top')
-    ax.text(0.5, stage_accs[0] * 100 - 5, 'FFT+diff\nno training',
-            ha='center', fontsize=8, color=COLORS['success'], style='italic')
-    ax.text(2.5, stage_accs[2] * 100 + 8,
+                                lw=2))
+    ax.text(0.5, v2_top + 2.5,
+            f'+{(stage_accs[1]-stage_accs[0])*100:.0f}%  FFT+diff, no training',
+            ha='center', fontsize=9, fontweight='bold',
+            color=COLORS['success'], style='italic')
+    ax.text(3, stage_accs[3] * 100 + 7,
             'V4 random weights:\nattention without training hurts',
             fontsize=8, color=COLORS['gray'], ha='center', style='italic')
     from matplotlib.patches import Patch
@@ -337,9 +337,9 @@ def run():
                          f'Prototypes\n(10 memories)'])
     ax.set_ylabel('Recognition accuracy (%), 20-shot')
     ax.set_title('Memory Trade-off: Episodes vs Prototypes')
-    ax.set_ylim(0, 68)
+    ax.set_ylim(0, 70)
     delta = (proto_acc_20 - knn_acc_20) * 100
-    ax.text(0.5, 0.92,
+    ax.text(0.5, 0.97,
             f'{mem//10}\u00d7 memory compression  |  {delta:+.1f}% accuracy trade-off',
             transform=ax.transAxes, ha='center', fontsize=10,
             style='italic', color=COLORS['gray'])
