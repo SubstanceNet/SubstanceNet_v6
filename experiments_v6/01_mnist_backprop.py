@@ -6,7 +6,7 @@ Establishes baseline accuracy and verifies consciousness
 operates in critical regime during training.
 
 Key results:
-- 95.94% test accuracy (1 epoch, v3.1.1 ref: 93.74%)
+- 97.43% test accuracy (1 epoch, v3.1.1 ref: 93.74%)
 - R ≈ 0.41 throughout training (κ-plateau)
 """
 from config import *

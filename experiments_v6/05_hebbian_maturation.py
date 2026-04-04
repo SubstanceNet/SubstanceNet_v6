@@ -8,7 +8,7 @@ Key results:
 - V3 motion signal amplified after maturation
 - Velocity tuning curve preserved (logarithmic shape)
 - Maturation on relevant data improves recognition
-- Maturation on irrelevant data hurts recognition
+- Maturation on irrelevant data: minimal gain (+0.5%)
 """
 from config import *
 set_seed()
