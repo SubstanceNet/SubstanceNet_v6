@@ -1,5 +1,41 @@
 # Changelog
 
+## v0.6.1 (2026-04-04)
+
+### Release Preparation
+- **ARCHITECTURE.md rewritten** for publication: Key Concepts glossary, neuroscience motivation (4 findings → 4 decisions), CNN/Transformer comparison table, biological context for all modules
+- **All 6 methodology documents rewritten** to academic standard: Objective → Method → Results → Discussion → Conclusions → References
+- **README.md rewritten** for release: cognitive architecture positioning, two key figures, Quick Start, Citation
+
+### Code Cleanup
+- Remove duplicated retinal preprocessing in BiologicalV1.forward()
+- Remove duplicated methods in Hippocampus (store_feature, recognize)
+- Add Notes on V4 feature degradation without Hebbian maturation
+- Document two Hippocampus memory interfaces (episodic dim=3, recognition dim=128)
+- Fix version label v4 → v6 in config.py and run_all_experiments.py
+
+### Reference Cleanup
+- Replace unpublished '2D-Substance Theory' with 'SubstanceNet theoretical framework' (all source files)
+- Remove all references to unpublished monograph
+- Replace 'Th 6.22' with inline equation, 'Chapter N' with descriptive references
+- Remove 'Code: Claude (Anthropic)' from all source files
+- Standardize attribution: Author + Developer + License in all 24 files
+
+### Project Restructuring
+- Rename experiments/ → experiments_v6/ (versioned experiment sets for future v7+)
+- Move figures/ into experiments_v6/figures/
+- Remove empty directories (scripts/, outputs/, checkpoints/)
+- Update CITATION.cff to v6 (v4 → v6, wave-based → plain vectors)
+
+### Figure Fixes
+- Fix annotation overlaps in consolidation.png, hebbian_maturation.png, hebbian_recognition.png, innate_vs_acquired.png
+
+### Verification
+- 38/38 tests passed
+- 6/6 experiments passed, all results identical to v0.6.0
+- 10 figures regenerated in new location
+
+---
 ## v0.6.0 (2026-04-01)
 
 ### Architecture

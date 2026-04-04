@@ -1,5 +1,5 @@
 """
-SubstanceNet v4 — Run All Experiments
+SubstanceNet v6 — Run All Experiments
 ======================================
 Master script that runs all experiments sequentially.
 Generates all JSON results and PNG/PDF figures.
@@ -27,7 +27,7 @@ EXPERIMENTS = [
 def main():
     print()
     print('=' * 60)
-    print('  SubstanceNet v4 — Running All Experiments')
+    print('  SubstanceNet v6 — Running All Experiments')
     print('=' * 60)
 
     total_start = time.time()

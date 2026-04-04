@@ -1,12 +1,12 @@
 cff-version: 1.2.0
 message: "If you use this software, please cite it as below."
 type: software
-title: "SubstanceNet v4: Bio-inspired Neural Architecture for Numerical Verification of Neuroscience Hypotheses"
-version: 0.4.0
-date-released: 2026-03-29
+title: "SubstanceNet v6: Bio-inspired Neural Architecture for Numerical Verification of Neuroscience Hypotheses"
+version: 0.6.1
+date-released: 2026-04-04
 license: Apache-2.0
-url: "https://github.com/SubstanceNet/SubstanceNet_v4"
-repository-code: "https://github.com/SubstanceNet/SubstanceNet_v4"
+url: "https://github.com/SubstanceNet/SubstanceNet_v6"
+repository-code: "https://github.com/SubstanceNet/SubstanceNet_v6"
 authors:
   - family-names: Onasenko
     given-names: Oleksii
@@ -15,25 +15,29 @@ authors:
 keywords:
   - bio-inspired neural networks
   - computational neuroscience
+  - cognitive neural architecture
   - reflexive consciousness
   - visual cortex hierarchy
   - Hebbian learning
   - episodic memory
   - emergence parameter
   - criticality
+  - kappa
 abstract: >-
-  SubstanceNet is an experimental bio-inspired neural architecture designed
-  as a computational platform for numerical verification of empirical and
-  theoretical results from neuroscience and cognitive science. The system
-  integrates hierarchical visual processing (V1-V4), wave-based feature
-  representation, reflexive self-monitoring, Hebbian plasticity, and
-  hippocampal episodic memory into a unified architecture governed by the
-  emergence parameter κ ≈ 1.
+  SubstanceNet is a modular bio-inspired neural architecture belonging to
+  the class of cognitive neural architectures. Each module corresponds to
+  a specific brain structure (V1-V4 visual cortex, hippocampus, reflexive
+  consciousness), and the system operates in the critical regime kappa ~ 1.
+  V1-V4 use plain vector representations; upper layers (V3, V4) learn
+  through Hebbian plasticity. The architecture achieves 73.2% MNIST
+  recognition without any gradient-based training, and produces emergence
+  parameter kappa = 0.993 +/- 0.010 comparable to superfluid He-II
+  (0.989 +/- 0.007).
 references:
   - type: article
     authors:
       - family-names: Onasenko
         given-names: Oleksii
-    title: "Emergence Parameter κ ≈ 1: An Empirical Signature of Criticality in Physical and Biological Systems"
+    title: "Emergence Parameter kappa ~ 1: An Empirical Signature of Criticality in Physical and Biological Systems"
     year: 2025
     doi: "10.5281/zenodo.17844282"

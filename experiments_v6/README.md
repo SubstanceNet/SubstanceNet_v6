@@ -1,41 +1,34 @@
-# SubstanceNet v4 — Experiments
+# SubstanceNet v6 — Experiments
 
-Reproducible experiment suite. Each script generates JSON results and publication-quality figures.
+6 reproducible experiments validating the bio-inspired architecture.
 
 ## Quick Start
 ```bash
-# Run all experiments (~25 min on GPU)
-python experiments/run_all_experiments.py
-
-# Run individual experiment
-python experiments/01_mnist_backprop.py
+# Run all experiments (~65 seconds on GPU)
+python experiments_v6/run_all_experiments.py
 ```
 
 ## Experiments
 
-| # | Script | Key Result | Figures |
-|---|--------|------------|---------|
-| 01 | `01_mnist_backprop.py` | 98.0% MNIST (1 epoch), R=0.41 | mnist_training |
-| 02 | `02_cognitive_battery.py` | 99.8% accuracy, κ-plateau R=0.409±0.001 | kappa_plateau, kappa_convergence |
-| 03 | `03_recognition_paradigm.py` | 73.7%±2.0% kNN recognition (no backprop) | recognition_scaling, innate_vs_acquired, consolidation |
-| 04 | `04_velocity_tuning.py` | Logarithmic velocity tuning from wave math | velocity_tuning_curve |
-| 05 | `05_hebbian_maturation.py` | 8× motion amplification, +5.2% from relevant maturation | hebbian_maturation, hebbian_recognition |
-| 08 | `08_moving_mnist.py` | 52.6% moving recognition, cross-modal limits | model_boundaries |
+| # | Script | Description | Methodology |
+|---|--------|-------------|-------------|
+| 01 | 01_mnist_backprop.py | Supervised MNIST baseline (97.4%, 1 epoch) | [methodology](methodology/01_mnist_backprop_methodology.md) |
+| 02 | 02_cognitive_battery.py | 10 cognitive tasks, R = 0.409 ± 0.001 | [methodology](methodology/02_cognitive_battery_methodology.md) |
+| 03 | 03_recognition_paradigm.py | 73.2% recognition without backprop | [methodology](methodology/03_recognition_paradigm_methodology.md) |
+| 04 | 04_velocity_tuning.py | V3 velocity tuning matches MT/V3 electrophysiology | [methodology](methodology/04_velocity_tuning_methodology.md) |
+| 05 | 05_hebbian_maturation.py | Unsupervised Hebbian learning, sensitive period | [methodology](methodology/05_hebbian_maturation_methodology.md) |
+| 06 | 06_kappa_analysis.py | κ = 0.993 ± 0.010 (He-II ref: 0.989 ± 0.007) | [methodology](methodology/06_kappa_analysis_methodology.md) |
 
-## Output
+## Structure
 
-- `results/` — JSON files with all numerical data
-- `methodology/` — Detailed methodology documents per experiment
-- `../figures/` — PNG (300dpi) + PDF figures
-
-## Configuration
-
-All experiments use `config.py`:
-- Seed: 42 (fixed for reproducibility)
-- Device: CUDA if available
-- Unified plot style and color scheme
-- Helper functions: `set_seed()`, `save_results()`, `save_figure()`, `create_model()`
+experiments_v6/
+├── 01–06_*.py           Experiment scripts
+├── config.py            Shared configuration (seed, paths, plot style)
+├── run_all_experiments.py
+├── methodology/         Academic methodology documents (per experiment)
+├── results/             JSON results (reproducible, seed=42)
+└── figures/             Publication-quality figures (PNG 300dpi + PDF)
 
 ## Reproducibility
 
-Every result in the README and documentation can be reproduced by running the corresponding script. JSON output includes metadata (timestamp, seed, device, torch version).
+All experiments use seed=42, deterministic CUDA, and fixed random states. Results are identical across runs on the same hardware. JSON results and figures are regenerated on each run.
