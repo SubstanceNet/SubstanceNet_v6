@@ -3,7 +3,6 @@ import math
 System Classification: src.hippocampus.episodic_memory
 Author: Oleksii Onasenko
 Developer: SubstanceNet — https://github.com/SubstanceNet
-Code: Claude (Anthropic)
 License: Apache-2.0
 
 Theoretical Framework:

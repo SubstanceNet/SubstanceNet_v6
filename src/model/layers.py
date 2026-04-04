@@ -2,7 +2,6 @@
 System Classification: src.model.layers
 Author: Oleksii Onasenko
 Developer: SubstanceNet — https://github.com/SubstanceNet
-Code: Claude (Anthropic)
 License: Apache-2.0
 
 Theoretical Framework:

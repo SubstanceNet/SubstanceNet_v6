@@ -2,7 +2,6 @@
 System Classification: src.hippocampus.hippocampus
 Author: Oleksii Onasenko
 Developer: SubstanceNet — https://github.com/SubstanceNet
-Code: Claude (Anthropic)
 License: Apache-2.0
 
 Theoretical Framework:

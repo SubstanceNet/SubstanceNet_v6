@@ -2,7 +2,6 @@
 System Classification: tests.test_consciousness
 Author: Oleksii Onasenko
 Developer: SubstanceNet — https://github.com/SubstanceNet
-Code: Claude (Anthropic)
 License: Apache-2.0
 
 Tests for ReflexiveConsciousness and TemporalConsciousnessController.

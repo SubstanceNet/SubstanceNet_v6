@@ -1,8 +1,7 @@
 """
 System Classification: src.data.dynamic_primitives
 Author: Oleksii Onasenko
-Developer: SubstanceNet
-Code: Claude (Anthropic)
+Developer: SubstanceNet — https://github.com/SubstanceNet
 License: Apache-2.0
 
 Dynamic 2D Primitives Generator

@@ -1,8 +1,7 @@
 """
 System Classification: src.cortex.hebbian
 Author: Oleksii Onasenko
-Developer: SubstanceNet
-Code: Claude (Anthropic)
+Developer: SubstanceNet — https://github.com/SubstanceNet
 License: Apache-2.0
 
 Theoretical Framework:

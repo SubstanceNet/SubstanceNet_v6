@@ -2,7 +2,6 @@
 System Classification: src.consciousness.controller
 Author: Oleksii Onasenko
 Developer: SubstanceNet — https://github.com/SubstanceNet
-Code: Claude (Anthropic)
 License: Apache-2.0
 
 Theoretical Framework:

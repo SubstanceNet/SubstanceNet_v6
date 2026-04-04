@@ -2,7 +2,6 @@
 System Classification: src.cortex
 Author: Oleksii Onasenko
 Developer: SubstanceNet — https://github.com/SubstanceNet
-Code: Claude (Anthropic)
 License: Apache-2.0
 """
 from .v1 import BiologicalV1, GaborFilterBank, SimpleCells, ComplexCells, HyperColumns, RetinalLayer

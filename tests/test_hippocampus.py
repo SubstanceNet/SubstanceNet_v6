@@ -2,7 +2,6 @@
 System Classification: tests.test_hippocampus
 Author: Oleksii Onasenko
 Developer: SubstanceNet — https://github.com/SubstanceNet
-Code: Claude (Anthropic)
 License: Apache-2.0
 
 Tests for Hippocampus module.
