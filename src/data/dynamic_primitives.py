@@ -142,7 +142,7 @@ def generate_sequence(
         cx = cx % W
         cy = cy % H
 
-    frames_tensor = torch.tensor(np.stack(frames)).unsqueeze(1)
+    frames_tensor = torch.from_numpy(np.stack(frames)).float().unsqueeze(1)
     return frames_tensor, motion, primitive_type
 
 
