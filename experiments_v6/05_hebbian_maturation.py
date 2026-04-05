@@ -179,7 +179,7 @@ def run():
 
     transform = transforms.Compose([transforms.ToTensor()])
     train_data = datasets.MNIST(DATA_DIR, train=True,
-                                download=False, transform=transform)
+                                download=True, transform=transform)
     test_data = datasets.MNIST(DATA_DIR, train=False, transform=transform)
 
     # === 1. Before maturation ===
