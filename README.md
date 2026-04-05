@@ -68,7 +68,7 @@ pip install -r requirements.txt
 python experiments_v6/run_all_experiments.py
 ```
 
-Requirements: Python 3.10+, PyTorch 2.0+, CUDA GPU (recommended).
+Requirements: Python 3.10–3.12, PyTorch 2.0+ (2.8+ recommended for exact reproducibility), CUDA GPU (recommended). Note: numpy<2 required for PyTorch<2.4.
 
 ---
 
