@@ -105,8 +105,6 @@ def get_features_at_stage(model, images, stage):
         v1, _ = model.v1(images.to(DEVICE))
         o = model.orientation(v1)
         f = F.relu(model.feature_proj(o))
-        half = f.shape[-1] // 2
-        a, p = f[..., :half], f[..., half:]
         if stage == 'after_wave':
             return f.mean(dim=1)
         f = model.nonlocal_interaction(f)
