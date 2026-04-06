@@ -29,7 +29,7 @@ Changelog:
 # ARCHITECTURE
 # ============================================================================
 
-WAVE_DIM = 128                    # Quantum wave function dimensionality
+WAVE_DIM = 128                    # Feature vector dimensionality (amplitude + phase)
 CORTEX_CHANNELS = [64, 128, 256]  # V1 → V2 → V4 channel progression
 GABOR_ORIENTATIONS = 8            # V1 Gabor filter orientations
 

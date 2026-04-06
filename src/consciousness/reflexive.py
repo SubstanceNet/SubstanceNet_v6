@@ -184,7 +184,10 @@ class ReflexiveConsciousness(nn.Module):
         psi_c = torch.cat([amplitude, phase], dim=-1)
         psi_c_proj = self.project(psi_c)
         mse = F.mse_loss(psi_c, psi_c_proj)
-        target_mse = torch.tensor(1.44, device=device)  # R ~ 0.41
+        # R = 1/(1+MSE) => MSE = 1/R - 1; R_target = midpoint of [OPTIMAL_MIN, OPTIMAL_MAX]
+        from src.constants import OPTIMAL_REFLEXIVITY_MIN, OPTIMAL_REFLEXIVITY_MAX
+        R_target = (OPTIMAL_REFLEXIVITY_MIN + OPTIMAL_REFLEXIVITY_MAX) / 2  # 0.41
+        target_mse = torch.tensor(1.0 / R_target - 1.0, device=device)  # ≈ 1.44
         reflexivity_loss = (mse - target_mse) ** 2
 
         # 2. Phase coherence loss (batch-level)

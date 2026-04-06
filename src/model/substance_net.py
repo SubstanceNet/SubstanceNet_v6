@@ -31,9 +31,9 @@ Data Flow:
         -> ReflexiveConsciousness  (psi_C = F[P_hat[psi_C]])
         -> Classifier              (logits)
 
-Reference Results (SubstanceNet v3.1.1 / v3.2):
-    MNIST:    93.74% accuracy (Stream mode, R = 0.382)
-    CIFAR-10: 74.23% accuracy (5.64M params)
+Reference Results (SubstanceNet v6):
+    MNIST:    97.43% accuracy (1 epoch, R = 0.410)
+    Recognition: 73.2% without backprop (100-shot kNN)
 
 Key References:
     - Hubel D.H., Wiesel T.N. (1962, 1968)
@@ -103,6 +103,15 @@ class SubstanceNet(nn.Module):
     >>> output = model(x)
     >>> output['logits'].shape
     torch.Size([4, 10])
+
+    Notes
+    -----
+    - psi (complex consciousness state) is returned only in video mode,
+      where temporal phase dynamics are meaningful.
+    - Hippocampus accounts for ~58.7% of parameters but is not used in
+      the forward pass. It serves the recognition paradigm (exp03):
+      store_feature/recognize are called externally, not during training.
+      This is by design: hippocampal memory is episodic, not gradient-based.
     """
 
     def __init__(
