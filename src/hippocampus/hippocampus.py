@@ -76,7 +76,7 @@ class Hippocampus(nn.Module):
     """
 
     def __init__(self, input_dim: int, hidden_dim: int = 256,
-                 consciousness_dim: int = 64, buffer_size: int = 1000,
+                 consciousness_dim: int = 32, buffer_size: int = 1000,
                  num_prototypes: int = 10, forgetting_rate: float = 0.01,
                  feature_dim: int = 128):
         super().__init__()

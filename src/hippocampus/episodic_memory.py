@@ -1,4 +1,3 @@
-import math
 """
 System Classification: src.hippocampus.episodic_memory
 Author: Oleksii Onasenko
@@ -29,6 +28,7 @@ Key References:
 Changelog:
     2026-02-11 v0.1.0 — Ported from SubstanceNet v3.2 hippocampus_module_v2.py
 """
+import math
 
 import time
 import hashlib
@@ -66,7 +66,7 @@ class EpisodicEncoder(nn.Module):
     """
 
     def __init__(self, input_dim: int, hidden_dim: int = 256,
-                 consciousness_dim: int = 64, num_places: int = 100,
+                 consciousness_dim: int = 32, num_places: int = 100,
                  num_grid_modules: int = 4, num_time_cells: int = 50):
         super().__init__()
 
