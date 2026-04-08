@@ -41,3 +41,10 @@ references:
     title: "Emergence Parameter kappa ~ 1: An Empirical Signature of Criticality in Physical and Biological Systems"
     year: 2025
     doi: "10.5281/zenodo.17844282"
+  - type: article
+    authors:
+      - family-names: Onasenko
+        given-names: Oleksii
+    title: "SubstanceNet: A Bio-Inspired Cognitive Architecture for Numerical Verification of Neuroscience Hypotheses"
+    year: 2025
+    doi: "10.5281/zenodo.19470755"
