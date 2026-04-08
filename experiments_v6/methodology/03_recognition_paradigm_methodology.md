@@ -12,12 +12,13 @@
 
 Demonstrate that SubstanceNet can recognize handwritten digits without any gradient-based training, using only innate feature extraction (V1→V2) and episodic memory (kNN retrieval). This implements the biological recognition paradigm: **saw → remembered → recognized**.
 
-The experiment answers five questions:
+The experiment answers six questions:
 1. How does recognition accuracy scale with the number of stored examples (N-shot)?
 2. How does episodic memory (kNN) compare to prototype-based memory (class means)?
 3. Which processing stage (V1, V2, V3, V4) produces the most discriminative features without training?
 4. Is the recognition paradigm reproducible across random initializations?
 5. How does SubstanceNet compare to standard statistical baselines (PCA, Random Features) under identical conditions?
+6. Which pipeline module contributes most to recognition accuracy (full ablation)?
 
 ---
 
@@ -46,6 +47,8 @@ The model is initialized with random weights (seed=42), no training is performed
 **D. Feature quality by processing stage.** Recognition accuracy measured using features extracted after each cortical stage (V1, V2, V3, V4) separately. 20-shot protocol. Classifies each stage as innate (fixed computations) or acquired (random HebbianLinear weights).
 
 **E. Statistical baselines.** Four non-biological baselines evaluated under identical conditions (100-shot, kNN top-5 cosine weighted, test_size=1024, seed=42): (1) Raw pixels (784D) — no dimensionality reduction; (2) PCA (128D) — optimal linear projection preserving maximum variance; (3) Random Fourier Features via RBF kernel (128D) — random nonlinear projection; (4) Fair 3×3 (9D) — average pooling to 3×3 pixels, matching SubstanceNet spatial resolution. Baselines isolate the contribution of biological feature extraction vs generic dimensionality reduction.
+
+**F. Full module ablation.** 7-stage ablation measuring the contribution of each pipeline module independently: V1 Gabor → +OrientationSelectivity → +FeatureProjection → +NonLocalInteraction → +V2 → +V3 → +V4. 20-shot kNN protocol. Each stage is cumulative (includes all previous). Isolates the value added by each biological module and identifies which modules require experience (maturation) to contribute positively.
 
 ### 2.3. Evaluation
 
@@ -120,6 +123,20 @@ Consciousness R during recognition: 0.4009 (critical regime).
 
 SubstanceNet is −15.4% below PCA (cost of biological constraints: spatial compression 784→9, fixed Gabor filters instead of data-optimized projections). However, SubstanceNet is +5.4% above the fair 3×3 baseline (value of V1+V2 biological features over trivial average pooling at the same spatial resolution).
 
+### 3.6. Full Module Ablation (20-shot)
+
+| Stage | Dim | Accuracy | Δ from previous | Type |
+|-------|-----|----------|-----------------|------|
+| V1 Gabor only | 64 | 58.5% | — | Innate |
+| + OrientationSelectivity | 512 | 59.3% | +0.8% | Innate |
+| + FeatureProjection | 128 | 61.9% | +2.6% | Innate |
+| + NonLocal attention | 128 | 61.8% | −0.1% | Innate |
+| + V2 (3-stream) | 128 | **68.4%** | **+6.5%** | Innate |
+| + V3 (Hebbian) | 128 | 68.3% | −0.1% | Acquired |
+| + V4 (Hebbian) | 128 | 62.8% | −5.5% | Acquired |
+
+V2 provides the largest single contribution (+6.5%), confirming that three-stream processing (thick/thin/pale; Livingstone \& Hubel, 1987) is the key innate feature extraction mechanism. V1 Gabor alone (58.5%) is below the fair 3×3 baseline (67.9%) — biological feature extraction requires the full V1+V2 innate pipeline, not just orientation filters. NonLocal attention and V3 without maturation are neutral; V4 without maturation is harmful (−5.5%).
+
 ---
 
 ## 4. Discussion
@@ -130,11 +147,12 @@ SubstanceNet is −15.4% below PCA (cost of biological constraints: spatial comp
 
 **V2 as optimal innate stage.** The V2 module adds +6.5% over V1 through three parallel processing streams (thick: temporal difference, thin: FFT spectral features, pale: identity). This is achieved without any training — the computations are fixed. V3 maintains this level (68.3%) despite random HebbianLinear weights, suggesting that the cross-stream gating architecture is not harmful even before maturation. V4, however, degrades features (62.8%) because random multi-scale attention actively destroys discriminative information. This is consistent with the biological finding that V4 requires visual experience to develop useful selectivity (Blakemore & Cooper, 1970), and with the Hebbian maturation results in exp05.
 
-**E. Statistical baselines.** Four non-biological baselines evaluated under identical conditions (100-shot, kNN top-5 cosine weighted, test_size=1024, seed=42): (1) Raw pixels (784D) — no dimensionality reduction; (2) PCA (128D) — optimal linear projection preserving maximum variance; (3) Random Fourier Features via RBF kernel (128D) — random nonlinear projection; (4) Fair 3×3 (9D) — average pooling to 3×3 pixels, matching SubstanceNet spatial resolution. Baselines isolate the contribution of biological feature extraction vs generic dimensionality reduction.
 
 **Methodology precision.** A key discovery during the development of this experiment: kNN top-5 weighted voting on individual episodes can outperform prototype matching by up to +19% at 100-shot. The difference is not in the architecture but in the retrieval methodology — a distinction that must always be specified explicitly.
 
 **Cost of biological constraints.** Standard statistical baselines (PCA + kNN: 88.7%, Raw Pixels: 89.9%) significantly outperform SubstanceNet (73.2%) on MNIST. This −15.4% gap is not a defect but an expected consequence of two architectural constraints: (1) spatial compression from 784 pixels to 9 hypercolumn positions (3×3), while PCA retains latent information from all 784 points; (2) V1 Gabor filters are genetically fixed and not optimized for any particular dataset, unlike PCA eigenvectors that maximize variance for the specific data distribution. Crucially, the fair comparison at matched spatial resolution (3×3 average pooling: 67.9%) reveals that SubstanceNet extracts +5.4% more information from the same 9 positions — this is the measurable value of biologically-inspired feature extraction over trivial compression. None of the statistical baselines produce emergent electrophysiology, critical-regime dynamics, or sensitive-period effects.
+
+**Module contributions.** The full 7-stage ablation reveals that V2 three-stream processing is the dominant innate mechanism (+6.5%), not V1 Gabor filters alone. V1 Gabor (58.5%) is actually below the fair 3×3 baseline (67.9%), demonstrating that orientation-selective filtering alone is insufficient — the frequency analysis (FFT), temporal differencing, and identity streams of V2 are essential for meaningful innate feature extraction. This is consistent with the neuroanatomical finding that V2 receives the largest cortical projection from V1 and performs the critical transformation from local edge detection to contour and texture representation (Livingstone \& Hubel, 1987).
 
 ---
 
@@ -145,6 +163,7 @@ SubstanceNet is −15.4% below PCA (cost of biological constraints: spatial comp
 3. Episodic memory (kNN) consistently outperforms prototype memory, with the advantage growing with N (+19% at 100-shot) — supporting the complementary learning systems theory.
 4. V4 with random weights degrades recognition (−5.6% from V2), confirming that experience-dependent modules require maturation before contributing positively (see exp05).
 5. Statistical baselines (PCA: 88.7%, Raw: 89.9%) outperform SubstanceNet (73.2%) on MNIST — an expected cost of biological constraints (spatial compression 784→9). At matched resolution, SubstanceNet outperforms trivial pooling by +5.4%, confirming the value of V1+V2 biological features.
+6. Full module ablation identifies V2 three-stream processing as the dominant innate mechanism (+6.5%), while V1 Gabor alone (58.5%) is below the fair 3×3 baseline (67.9%). Biological feature extraction requires the complete V1+V2 innate pipeline.
 
 ---
 
