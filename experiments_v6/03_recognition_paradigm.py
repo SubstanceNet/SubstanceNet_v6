@@ -100,14 +100,34 @@ def prototype_recognition(model, train_data, test_data, N,
 
 
 def get_features_at_stage(model, images, stage):
-    """Extract features at specific V1->V4 stage."""
+    """Extract features at specific pipeline stage.
+    
+    Stages (cumulative, each includes all previous):
+      'v1_raw'      — V1 Gabor only (64D)
+      'orient'      — + OrientationSelectivity (512D)
+      'feat_proj'   — + FeatureProjection (128D) [= old 'after_wave']
+      'nonlocal'    — + NonLocalInteraction (128D)
+      'after_v2'    — + V2 MosaicField18 (128D)
+      'after_v3'    — + V3 DynamicForm (128D)
+      'after_v4'    — + V4 ObjectFeatures (128D)
+    """
+    # Backward compat
+    if stage == 'after_wave':
+        stage = 'feat_proj'
+
     with torch.no_grad():
         v1, _ = model.v1(images.to(DEVICE))
+        if stage == 'v1_raw':
+            return v1.mean(dim=1)
         o = model.orientation(v1)
+        if stage == 'orient':
+            return o.mean(dim=1)
         f = F.relu(model.feature_proj(o))
-        if stage == 'after_wave':
+        if stage == 'feat_proj':
             return f.mean(dim=1)
         f = model.nonlocal_interaction(f)
+        if stage == 'nonlocal':
+            return f.mean(dim=1)
         v2 = model.v2(f)
         if stage == 'after_v2':
             return v2.mean(dim=1)
@@ -319,6 +339,51 @@ def run():
         'note': 'All: 100-shot, kNN top-5 cosine weighted, test_size=1024, seed=42',
     }
 
+    # === TEST 6: Full module ablation ===
+    print(f'\n6. Full module ablation (20-shot kNN):')
+
+    ablation_stages = [
+        ('v1_raw',   'V1 Gabor only',          64,  True),
+        ('orient',   'V1 + Orient',            512,  True),
+        ('feat_proj','V1 + Orient + FeatProj', 128,  True),
+        ('nonlocal', '+ NonLocal attention',   128,  True),
+        ('after_v2', '+ V2 (3-stream)',        128,  True),
+        ('after_v3', '+ V3 (Hebbian)',         128,  False),
+        ('after_v4', '+ V4 (Hebbian)',         128,  False),
+    ]
+
+    ablation_accs = []
+    ablation_labels = []
+    ablation_dims = []
+    ablation_innate = []
+
+    for stage_key, label, dim, innate in ablation_stages:
+        acc = stage_knn(model, train_data, test_data, 20, stage_key)
+        ablation_accs.append(acc)
+        ablation_labels.append(label)
+        ablation_dims.append(dim)
+        ablation_innate.append(innate)
+        mark = '(innate)' if innate else '(acquired)'
+        print(f'   {label:<28} {dim:>3}D  {acc*100:.1f}%  {mark}')
+
+    # Delta analysis
+    print(f'   ---')
+    for i in range(1, len(ablation_accs)):
+        delta = (ablation_accs[i] - ablation_accs[i-1]) * 100
+        sign = '+' if delta >= 0 else ''
+        print(f'   {ablation_labels[i-1]:>28} -> {ablation_labels[i]}: '
+              f'{sign}{delta:.1f}%')
+
+    ablation_results = {
+        'stages': [s[0] for s in ablation_stages],
+        'labels': ablation_labels,
+        'dims': ablation_dims,
+        'innate': ablation_innate,
+        'accuracies': [float(a) for a in ablation_accs],
+        'protocol': '20-shot, kNN top-5 cosine weighted, test_size=1024',
+    }
+
+
 
 
     # === PLOTS ===
@@ -407,6 +472,38 @@ def run():
     ax.legend(handles=legend_elements, loc='lower right')
     save_figure('innate_vs_acquired', fig2)
 
+    # Fig: Full module ablation
+    fig_abl, ax = plt.subplots(figsize=(10, 5.5))
+    x_abl = np.arange(len(ablation_accs))
+    colors_abl = [COLORS['success'] if inn else COLORS['warning']
+                  for inn in ablation_innate]
+    bars_abl = ax.bar(x_abl, [a * 100 for a in ablation_accs],
+                      color=colors_abl, width=0.6, edgecolor='white')
+    for i, (bar, acc) in enumerate(zip(bars_abl, ablation_accs)):
+        ax.text(bar.get_x() + bar.get_width()/2, bar.get_height() + 0.5,
+                f'{acc*100:.1f}%', ha='center', va='bottom',
+                fontweight='bold', fontsize=10)
+    # Fair baseline reference
+    ax.axhline(y=acc_fair * 100, color='gray', linestyle=':',
+               alpha=0.5, label=f'Fair 3x3 + kNN ({acc_fair*100:.1f}%)')
+    ax.axhline(y=10, color=COLORS['danger'], linestyle=':',
+               alpha=0.3, label='Random (10%)')
+    ax.set_xticks(x_abl)
+    ax.set_xticklabels([l.replace(' + ', '\n+ ').replace('+ ', '+ ')
+                         for l in ablation_labels],
+                       fontsize=8, ha='center')
+    ax.set_ylabel('Recognition accuracy (%), 20-shot kNN')
+    ax.set_title('Module Ablation: Contribution of Each Pipeline Stage')
+    ax.set_ylim(0, 78)
+    from matplotlib.patches import Patch
+    legend_el = [
+        Patch(facecolor=COLORS['success'], label='Innate (fixed)'),
+        Patch(facecolor=COLORS['warning'], label='Acquired (random weights)'),
+    ]
+    ax.legend(handles=legend_el + ax.get_legend_handles_labels()[0],
+              loc='lower right', fontsize=8)
+    save_figure('module_ablation', fig_abl)
+
     # Fig 7: Consolidation trade-off
     fig3, ax = plt.subplots(figsize=(6.5, 5.5))
     bars = ax.bar([0, 1], [knn_acc_20 * 100, proto_acc_20 * 100],
@@ -453,6 +550,7 @@ def run():
         },
         'consciousness_R': float(r),
         'baselines': baselines,
+        'ablation': ablation_results,
     }
     save_results('03_recognition_paradigm', results)
 

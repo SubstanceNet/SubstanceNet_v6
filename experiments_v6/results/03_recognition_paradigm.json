@@ -58,8 +58,56 @@
     "substancenet_128d_9pos": 0.732421875,
     "note": "All: 100-shot, kNN top-5 cosine weighted, test_size=1024, seed=42"
   },
+  "ablation": {
+    "stages": [
+      "v1_raw",
+      "orient",
+      "feat_proj",
+      "nonlocal",
+      "after_v2",
+      "after_v3",
+      "after_v4"
+    ],
+    "labels": [
+      "V1 Gabor only",
+      "V1 + Orient",
+      "V1 + Orient + FeatProj",
+      "+ NonLocal attention",
+      "+ V2 (3-stream)",
+      "+ V3 (Hebbian)",
+      "+ V4 (Hebbian)"
+    ],
+    "dims": [
+      64,
+      512,
+      128,
+      128,
+      128,
+      128,
+      128
+    ],
+    "innate": [
+      true,
+      true,
+      true,
+      true,
+      true,
+      false,
+      false
+    ],
+    "accuracies": [
+      0.5849609375,
+      0.5927734375,
+      0.619140625,
+      0.6181640625,
+      0.68359375,
+      0.6826171875,
+      0.6279296875
+    ],
+    "protocol": "20-shot, kNN top-5 cosine weighted, test_size=1024"
+  },
   "_meta": {
-    "timestamp": "2026-04-08T11:14:54.465107",
+    "timestamp": "2026-04-08T11:39:13.408148",
     "seed": 42,
     "device": "cuda",
     "torch_version": "2.8.0+cu128"
