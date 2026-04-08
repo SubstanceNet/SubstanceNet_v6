@@ -242,6 +242,85 @@ def run():
     r = model.get_consciousness_metrics(out)['reflexivity_score']
     print(f'\n   R: {r:.4f}')
 
+    # === TEST 5: Statistical baselines (no biological constraints) ===
+    print(f'\n5. Statistical baselines (100-shot, same kNN settings):')
+
+    from sklearn.decomposition import PCA as skPCA
+    from sklearn.neighbors import KNeighborsClassifier as skKNN
+    from sklearn.kernel_approximation import RBFSampler
+
+    baseline_N = 100
+    baseline_test_size = 1024
+
+    np.random.seed(SEED)
+    bl_train_idx = []
+    for c in range(10):
+        cls_idx = [i for i, (_, lbl) in enumerate(train_data) if lbl == c]
+        bl_train_idx.extend(np.random.choice(cls_idx, baseline_N, replace=False))
+
+    bl_X_train = np.array([train_data[i][0].numpy().flatten() for i in bl_train_idx])
+    bl_y_train = np.array([train_data[i][1] for i in bl_train_idx])
+
+    np.random.seed(SEED)
+    bl_test_idx = np.random.choice(len(test_data), baseline_test_size, replace=False)
+    bl_X_test = np.array([test_data[i][0].numpy().flatten() for i in bl_test_idx])
+    bl_y_test = np.array([test_data[i][1] for i in bl_test_idx])
+
+    bl_knn = skKNN(n_neighbors=5, metric='cosine', weights='distance')
+
+    # Baseline 1: Raw pixels (784D)
+    bl_knn.fit(bl_X_train, bl_y_train)
+    acc_raw = bl_knn.score(bl_X_test, bl_y_test)
+    print(f'   Raw Pixels (784D) + kNN:     {acc_raw*100:.1f}%')
+
+    # Baseline 2: PCA (128D)
+    pca_bl = skPCA(n_components=128, random_state=SEED)
+    bl_knn.fit(pca_bl.fit_transform(bl_X_train), bl_y_train)
+    acc_pca = bl_knn.score(pca_bl.transform(bl_X_test), bl_y_test)
+    print(f'   PCA (128D) + kNN:            {acc_pca*100:.1f}%')
+
+    # Baseline 3: Random Fourier Features (128D)
+    rbf = RBFSampler(gamma=0.005, random_state=SEED, n_components=256)
+    pca_rbf = skPCA(n_components=128, random_state=SEED)
+    X_rbf_tr = pca_rbf.fit_transform(rbf.fit_transform(bl_X_train))
+    X_rbf_te = pca_rbf.transform(rbf.transform(bl_X_test))
+    bl_knn.fit(X_rbf_tr, bl_y_train)
+    acc_rbf = bl_knn.score(X_rbf_te, bl_y_test)
+    print(f'   RBF Random (128D) + kNN:     {acc_rbf*100:.1f}%')
+
+    # Baseline 4: Fair comparison — same spatial resolution (3x3 = 9D)
+    bl_X_train_9 = np.array([
+        F.adaptive_avg_pool2d(
+            torch.FloatTensor(train_data[i][0].numpy()).unsqueeze(0), (3, 3)
+        ).flatten().numpy() for i in bl_train_idx
+    ])
+    bl_X_test_9 = np.array([
+        F.adaptive_avg_pool2d(
+            torch.FloatTensor(test_data[i][0].numpy()).unsqueeze(0), (3, 3)
+        ).flatten().numpy() for i in bl_test_idx
+    ])
+    bl_knn.fit(bl_X_train_9, bl_y_train)
+    acc_fair = bl_knn.score(bl_X_test_9, bl_y_test)
+    print(f'   Fair 3x3 pool (9D) + kNN:    {acc_fair*100:.1f}%')
+
+    print(f'   ---')
+    print(f'   SubstanceNet V1->V4 (128D, 9 pos): {knn_accs[-1]*100:.1f}%')
+    print(f'   Delta vs PCA: {(knn_accs[-1] - acc_pca)*100:+.1f}%'
+          f' (cost of biological constraints)')
+    print(f'   Delta vs Fair 3x3: {(knn_accs[-1] - acc_fair)*100:+.1f}%'
+          f' (value of V1+V2 features over trivial pooling)')
+
+    baselines = {
+        'raw_pixels_784d': float(acc_raw),
+        'pca_128d': float(acc_pca),
+        'rbf_128d': float(acc_rbf),
+        'fair_3x3_9d': float(acc_fair),
+        'substancenet_128d_9pos': float(knn_accs[-1]),
+        'note': 'All: 100-shot, kNN top-5 cosine weighted, test_size=1024, seed=42',
+    }
+
+
+
     # === PLOTS ===
 
     # Fig 4: Recognition Scaling (kNN vs prototypes)
@@ -263,6 +342,13 @@ def run():
                alpha=0.5, label='Random baseline (10%)')
     ax.axhline(y=97.43, color=COLORS['gray'], linestyle='--',
                alpha=0.4, label='Backprop reference (97.4%)')
+    # Statistical baselines
+    ax.axhline(y=acc_raw * 100, color='#8B0000', linestyle='-.',
+               alpha=0.5, label=f'Raw pixels + kNN ({acc_raw*100:.1f}%)')
+    ax.axhline(y=acc_pca * 100, color='#4B0082', linestyle='-.',
+               alpha=0.5, label=f'PCA 128D + kNN ({acc_pca*100:.1f}%)')
+    ax.axhline(y=acc_fair * 100, color='#006400', linestyle=':',
+               alpha=0.5, label=f'Fair 3x3 + kNN ({acc_fair*100:.1f}%)')
     ax.set_xscale('log')
     ax.set_xlabel('Examples per class (N)')
     ax.set_ylabel('Recognition accuracy (%)')
@@ -366,6 +452,7 @@ def run():
             stage: float(acc) for stage, acc in zip(stages, stage_accs)
         },
         'consciousness_R': float(r),
+        'baselines': baselines,
     }
     save_results('03_recognition_paradigm', results)
 
@@ -378,6 +465,12 @@ def run():
           f' ± {np.std(trial_accs)*100:.1f}% (5 trials)')
     print(f'  V1+V2 innate: {stage_accs[1]*100:.1f}% without training')
     print(f'  kNN vs proto at 20-shot: {(knn_acc_20-proto_acc_20)*100:+.1f}%')
+    print(f'  Baselines: Raw={acc_raw*100:.1f}%, PCA={acc_pca*100:.1f}%, '
+          f'Fair 3x3={acc_fair*100:.1f}%')
+    print(f'  SubstanceNet vs PCA: {(knn_accs[-1]-acc_pca)*100:+.1f}% '
+          f'(cost of biological constraints)')
+    print(f'  SubstanceNet vs Fair 3x3: {(knn_accs[-1]-acc_fair)*100:+.1f}% '
+          f'(value of V1+V2 features)')
     print(f'{"="*60}')
 
 

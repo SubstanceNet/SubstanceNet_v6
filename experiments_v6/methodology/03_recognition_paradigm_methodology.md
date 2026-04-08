@@ -1,7 +1,7 @@
 # Experiment 03: Recognition Paradigm
 
-**Version:** 0.6.1  
-**Date:** 2026-04-04  
+**Version:** 0.6.2  
+**Date:** 2026-04-08  
 **Script:** `experiments_v6/03_recognition_paradigm.py`  
 **Results:** `experiments_v6/results/03_recognition_paradigm.json`  
 **Figures:** `experiments_v6/figures/recognition_scaling.png`, `experiments_v6/figures/innate_vs_acquired.png`, `experiments_v6/figures/consolidation.png`
@@ -12,11 +12,12 @@
 
 Demonstrate that SubstanceNet can recognize handwritten digits without any gradient-based training, using only innate feature extraction (V1→V2) and episodic memory (kNN retrieval). This implements the biological recognition paradigm: **saw → remembered → recognized**.
 
-The experiment answers four questions:
+The experiment answers five questions:
 1. How does recognition accuracy scale with the number of stored examples (N-shot)?
 2. How does episodic memory (kNN) compare to prototype-based memory (class means)?
 3. Which processing stage (V1, V2, V3, V4) produces the most discriminative features without training?
 4. Is the recognition paradigm reproducible across random initializations?
+5. How does SubstanceNet compare to standard statistical baselines (PCA, Random Features) under identical conditions?
 
 ---
 
@@ -43,6 +44,8 @@ The model is initialized with random weights (seed=42), no training is performed
 **C. Memory consolidation trade-off.** Direct comparison: kNN with 200 individual episodes vs 10 prototype vectors (one per class). Quantifies the accuracy cost of 20× memory compression.
 
 **D. Feature quality by processing stage.** Recognition accuracy measured using features extracted after each cortical stage (V1, V2, V3, V4) separately. 20-shot protocol. Classifies each stage as innate (fixed computations) or acquired (random HebbianLinear weights).
+
+**E. Statistical baselines.** Four non-biological baselines evaluated under identical conditions (100-shot, kNN top-5 cosine weighted, test_size=1024, seed=42): (1) Raw pixels (784D) — no dimensionality reduction; (2) PCA (128D) — optimal linear projection preserving maximum variance; (3) Random Fourier Features via RBF kernel (128D) — random nonlinear projection; (4) Fair 3×3 (9D) — average pooling to 3×3 pixels, matching SubstanceNet spatial resolution. Baselines isolate the contribution of biological feature extraction vs generic dimensionality reduction.
 
 ### 2.3. Evaluation
 
@@ -105,6 +108,18 @@ The kNN advantage grows monotonically with N. At 100-shot, kNN outperforms proto
 
 Consciousness R during recognition: 0.4009 (critical regime).
 
+### 3.5. Statistical Baselines (100-shot)
+
+| Model | Dimensionality | Spatial positions | Accuracy | Biology |
+|-------|---------------|-------------------|----------|--------|
+| Raw Pixels + kNN | 784 | 784 | 89.9% | None |
+| PCA + kNN | 128 | 784 (latent) | 88.7% | None |
+| RBF Random + kNN | 128 | 784 (latent) | 86.5% | None |
+| Fair 3×3 pool + kNN | 9 | 9 | 67.9% | None |
+| **SubstanceNet V1→V4 + kNN** | **128** | **9** | **73.2%** | **Yes** |
+
+SubstanceNet is −15.4% below PCA (cost of biological constraints: spatial compression 784→9, fixed Gabor filters instead of data-optimized projections). However, SubstanceNet is +5.4% above the fair 3×3 baseline (value of V1+V2 biological features over trivial average pooling at the same spatial resolution).
+
 ---
 
 ## 4. Discussion
@@ -115,7 +130,11 @@ Consciousness R during recognition: 0.4009 (critical regime).
 
 **V2 as optimal innate stage.** The V2 module adds +6.5% over V1 through three parallel processing streams (thick: temporal difference, thin: FFT spectral features, pale: identity). This is achieved without any training — the computations are fixed. V3 maintains this level (68.3%) despite random HebbianLinear weights, suggesting that the cross-stream gating architecture is not harmful even before maturation. V4, however, degrades features (62.8%) because random multi-scale attention actively destroys discriminative information. This is consistent with the biological finding that V4 requires visual experience to develop useful selectivity (Blakemore & Cooper, 1970), and with the Hebbian maturation results in exp05.
 
+**E. Statistical baselines.** Four non-biological baselines evaluated under identical conditions (100-shot, kNN top-5 cosine weighted, test_size=1024, seed=42): (1) Raw pixels (784D) — no dimensionality reduction; (2) PCA (128D) — optimal linear projection preserving maximum variance; (3) Random Fourier Features via RBF kernel (128D) — random nonlinear projection; (4) Fair 3×3 (9D) — average pooling to 3×3 pixels, matching SubstanceNet spatial resolution. Baselines isolate the contribution of biological feature extraction vs generic dimensionality reduction.
+
 **Methodology precision.** A key discovery during the development of this experiment: kNN top-5 weighted voting on individual episodes can outperform prototype matching by up to +19% at 100-shot. The difference is not in the architecture but in the retrieval methodology — a distinction that must always be specified explicitly.
+
+**Cost of biological constraints.** Standard statistical baselines (PCA + kNN: 88.7%, Raw Pixels: 89.9%) significantly outperform SubstanceNet (73.2%) on MNIST. This −15.4% gap is not a defect but an expected consequence of two architectural constraints: (1) spatial compression from 784 pixels to 9 hypercolumn positions (3×3), while PCA retains latent information from all 784 points; (2) V1 Gabor filters are genetically fixed and not optimized for any particular dataset, unlike PCA eigenvectors that maximize variance for the specific data distribution. Crucially, the fair comparison at matched spatial resolution (3×3 average pooling: 67.9%) reveals that SubstanceNet extracts +5.4% more information from the same 9 positions — this is the measurable value of biologically-inspired feature extraction over trivial compression. None of the statistical baselines produce emergent electrophysiology, critical-regime dynamics, or sensitive-period effects.
 
 ---
 
@@ -125,6 +144,7 @@ Consciousness R during recognition: 0.4009 (critical regime).
 2. Innate V1+V2 features alone provide 68.4% accuracy — confirming that biologically-inspired fixed computations (Gabor filters, FFT, temporal differencing) extract meaningful visual representations.
 3. Episodic memory (kNN) consistently outperforms prototype memory, with the advantage growing with N (+19% at 100-shot) — supporting the complementary learning systems theory.
 4. V4 with random weights degrades recognition (−5.6% from V2), confirming that experience-dependent modules require maturation before contributing positively (see exp05).
+5. Statistical baselines (PCA: 88.7%, Raw: 89.9%) outperform SubstanceNet (73.2%) on MNIST — an expected cost of biological constraints (spatial compression 784→9). At matched resolution, SubstanceNet outperforms trivial pooling by +5.4%, confirming the value of V1+V2 biological features.
 
 ---
 
