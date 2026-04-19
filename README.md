@@ -4,7 +4,7 @@
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 [![PyTorch 2.0+](https://img.shields.io/badge/PyTorch-2.0+-ee4c2c.svg)](https://pytorch.org/)
 [![DOI](https://img.shields.io/badge/DOI-10.5281%2Fzenodo.17844282-blue)](https://doi.org/10.5281/zenodo.17844282)
-[![Preprint](https://img.shields.io/badge/Preprint-10.5281%2Fzenodo.19470755-green)](https://doi.org/10.5281/zenodo.19470755)
+[![Preprint](https://img.shields.io/badge/Preprint-10.5281%2Fzenodo.19652588-green)](https://doi.org/10.5281/zenodo.19652588)
 
 **A modular bio-inspired neural architecture for numerical verification of neuroscience hypotheses.**
 
