@@ -4,6 +4,15 @@ import math
 from sklearn.metrics import mutual_info_score
 
 def compute_integration_info(wave_funcs):
+    """
+    Integrated Information Theory (IIT) metric: mutual information between
+    phase dimensions as a proxy for information integration.
+
+    ⚠️ UNUSED IN v6: retained from v5 wave-formalism era as reference
+    implementation. Not invoked by any publication experiment (exp01-06).
+    Candidate for v7 activation if IIT-based consciousness metrics are
+    reintroduced.
+    """
     if wave_funcs is None or wave_funcs.numel() == 0:
         return 0.0
     if wave_funcs.is_cuda:
@@ -27,6 +36,15 @@ def compute_integration_info(wave_funcs):
         return 0.0
 
 def compute_phi_approx(wave_funcs):
+    """
+    Approximation of IIT's Φ (integrated information) via minimum
+    information partition over phase dimensions.
+
+    ⚠️ UNUSED IN v6: retained from v5 wave-formalism era as reference
+    implementation. Not invoked by any publication experiment (exp01-06).
+    Candidate for v7 activation if IIT-based consciousness metrics are
+    reintroduced.
+    """
     if wave_funcs is None or wave_funcs.numel() == 0:
         return 0.0
     if wave_funcs.is_cuda:

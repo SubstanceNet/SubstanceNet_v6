@@ -26,11 +26,11 @@ The experiment answers six questions:
 
 ### 2.1. Recognition Protocol
 
-The model is initialized with random weights (seed=42), no training is performed. For each digit class, N examples are passed through the V1→V4 pipeline and their 128-dimensional feature vectors (amplitude + phase, mean-pooled over 9 spatial positions) are stored in episodic memory. Recognition of new images is performed by kNN retrieval from this memory.
+The model is initialized with random weights (seed=42), no training is performed. For each digit class, N examples are passed through the V1→V4 pipeline (full forward pass); the 128-dimensional feature vectors used for kNN retrieval are extracted at the FeatureProjection stage (amplitude + phase, mean-pooled over 9 spatial positions), **before** V2/V3/V4 processing. V2/V3/V4 continue to process features in parallel for classification logits and are evaluated separately in the Module Ablation experiment (sub-experiment F). Recognition of new images is performed by kNN retrieval from the FeatureProjection-level episodic memory.
 
 | Parameter | Value | Rationale |
 |-----------|-------|-----------|
-| Feature representation | 128-dim (64 amplitude + 64 phase) | Full V1→V4 output |
+| Feature representation | 128-dim (64 amplitude + 64 phase) | FeatureProjection output (V1 + Orientation + projection); V2/V3/V4 bypass for kNN |
 | Spatial pooling | Mean over 9 positions | Position-invariant representation |
 | Retrieval method | kNN, top-5, weighted cosine voting | Preserves within-class variability |
 | Hebbian learning | Disabled | Isolates innate feature quality |
@@ -119,7 +119,7 @@ Consciousness R during recognition: 0.4009 (critical regime).
 | PCA + kNN | 128 | 784 (latent) | 88.7% | None |
 | RBF Random + kNN | 128 | 784 (latent) | 86.5% | None |
 | Fair 3×3 pool + kNN | 9 | 9 | 67.9% | None |
-| **SubstanceNet V1→V4 + kNN** | **128** | **9** | **73.2%** | **Yes** |
+| **SubstanceNet FeatureProjection + kNN** | **128** | **9** | **73.2%** | **Yes** |
 
 SubstanceNet is −15.4% below PCA (cost of biological constraints: spatial compression 784→9, fixed Gabor filters instead of data-optimized projections). However, SubstanceNet is +5.4% above the fair 3×3 baseline (value of V1+V2 biological features over trivial average pooling at the same spatial resolution).
 

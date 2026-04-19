@@ -435,7 +435,13 @@ class SubstanceNet(nn.Module):
         else:
             topo_loss = torch.tensor(0.0, device=target.device)
 
-        # R-regulation: penalize reflexivity outside optimal range [0.35, 0.47]
+        # R-regulation: diagnostic metric for reflexivity outside [0.35, 0.47].
+        # NOTE: r_penalty is monitoring-only. current_r is computed in no_grad;
+        # the resulting tensor is created from a Python scalar, so requires_grad=False.
+        # It is added to 'total' below for logging compatibility, but does NOT
+        # contribute to gradients (no backward path through r_penalty).
+        # Effective R-targeting is through consciousness_loss.reflexivity_loss
+        # with effective weight 0.1 * 0.3 = 0.03 (see src/consciousness/reflexive.py).
         with torch.no_grad():
             psi_c_cat = torch.cat([output['amplitude_c'], output['phase_c']], dim=-1)
             psi_c_proj = self.consciousness.project(psi_c_cat)

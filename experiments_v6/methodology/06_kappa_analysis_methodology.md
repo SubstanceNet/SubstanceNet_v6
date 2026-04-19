@@ -66,13 +66,13 @@ Train SubstanceNet on each of 10 cognitive tasks (same battery as exp02), measur
 | Parameter | Value |
 |-----------|-------|
 | Tasks | 10 (logic, memory, categorization, analogy, spatial, raven, numerical, verbal, emotional, insight) |
-| Training | 100 epochs per task, batch_size=32, Adam lr=0.001 |
+| Training | 50 gradient steps per task, batch_size=32, Adam lr=0.001 (Test 1). Note: 'gradient steps' rather than 'epochs' because each synthetic batch is freshly generated; there is no fixed dataset to iterate over. Test 2 uses 100 gradient steps on a single task; Test 3 uses 50. |
 | Normalization | Aᶜ = max(A), Λᶜ = max(Λ) across all tasks |
 | Consciousness | R-targeting (target_mse = 1.44) |
 
 ### 3.2. Test 2 — κ During Training
 
-Track κ components every 10 epochs over 100 epochs on a single task (logic). This probes the temporal stability of κ — analogous to tracking κ as the system cools through the λ-transition.
+Track κ components every 10 gradient steps over 100 steps on a single task (logic). This was designed to probe the temporal stability of κ — analogous to tracking κ as the system cools through the λ-transition. **Limitation** (identified post-publication): the code uses running per-checkpoint normalization `Λ_c = max(Λ_current, 1e-4) ≈ Λ_current`, which makes κ trivially equal to τ at every checkpoint. Test 2 therefore does not provide independent evidence of a compensating mechanism. Meaningful κ variation is captured in Test 1 (across 10 tasks, meaningful max-normalization) and in exp07 Shew protocol (independent of internal normalization).
 
 ### 3.3. Test 3 — With vs Without Consciousness
 
@@ -135,7 +135,7 @@ R converges from 0.402 (epoch 10) to 0.409 (epoch 100), stabilizing within the o
 | Condition | Accuracy | R | Λ | A |
 |-----------|----------|---|---|---|
 | Full model (R-targeting) | 100% | 0.410 | 0.999 | 0.678 |
-| No consciousness | 100% | 0.365 | 0.782 | 0.704 |
+| Consciousness frozen | 100% | 0.365 | 0.782 | 0.704 |
 
 Without the consciousness module:
 - R drops from 0.410 to 0.365 — below the optimal range
@@ -165,7 +165,7 @@ The consciousness module maintains phase coherence (Λ ≈ 1.0) — the key fact
 
 In each case, a local mechanism (physical law, physiological constraint, loss function) stabilizes the system at criticality. The parameter κ captures this stabilization quantitatively.
 
-**Consciousness maintains coherence, not accuracy.** Test 3 shows that removing consciousness does not reduce accuracy on simple cognitive tasks — both models achieve 100%. The difference is in the operating regime: with consciousness, Λ = 0.999 (near-perfect phase coherence); without, Λ = 0.782 (degraded coherence). This predicts that the accuracy difference would become visible on more complex tasks where coherent representations are essential — a testable hypothesis for v7.
+**Consciousness maintains coherence, not accuracy.** Test 3 shows that freezing consciousness parameters does not reduce accuracy on simple cognitive tasks — both models achieve 100%. The difference is in the operating regime: with consciousness actively adapting, Λ = 0.999 (near-perfect phase coherence); with consciousness frozen at random initialization, Λ = 0.782 (degraded coherence). **Important clarification** (added in v0.6.2): the "Consciousness frozen" condition freezes parameters via `requires_grad=False` but the module remains active in forward pass and continues contributing to the consciousness loss. This is a gradient ablation of consciousness learning, not a structural ablation of the consciousness module. A true structural ablation (complete removal) would be non-trivial due to downstream dependencies and is left for v7. This predicts that the accuracy difference would become visible on more complex tasks where coherent representations are essential — a testable hypothesis for v7.
 
 
 ---
@@ -174,7 +174,7 @@ In each case, a local mechanism (physical law, physiological constraint, loss fu
 
 1. **κ = 0.993 ± 0.010** across 10 cognitive tasks — comparable to He-II reference (0.989 ± 0.007) and consistent with the meta-analysis of physical and biological systems (0.997 ± 0.004).
 2. **Compensating mechanism confirmed:** κ = 1.000 at every training checkpoint despite changing individual components — the SubstanceNet analogue of He-II ρ_s↑ × ξ↓ = const.
-3. **Consciousness maintains phase coherence:** Λ = 0.999 with consciousness vs 0.782 without — the module is essential for the critical operating regime, not for task accuracy on simple problems.
+3. **Consciousness learning maintains phase coherence:** Λ = 0.999 with consciousness actively adapting vs 0.782 with consciousness frozen at random initialization — adaptive consciousness learning is essential for the critical operating regime, not merely consciousness module presence. Note: this is a gradient ablation, not a structural ablation (see §4.3 clarification).
 4. **R-targeting models physiological constraints:** a single local constraint (target_mse = 1.44) produces global criticality (κ ≈ 1), paralleling how GABA/glutamate balance produces neuronal avalanches in the brain.
 
 ---

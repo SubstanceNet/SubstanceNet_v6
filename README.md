@@ -12,6 +12,19 @@ SubstanceNet belongs to the class of cognitive neural architectures — alongsid
 
 ---
 
+## Current status (v0.6.2, April 2026)
+
+Patch release addressing formulation clarifications and code hygiene items identified during external code audit. **No published numerical results have changed.** See [CHANGELOG.md](CHANGELOG.md) for details.
+
+Key clarifications in this patch:
+- Recognition features (73.2% MNIST kNN) are extracted at the FeatureProjection stage (V1 + Orientation + projection), before V2/V3/V4 processing. V2/V3/V4 are active for classification logits and as ablation references, but are bypassed for the main kNN feature extraction.
+- The hippocampus module (~50% of parameters) is architecturally complete and covered by 8 unit tests, but is **not invoked in v6 publication experiments**. Recognition (exp03) uses an inline kNN bypassing the hippocampus API. Full activation planned for v7.
+- The `r_penalty` term in the loss function is monitoring-only (computed outside the backward graph); effective R-targeting is through `consciousness_loss.reflexivity_loss` (weight 0.03).
+- exp06 Test 2 κ-stability is tautological due to running normalization (`Λ_c = max(Λ, 1e-4) ≈ Λ`, making κ trivially equal to τ per checkpoint). Meaningful κ variation is provided by Test 1 (10 tasks). Independent criticality validation comes from exp07 Shew protocol.
+- exp06 Test 3 'No consciousness' is more precisely 'Consciousness frozen' (gradient ablation of consciousness learning, not structural ablation of the module).
+
+---
+
 ## Key Results
 
 | Experiment | Result | Significance |
@@ -42,7 +55,7 @@ SubstanceNet achieves 73.2% MNIST recognition using only innate (untrained) visu
   <img src="experiments_v6/figures/kappa_analysis.png" width="600" alt="κ ≈ 1 emergence analysis">
 </p>
 
-The emergence parameter κ = (A/Aᶜ)·τ·(Λ/Λᶜ) measures how close a system is to the critical point between order and chaos. A meta-analysis of seven physical and biological systems yielded κ = 0.997 ± 0.004 (Onasenko, 2025). SubstanceNet produces **κ = 0.993 ± 0.010** across 10 cognitive tasks — comparable precision to the He-II λ-transition measured aboard Space Shuttle Columbia. During training, a compensating mechanism maintains κ = 1.0 at every checkpoint: as accuracy increases (τ↑), phase coherence adjusts (Λ↓), keeping the product constant — the same mechanism as in superfluid helium (ρ_s↑ × ξ↓ = const).
+The emergence parameter κ = (A/Aᶜ)·τ·(Λ/Λᶜ) measures how close a system is to the critical point between order and chaos. A meta-analysis of seven physical and biological systems yielded κ = 0.997 ± 0.004 (Onasenko, 2025). SubstanceNet produces **κ = 0.993 ± 0.010** across 10 cognitive tasks — comparable precision to the He-II λ-transition measured aboard Space Shuttle Columbia. Independent confirmation of criticality is provided by the exp07 neural-criticality protocol (Shew et al.): α = −1.498 vs cortical target −1.5, which does not rely on internal normalization.
 
 ---
 

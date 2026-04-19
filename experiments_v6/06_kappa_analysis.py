@@ -44,7 +44,10 @@ def measure_kappa_components(model, output):
     """
     metrics = model.get_consciousness_metrics(output)
     
-    # Extract wave state if v2
+    # Extract wave state if v2.
+    # NOTE: in v6, ReflexiveConsciousness (v1) does not have _last_A attribute,
+    # so the fallback branch below is always taken. The cos-matrix code is
+    # retained for future v2 wave-consciousness (see research/reflexive_v2.py).
     if hasattr(model.consciousness, '_last_A'):
         A_cliques = model.consciousness._last_A      # [B, N, D]
         phi_cliques = model.consciousness._last_phi   # [B, N, D]
@@ -93,7 +96,7 @@ def run():
     
     results_by_version = {}
     
-    for version_name, use_v2 in [('v1 (R-targeting)', False)]:
+    for version_name in ['v1 (R-targeting)']:
         print(f'\n  --- {version_name} ---')
         task_results = []
         
@@ -180,7 +183,7 @@ def run():
     print(f'  Analogy: He-II cooling through T_λ')
     print(f'{"="*60}')
     
-    for version_name, use_v2 in [('v1 (R-targeting)', False)]:
+    for version_name in ['v1 (R-targeting)']:
         print(f'\n  --- {version_name} ---')
         
         set_seed()
@@ -249,9 +252,10 @@ def run():
     print(f'  Analogy: He-II (superfluid, κ≈1) vs He-I (normal, κ=0)')
     print(f'{"="*60}')
     
-    for label, use_v2, disable_cons in [
-            ('Full model (v2)', True, False),
-            ('No consciousness', True, True)]:
+    test3_results = {}
+    for label, disable_cons in [
+            ('Full model', False),
+            ('Consciousness frozen', True)]:
         set_seed()
         model = SubstanceNet(num_classes=2).to(DEVICE)
         for mod in model.modules():
@@ -287,6 +291,13 @@ def run():
         
         print(f'  {label:<25} acc={acc:.4f}  R={kd["R"]:.4f}  '
               f'Λ={kd["Lambda"]:.4f}  A={kd["A"]:.4f}')
+        test3_results[label] = {
+            'accuracy': float(acc),
+            'R': float(kd['R']),
+            'Lambda': float(kd['Lambda']),
+            'A': float(kd['A']),
+            'disable_cons': bool(disable_cons),
+        }
         del model, optimizer
         torch.cuda.empty_cache()
         gc.collect()
@@ -396,6 +407,7 @@ def run():
             'Rs': training_Rs,
             'accs': training_accs,
         },
+        'test3_consciousness_ablation': test3_results,
     }
     save_results('06_kappa_analysis', all_results)
     

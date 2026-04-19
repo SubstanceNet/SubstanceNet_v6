@@ -42,7 +42,7 @@ Hubel & Wiesel (1962, 1968; Nobel Prize 1981) showed that visual processing pass
 
 **Finding 2: The brain does not do backpropagation.**  
 Crick (1989) argued that error backpropagation is biologically implausible — there is no known mechanism for transmitting error signals backward through synapses. Upper cortical areas learn through local Hebbian rules: neurons that fire together wire together (Hebb, 1949), with Oja normalization (1982) preventing unbounded growth.  
-→ **Decision:** V1 and V2 use fixed (innate) computations. V3 and V4 use HebbianLinear — weight updates based on local phase coherence, no backprop gradients.
+→ **Decision:** V1 and V2 use fixed (innate) computations as the feature-extraction front-end. V3 and V4 use HebbianLinear for feature learning (weight updates based on global phase coherence gating, no backprop gradients on these specific layers), alongside backprop-trained auxiliary components (attention, normalization, gates). Note: Hebbian learning is disabled by default (`create_model()` sets `learning=False`); it is activated only in exp05 (hebbian_maturation), where 500 steps of passive observation on dynamic primitives amplify V3 motion signal by 1.6× and improve recognition by +2.4%.
 
 **Finding 3: The brain operates near a critical point.**  
 Beggs & Plenz (2003) demonstrated that cortical networks generate neuronal avalanches with power-law distributions — a signature of criticality. Shew et al. (2009) showed that criticality maximizes the dynamic range of cortical networks: at the critical point, neurons respond to the widest range of stimulus intensities, which is optimal for information processing. Hengen & Shew (2025) extended this further, proposing that criticality serves as a unified setpoint of brain function — not merely an interesting phenomenon, but a homeostatic target that the brain actively maintains. The Yerkes-Dodson law (1908) describes the same principle from the behavioral side: optimal performance at moderate arousal, degradation at both extremes. The emergence parameter κ ≈ 1 (Onasenko, 2025) quantifies this critical regime across physical and biological systems.  
@@ -143,7 +143,7 @@ Input [B, *] (flat tensor, e.g. logic/memory/analogy tasks)
 | MosaicField18 | v2.py | V2 cortex | Yes | Three parallel streams: motion/texture/form |
 | DynamicFormV3 | v3.py | V3 cortex | Partially | Cross-stream gating + HebbianLinear |
 | ObjectFeaturesV4 | v4.py | V4 cortex | No | Multi-scale attention + Hebbian compression |
-| HebbianLinear | hebbian.py | Synaptic plasticity | — | dW = η·(cos(φ_i−φ_j)·x·y − α·W·y²) |
+| HebbianLinear | hebbian.py | Synaptic plasticity | — | dW = η·⟨cos(φ)⟩·x·y − α·W·⟨y²⟩ (global phase gating, simplified STDP) |
 
 **Why innate vs. acquired matters:** V1+V2 innate features achieve 68.4% MNIST recognition without any training — confirming Hubel & Wiesel's finding that basic vision is genetically programmed. V3/V4 Hebbian maturation on relevant stimuli adds +2.4% (exp05), modeling the biological sensitive period (Blakemore & Cooper, 1970).
 
@@ -197,7 +197,9 @@ The value R ≈ 0.41 was not chosen theoretically — it was discovered empirica
 
 1. **Episodic memory** (dim=3): `store_episode(abstract)` — stores contextual representations with grid/place/time cell codes and consciousness-modulated importance scoring. Used for consolidation into long-term prototypes.
 
-2. **Recognition memory** (dim=128): `store_feature(features, label)` — stores discriminative amplitude+phase features from the V1→V4 pipeline. Recognition via kNN top-5 weighted cosine voting. This is the "saw → remembered → recognized" paradigm: 73.2% ± 2.1% on MNIST with 100 examples per class and zero gradient descent.
+2. **Recognition memory** (dim=128): `store_feature(features, label)` — stores 128-dim discriminative features (amplitude + phase halves of the FeatureProjection output, before V2/V3/V4 processing), `recognize(features)` — kNN top-5 weighted cosine voting. This is the "saw → remembered → recognized" paradigm: 73.2% ± 2.1% on MNIST with 100 examples per class and zero gradient descent.
+
+**Activation status in v6 publication experiments:** The hippocampus module (~50% of model parameters) is architecturally complete and covered by 8 unit tests (grid cells, place cells, time cells, episodic encoding, retrieval, consolidation, state summary), but is **not invoked** in any of the six publication experiments. Experiment 3 (recognition) uses an inline kNN that bypasses the `Hippocampus.store_feature/recognize` API; experiments 1, 2, 4, 5, 6 do not call Path A (episodic storage) either. This is a deliberate staged design — full hippocampus activation, replacing mean-pooling over 9 spatial positions with spatially-indexed episodic memory, is the v7 priority (post-publication spatial-resolution study identified mean-pooling as the primary bottleneck).
 
 ### 5.4. Assembly Layers (`src/model/`)
 

@@ -1,5 +1,94 @@
 # Changelog
 
+## v0.6.2 (2026-04-19)
+
+### Context
+Patch release addressing formulation clarifications and code hygiene items
+identified during external L1-factual code audit (95.1% audit confirmation rate).
+**No published numerical results have changed.** All modifications are to
+documentation, comments, labels, and dead-code annotations.
+
+### Fixed (code ↔ documentation)
+- **Recognition feature stage** (preprint §5.3, §6.1, methodology 03): features for kNN
+  are extracted at the FeatureProjection stage (V1 + Orientation + projection),
+  not from the full V1→V4 pipeline. V2/V3/V4 run in parallel for classification
+  logits but are bypassed for recognition feature extraction.
+- **exp06 Test 3 label** (`'No consciousness'` → `'Consciousness frozen'`): the
+  ablation freezes consciousness parameters (requires_grad=False) but keeps the
+  module active in forward pass and loss. This is a gradient ablation, not a
+  structural ablation.
+- **exp06 methodology**: Test 1 uses 50 gradient steps per task (was documented
+  as 100); Test 2 uses 100 as documented. Terminology clarified from 'epochs' to
+  'gradient steps' (fresh synthetic batch per step, no fixed dataset).
+- **exp04/exp05 methodology**: `image_size=32` in generate_sequence calls, not
+  28×28 as previously documented. MNIST (exp01) remains on 28×28.
+
+### Documentation (preprint SubstanceNet_v6_preprint_v4.md)
+- §5.4 Loss table: r_penalty annotated as monitoring-only (torch.no_grad(),
+  requires_grad=False, no gradient contribution). Effective R-targeting is
+  through consciousness_loss.reflexivity_loss (weight 0.1 × 0.3 = 0.03).
+- §3 Finding 2: HebbianLinear formula aligned with code. Code implements
+  global phase coherence `<cos(φ)>` (simplified STDP variant), not pairwise
+  `cos(φ_i − φ_j)`. Bi & Poo 2001 reference reformulated accordingly.
+- §6.4 Test 2: running normalization `Λ_c = max(Λ, 1e-4) ≈ Λ` makes κ
+  trivially equal to τ per checkpoint. Test 2 does not provide independent
+  evidence of compensating mechanism; Test 1 (10 tasks) remains the primary
+  κ-variation measurement.
+- §6.4 Table 9: 'No consciousness' → 'Consciousness frozen' with explanatory
+  note on the distinction between gradient and structural ablation.
+- §3 Finding 1: 'Innate' defined as 'functional without gradient training',
+  not 'lacking trainable parameters'. V1 contains ~50K backprop-learnable
+  parameters in addition to fixed Gabor filter bank.
+- §5.3: Hippocampus architectural status explicitly noted — complete and
+  tested (8 unit tests) but not invoked in v6 publication experiments.
+  Full activation planned for v7.
+- §8 Limitations: two new points added — (7) hippocampus architectural
+  underuse, (8) recognition feature stage.
+
+### Cleanup (code annotations, no behavioral change)
+- `tests/test_wave.py` → `tests/test_feature_proj.py` (rename; contents
+  already tested FeatureProjection, name was legacy from v5).
+- `src/constants.py`: __version__ synced from "0.1.0" to "0.6.2";
+  EWC_LAMBDA constant removed (unused legacy from v3 continual learning).
+- `src/utils.py`: `compute_integration_info`, `compute_phi_approx` annotated
+  as UNUSED IN v6 (retained from v5 wave-formalism; candidates for v7).
+- `src/wave/__init__.py`: docstring expanded with v5→v6 migration history
+  and pointers to replacement (FeatureProjection) and archive
+  (research/wave_dynamics/).
+- `src/model/substance_net.py::compute_loss`: r_penalty computation annotated
+  with monitoring-only semantics and pointer to effective R-regularization.
+- `experiments_v6/06_kappa_analysis.py::measure_kappa_components`: fallback
+  branch (pairwise cos_matrix for v2 wave-consciousness) annotated as
+  always-taken in v6; retained for research/reflexive_v2.py compatibility.
+- `experiments_v6/06_kappa_analysis.py`: unused `use_v2` tuple parameter
+  removed from Test 1, Test 2, and Test 3 loops.
+
+### Added
+- `experiments_v6/06_kappa_analysis.py`: Test 3 results now persisted to
+  JSON under key `test3_consciousness_ablation`. Previously only printed
+  to console, making Preprint Table 9 non-auto-reproducible.
+  Note: existing results JSON remains from original v0.6.0 run; new key
+  will appear on next exp06 execution.
+
+### Not changed (explicitly verified)
+- All 6 experiments produce identical numerical results to v0.6.1
+- Published central results unchanged:
+  - MNIST 97.4% (1-epoch backprop, exp01)
+  - Recognition 73.2% ± 2.1% (100-shot kNN, exp03)
+  - κ = 0.993 ± 0.010 across 10 cognitive tasks (exp06 Test 1)
+  - R = 0.4090 ± 0.0009 κ-plateau (exp02, exp06)
+  - V3 motion 1.6× amplification after Hebbian maturation (exp05)
+  - 720× V3:abstract compression ratio (exp04)
+- Architectural design unchanged
+- Training protocols unchanged
+
+### Verification
+- 38/38 tests passed (post-rename, post-version-sync)
+- Python syntax validated on all modified files
+- No experiments re-run; published JSONs from v0.6.0 remain reference
+
+---
+
 ## v0.6.1 (2026-04-04)
 
 ### Release Preparation

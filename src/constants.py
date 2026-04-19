@@ -77,7 +77,6 @@ DEFAULT_CONSCIOUSNESS_MODE = 'stream'
 # ============================================================================
 
 KAPPA_TARGET = 1.0                # Emergence parameter target
-EWC_LAMBDA = 100.0                # Elastic Weight Consolidation strength
 
 # ============================================================================
 # EXPERIMENTAL RESULTS (reference values for validation)
@@ -141,5 +140,5 @@ _validate_constants()
 # VERSION
 # ============================================================================
 
-__version__ = "0.1.0"
+__version__ = "0.6.2"
 __date__ = "2026-02-11"

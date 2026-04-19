@@ -13,7 +13,7 @@ import pytest
 def test_constants_import():
     """Constants module imports without errors (validation runs at import)."""
     from src import constants
-    assert constants.__version__ == "0.1.0"
+    assert constants.__version__ == "0.6.2"
 
 
 def test_reflexivity_bounds():
